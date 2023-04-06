@@ -1,0 +1,25 @@
+.gender-header {
+  width: 100%;
+}
+.gender-header > picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gender-header_img-container {
+  position: relative;
+  cursor: pointer;
+}
+.gender-header img {
+  max-width: 45vw;
+}
+.gender-title {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translate(0, -50%);
+  font-size: 5vmin;
+  font-weight: bold;
+  letter-spacing: 1vmin;
+  color: var(--Orange);
+}

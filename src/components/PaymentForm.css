@@ -1,0 +1,24 @@
+.payment-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid gray;
+}

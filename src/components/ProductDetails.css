@@ -1,0 +1,212 @@
+.details {
+  font-family: var(--Kumbh);
+  flex: 1 0 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+}
+.details__product {
+  position: relative;
+}
+.details__company {
+  color: var(--Orange);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.details__description {
+  color: var(--Dark-grayish-blue);
+  line-height: 24px;
+  font-size: 0.8rem;
+}
+
+.details__description a {
+  text-decoration: none;
+}
+.details__description li {
+  list-style: none;
+}
+
+.details details > summary {
+  font-size: 0.7rem;
+  padding: 2px;
+  width: 200px;
+  background-color: #eeeeee;
+  border: none;
+  box-shadow: 1px 1px 2px #bbbbbb;
+  cursor: pointer;
+}
+.details details > article {
+  position: absolute;
+  top: 0;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  font-size: 0.7rem;
+  background-color: #eeeeeeef;
+  padding: 2px;
+  margin: 0;
+  box-shadow: 1px 1px 2px #bbbbbb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.details details > article li {
+  list-style-position: inside;
+}
+.details__prices {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.details__now {
+  margin-top: 1rem;
+  font-size: 1.8em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.price_now {
+  margin: 0;
+}
+.details__discount {
+  font-size: 0.5em;
+  color: var(--Orange);
+  background-color: var(--Pale-orange);
+  padding: 4px;
+  border-radius: 4px;
+  margin: 0;
+  display: none;
+}
+.details__before {
+  font-weight: 700;
+  color: var(--Dark-grayish-blue);
+  text-decoration: line-through;
+  display: none;
+}
+.input {
+  height: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input__minus {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--Orange);
+  flex: 0 0 20%;
+  border: none;
+  background-color: var(--Light-grayish-blue);
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input__number::-webkit-outer-spin-button,
+.input__number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input__number {
+  -moz-appearance: textfield;
+}
+
+.input__number {
+  appearance: none;
+  width: 100%;
+  border: none;
+  background-color: var(--Light-grayish-blue);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  border-radius: 5%;
+}
+.input__plus {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--Orange);
+  border: none;
+  flex: 0 0 20%;
+  background-color: var(--Light-grayish-blue);
+}
+.input__minus,
+.input__plus {
+  cursor: pointer;
+}
+.details__button {
+  margin-top: 1rem;
+  height: 3.5rem;
+  width: 100%;
+  background-color: var(--Orange);
+  color: var(--White);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.details__button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  .details {
+    flex: 0 0 50%;
+    width: 100%;
+    height: 100%;
+    flex-wrap: nowrap;
+    padding: 0;
+    justify-content: flex-start;
+    gap: 5%;
+  }
+  .details__product {
+    position: relative;
+    flex: 0 0 65%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .details__company {
+    margin-top: 2.5rem;
+  }
+
+  .details__order {
+    flex: 0 0 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .details__prices {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  .details__now {
+    margin-top: 0;
+  }
+  .details__product-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10%;
+  }
+  .input {
+    flex: 0 0 45%;
+  }
+  .details__button {
+    flex: 0 0 45%;
+    margin-top: 0;
+  }
+}

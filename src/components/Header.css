@@ -1,0 +1,112 @@
+/* -----------------HEADER -----------------------*/
+.header {
+  font-family: var(--Kumbh);
+  background-color: var(--White);
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  border-bottom: 1px solid var(--gray);
+}
+.header * {
+  z-index: 1000;
+}
+.header__logo {
+  cursor: pointer;
+}
+.header__navigation {
+  flex: 0 0 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.header__menu-container {
+  flex: 0 0 25%;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header__user {
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+.header__user-avatar {
+  width: 80%;
+  border-radius: 50%;
+}
+.search-button_mobile {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.close-search-button_mobile {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+}
+.close-search-button_mobile-image {
+  color: var(--gray);
+  font-size: 2.5rem;
+  margin-left: 1rem;
+}
+.close-search-button_mobile-image:hover {
+  color: var(--Orange);
+}
+.header__cart {
+  position: relative;
+}
+.header__cart:hover {
+  cursor: pointer;
+}
+.header__avatar {
+  width: 100%;
+}
+.header__avatar:hover {
+  cursor: pointer;
+  border: 2px solid var(--Orange);
+  border-radius: 50%;
+}
+
+.header__cart--notification {
+  background-color: var(--Orange);
+  width: 15px;
+  height: 12px;
+  border-radius: 16px;
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  font-size: 0.6rem;
+  text-align: center;
+  color: var(--White);
+}
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  .header {
+    padding: 0 24px;
+    justify-content: space-between;
+  }
+  .header__logo {
+    max-height: 10vh;
+  }
+  .header__menu-container {
+    display: none;
+  }
+  .header__navigation {
+    display: flex !important;
+  }
+  .search-button_mobile-container {
+    display: none;
+  }
+}

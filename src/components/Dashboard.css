@@ -1,0 +1,52 @@
+/* -----------------------USER PANEL----------------------------- */
+.user-panel {
+  display: none;
+  position: fixed;
+  height: auto;
+  box-shadow: 3px 3px 10px;
+  top: 10vh;
+  left: 2vw;
+  right: 2vw;
+  background-color: var(--White);
+  padding: 5%;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-align: center;
+
+  z-index: 1001;
+}
+.user-panel.is-open {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.user-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.user-buttons > button {
+  flex: 0 0 45%;
+  height: 2.5rem;
+  background-color: var(--Orange);
+  color: var(--White);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.5rem;
+  padding: 5px;
+}
+.user-buttons > button:hover {
+  opacity: 0.5;
+}
+
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  .user-panel {
+    left: unset;
+    right: 1px;
+    width: 25%;
+    padding: 2%;
+  }
+}

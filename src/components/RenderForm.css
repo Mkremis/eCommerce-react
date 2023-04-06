@@ -1,0 +1,115 @@
+/* -----------------USER ACCOUNT FORM---------------------- */
+.user-account__form {
+  width: 80%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
+}
+.user-account__form > label:not(fieldset),
+.user-account__form > input:not(input[type="submit"]) {
+  align-self: flex-start;
+  min-width: auto;
+  width: 50%;
+}
+.user-account__form h1 {
+  flex: 1 0 2rem;
+  font-size: 1.2rem;
+  color: rgb(41, 92, 133);
+}
+.user-account__form fieldset {
+  border: 2px solid rgb(41, 92, 133);
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-account__form fieldset label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-account__form input:not(input[type="submit"]) {
+  font-size: 0.7rem;
+  flex: 1 0 auto;
+  max-width: 90%;
+  border: thin solid;
+  padding: 0;
+  margin: 0.1rem;
+}
+
+.user-account__form label,
+.user-account__form legend {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.user-account__form legend {
+  color: var(--Very-vark-blue);
+}
+.user-account__form label {
+  color: var(--Dark-grayish-blue);
+}
+.user-account__form-submit {
+  padding: 15px 40px;
+  background: rgb(41, 92, 133);
+  border: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: helvetica;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  display: block;
+  margin: 1rem auto;
+}
+.progress {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.form-output {
+  color: rgb(11, 177, 11);
+  font-weight: bold;
+}
+.user-account__form-submit::after,
+.user-account__form-submit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.user-account__form-submit::after {
+  width: 30px;
+  height: 1px;
+  background: white;
+  transform: translateX(-3px);
+  margin-top: 0px;
+}
+
+.user-account__form-submit::before {
+  content: "";
+  transform: rotate(-135deg) translateX(50%);
+  width: 11px;
+  height: 11px;
+  background: transparent;
+  border-left: 1px solid white;
+  border-bottom: 1px solid white;
+  margin-top: -1px;
+}
+
+.user-account__form-submit:hover {
+  padding: 15px 60px 15px 20px;
+}
+
+.user-account__form-submit:hover::after,
+.user-account__form-submit:hover::before {
+  opacity: 1;
+  right: 15px;
+}

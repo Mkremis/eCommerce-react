@@ -1,0 +1,101 @@
+/* ------------------------------------------ASIDE---------------------------------- */
+/* MOBILE */
+@media (max-width: 415px) {
+  .modal__sub-nav-bar {
+    margin: auto;
+  }
+  .nav__category-items {
+    height: 65vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: 'asideHeader asideHeader' 'asideLinks asideLinks';
+    grid-auto-flow: row;
+    align-items: center;
+    grid-area: asideLinks;
+    background-color: rgb(33, 33, 33);
+  }
+  .nav__category-items > li {
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+  }
+  .asideHeader {
+    letter-spacing: 1rem;
+    height: 100%;
+    grid-area: asideHeader;
+    background-color: var(--Orange);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .category__link {
+    font-size: 0.7rem;
+    flex: 1 0 100%;
+    border: thin solid var(--Grayish-blue);
+    background-color: rgb(33, 33, 33);
+    color: rgba(250, 235, 215, 0.526);
+    text-align: center;
+    text-decoration: none;
+  }
+  .category__link:active {
+    background-color: var(--Orange);
+  }
+}
+
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  #nav-bar__aside {
+    background-color: #000;
+    position: fixed;
+    top: 90vh;
+    width: 100vw;
+    z-index: 998;
+  }
+  .modal__sub-nav-bar {
+    height: 100%;
+    width: 100%;
+    padding-right: 1%;
+  }
+  .nav__category-items {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 100px repeat(1, 1fr);
+    grid-template-rows: 2rem 2rem;
+    grid-template-areas: 'asideHeader asideLinks' 'asideHeader asideLinks';
+    grid-area: asideLinks;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+  .nav__category-items > li {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+  .category__link {
+    appearance: none;
+    background-color: var(--Black);
+    color: var(--White);
+    font-size: 0.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+  }
+  .category__link:hover {
+    background-color: var(--Orange);
+  }
+  .asideHeader {
+    height: 100%;
+    grid-area: asideHeader;
+    background-color: var(--Orange);
+    font-weight: bold;
+    letter-spacing: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
