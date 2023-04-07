@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './ProductGallery.css';
 
-const ProductGalleryModal = ({ product }) => {
+const ProductGalleryModal = ({ product, current }) => {
   const [indexImgModal, setIndexImgModal] = useState(0);
   let galleryModal = product.media.images[indexImgModal].url;
   let { images } = product.media;
@@ -13,7 +13,8 @@ const ProductGalleryModal = ({ product }) => {
     <article className="gallery">
       <div className="gallery__image-container">
         <img
-          src={`https://${galleryModal}`}
+          src={current}
+          //src={`https://${galleryModal}`}
           className="gallery__image"
           ref={modalPoster}
         />
