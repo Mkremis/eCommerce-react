@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './ProductGallery.css';
 
 const ProductGalleryModal = ({ product, current }) => {
-  const [indexImgModal, setIndexImgModal] = useState(0);
-  let galleryModal = product.media.images[indexImgModal].url;
+  
+  console.log(current);
+  let galleryModal = product.media.images[0].url;
   let { images } = product.media;
   const modalPoster = useRef(null);
   const handleClickModal = (e) => {
@@ -11,6 +12,7 @@ const ProductGalleryModal = ({ product, current }) => {
   };
   return (
     <article className="gallery">
+    {console.log(current)}
       <div className="gallery__image-container">
         <img
           src={current}
