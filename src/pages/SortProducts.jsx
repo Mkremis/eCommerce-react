@@ -48,6 +48,7 @@ const SortProduct = () => {
         dataLength={items.length} //This is important field to render the next data
         next={() => setPage(page + 1)}
         hasMore={hasMore}
+        style={{display:'flex', flexDirection:'row', flexWrap:'wrap', alignItems:'baseline' }}
         endMessage={
           <p style={{ textAlign: 'center' }}>
             <b>You have seen it all</b>
