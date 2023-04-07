@@ -244,6 +244,9 @@ img {
 /* Checkout */
 .checkout {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .payment {
   flex: 0 0 50%;
