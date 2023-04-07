@@ -35,7 +35,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 .header__user {
   flex: 0 0 auto;
