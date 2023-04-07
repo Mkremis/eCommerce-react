@@ -20,7 +20,7 @@ const SearchBar = () => {
     <>
       <div className="search-button_mobile-container">
        <button className="search-button_mobile" onClick={showSearchMobile}>
-        <span class="material-symbols-outlined">search</span>
+        <span className="material-symbols-outlined">search</span>
         </button>
         <button
           className="close-search-button_mobile --invisible"
