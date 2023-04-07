@@ -20,17 +20,20 @@
   transform: translate(0, -50%);
   background-color: var(--White);
   border-radius: 50%;
+  border: none;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
   padding: 5px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .gallery__previous {
-  left: 5%;
+  left: 2rem;
 }
 .gallery__next {
-  right: 5%;
+  right: 2rem;
 }
 .gallery__thumnails {
   display: none;
