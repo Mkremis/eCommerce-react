@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import './ProductGallery.css';
 
 const ProductGalleryModal = ({ product, currentPoster }) => {
- if(currentPoster) console.log('current', currentPoster.current.currentSrc);
+ if(currentPoster) console.log('current', currentPoster.current);
   let galleryModal = product.media.images[0].url;
   let { images } = product.media;
   const modalPoster = useRef(null);
