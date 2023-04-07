@@ -23,5 +23,13 @@ input.form-control {
   border: 1px solid gray;
 }
 .submit-button{
-  background-color: var(--Orange);
+    background-color: var(--Orange);
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: auto;
+    width: 50%;
 }
