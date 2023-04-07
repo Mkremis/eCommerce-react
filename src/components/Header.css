@@ -2,6 +2,7 @@
 .header {
   font-family: var(--Kumbh);
   background-color: var(--White);
+  padding: 0 5px;
   position: sticky;
   width: 100%;
   top: 0;
