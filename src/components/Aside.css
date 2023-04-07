@@ -49,7 +49,7 @@
   #nav-bar__aside {
     background-color: #000;
     position: fixed;
-    top: 90vh;
+    bottom: 0;
     width: 100vw;
     z-index: 998;
   }
