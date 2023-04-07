@@ -43,7 +43,8 @@ const SortProduct = () => {
   return (
     <>
       <Filters facets={res.facets} refreshPage={refreshPage} />
-      <InfiniteScroll
+        <section className="content">
+           <InfiniteScroll
         dataLength={items.length} //This is important field to render the next data
         next={() => setPage(page + 1)}
         hasMore={hasMore}
@@ -53,7 +54,6 @@ const SortProduct = () => {
           </p>
         }
       >
-        <section className="content">
           {items.length > 0 &&
             items.map((product) => (
               <Link
@@ -70,8 +70,8 @@ const SortProduct = () => {
                 />
               </Link>
             ))}
-        </section>
       </InfiniteScroll>
+       </section>
     </>
   );
 };
