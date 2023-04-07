@@ -3,7 +3,7 @@ import './ProductGallery.css';
 
 const ProductGalleryModal = ({ product, current }) => {
   
-  console.log(current);
+  console.log('current',current);
   let galleryModal = product.media.images[0].url;
   let { images } = product.media;
   const modalPoster = useRef(null);
@@ -12,7 +12,6 @@ const ProductGalleryModal = ({ product, current }) => {
   };
   return (
     <article className="gallery">
-    {console.log(current)}
       <div className="gallery__image-container">
         <img
           src={current}
