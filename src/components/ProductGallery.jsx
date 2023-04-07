@@ -30,16 +30,16 @@ const ProductGallery = ({ product }) => {
             ref={poster}
             onClick={openModalGallery}
           />
-          <div className="gallery__previous">
-            <span className="material-symbols-outlined" onClick={handlePrev}>
+          <button className="gallery__previous" onClick={handlePrev}>
+            <span className="material-symbols-outlined">
               arrow_back_ios
             </span>
-          </div>
-          <div className="gallery__next">
-            <span className="material-symbols-outlined " onClick={handleNext}>
+          </button>
+          <button className="gallery__next" onClick={handleNext}>
+            <span className="material-symbols-outlined">
               arrow_forward_ios
             </span>
-          </div>
+          </button>
         </div>
         <div className="gallery__thumnails">
           {images.map((image, index) => (
