@@ -54,7 +54,7 @@ const ProductGallery = ({ product }) => {
         </div>
       </article>
       <Modal isOpen={isOpenModalGallery} closeModal={closeModalGallery}>
-        <ProductGalleryModal product={product} />
+        <ProductGalleryModal product={product} current={poster} />
       </Modal>
     </>
   );
