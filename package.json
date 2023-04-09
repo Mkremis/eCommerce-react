@@ -2,7 +2,7 @@
   "name": "vite-react-starter",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Mkremis.github.io/ecommerce-react-vite",
+  "homepage": "https://Mkremis.github.io/ecommerce-react",
   "type": "module",
   "scripts": {
     "dev": "vite",
