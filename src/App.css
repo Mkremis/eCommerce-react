@@ -90,13 +90,13 @@ img {
   flex-wrap: wrap;
   align-items: baseline;
 }
-/* MEDIA QUERY MOBILE */
+/* MEDIA QUERY MOBILE
 @media (max-width: 415px) {
   .content {
     margin-top: 7vh;
   }
 }
-
+ */
 /* end of MAIN/CONTENT */
 /* -------------------------------------WM/M HOME------------------------------------ */
 .WM-home,
