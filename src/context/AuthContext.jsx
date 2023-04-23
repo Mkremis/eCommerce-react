@@ -1,12 +1,12 @@
-import React, { createContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import fakeUser from '../test/fakeUser';
+import React, { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import fakeUser from "../test/fakeUser";
 
 const AuthContext = createContext();
 const initialAuth = null;
 const initialUser = null;
 const initialProductQ = 0;
-const initialCart = '';
+const initialCart = "";
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -28,22 +28,36 @@ const AuthProvider = ({ children }) => {
 
   const handleAuth = (e) => {
     const { username, psw } = e.target;
+
     if (auth) {
       setAuth(null);
     } else {
-      if (
-        username.value === fakeUser.login.username &&
-        psw.value === fakeUser.login.password
-      ) {
-        setUser(fakeUser);
-        setAuth(true);
-      } else {
-        alert('wrong user email or password');
-      }
+      fetch("https://ecommerce-users-api-production.up.railway.app/api/users")
+        .then((res) => (res.ok ? res.json() : Promise.reject()))
+        .then((users) => {
+          const matchUsername = users.find(
+            (user) => user.username === username.value
+          );
+
+          const matchPassword =
+            matchUsername.userData.login.password === psw.value ? true : false;
+
+          if (matchUsername && matchPassword) {
+            setUser(matchUsername.userData);
+            setAuth(true);
+          }
+          if (!matchUsername && matchPassword) {
+            alert(`Not user found with the username ${username.value}.`);
+          }
+          if (matchUsername && !matchPassword) {
+            alert(`Wrong password, please try again.`);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
   const handleLogout = () => {
-    navigate('/');
+    navigate("/");
     setAuth(initialAuth);
     setUser(initialUser);
   };
