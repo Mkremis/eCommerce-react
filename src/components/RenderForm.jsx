@@ -33,7 +33,7 @@ const RenderForm = ({ data }) => {
         value="Save the changes"
         onClick={(e) => {
           e.preventDefault();
-          console.log(new FormData(e.target));
+          console.log(e.target);
         }}
       />
       <output ref={output} className="form-output --invisible">
