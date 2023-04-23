@@ -13,13 +13,13 @@
   --Black-modal: hsl(0, 0%, 0%, 0.5);
   --Black-modal2: hsl(0, 0%, 0%, 0.8);
   /* FONT FAMILY */
-  --Futura: 'Futura PT', sans-serif;
-  --Kumbh: 'Kumbh Sans', sans-serif;
+  --Futura: "Futura PT", sans-serif;
+  --Kumbh: "Kumbh Sans", sans-serif;
 }
 @font-face {
-  font-family: 'Futura PT';
-  src: url('./FuturaPT-Light.woff2') format('woff2'),
-    url('./FuturaPT-Light.woff') format('woff');
+  font-family: "Futura PT";
+  src: url("./assets/FuturaPT-Light.woff2") format("woff2"),
+    url("./assets/FuturaPT-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -245,7 +245,7 @@ img {
 .checkout {
   margin-top: 1rem;
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 .payment {
   flex: 1 0 50%;
