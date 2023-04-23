@@ -8,7 +8,8 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   return (
     <article
       className={`user-panel ${isOpen && "is-open"}`}
-      onClick={closeDash}>
+      onClick={closeDash}
+    >
       <div className="user-info">
         <h3 className="user-fullname">
           {user.fullName.title} {user.fullName.first} {user.fullName.last}
@@ -19,7 +20,8 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
       <div className="user-buttons">
         <button
           className="user-mangment"
-          onClick={() => navigate(`/dashboard/${user.login.username}`)}>
+          onClick={() => navigate(`/dashboard/${user.login.username}`)}
+        >
           Manage your account
         </button>
         <button className="user-logout" onClick={logout}>

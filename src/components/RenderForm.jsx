@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import './RenderForm.css';
+import React, { useRef } from "react";
+import "./RenderForm.css";
 
 const RenderForm = ({ data }) => {
   const output = useRef(null);
   const renderFormElements = (obj) => {
     return Object.entries(obj).map(([key, value]) => {
-      if (typeof value === 'object') {
+      if (typeof value === "object") {
         return (
-          <fieldset key={key} style={{ padding: '1rem', margin: '1rem' }}>
+          <fieldset key={key} style={{ padding: "1rem", margin: "1rem" }}>
             <legend>{key}</legend>
             {renderFormElements(value)}
           </fieldset>
@@ -33,7 +33,7 @@ const RenderForm = ({ data }) => {
         value="Save the changes"
         onClick={(e) => {
           e.preventDefault();
-          console.log(output.current.classList.toggle('--invisible'));
+          console.log(output.current.classList.toggle("--invisible"));
         }}
       />
       <output ref={output} className="form-output --invisible">

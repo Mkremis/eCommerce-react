@@ -1,17 +1,15 @@
 import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fakeUser from "../test/fakeUser";
 
 const AuthContext = createContext();
 const initialAuth = null;
-const initialUser = null;
 const initialProductQ = 0;
 const initialCart = "";
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(initialAuth);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);

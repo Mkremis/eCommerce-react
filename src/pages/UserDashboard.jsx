@@ -11,8 +11,9 @@ const UserDashboard = () => {
         style={{
           textAlign: "center",
           marginTop: "1rem",
-          color: "var( --Orange)"
-        }}>
+          color: "var( --Orange)",
+        }}
+      >
         {user ? "User Dashboard" : "loggin out.."}
       </h2>
       {user && <RenderForm data={user} />}
