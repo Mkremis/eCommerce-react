@@ -48,18 +48,15 @@ const handleSubmit=(e)=>{
       
     });
     console.log(newUserData);
-  
+  const username = newUserData.login.username;
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: { userData: newUserData }
 };
-fetch(`https://ecommerce-users-api-production.up.railway.app/api/users/${newUserData.login.username}`, requestOptions)
+fetch(`https://ecommerce-users-api-production.up.railway.app/api/users/${username}`, requestOptions)
     .then(response => response.json())
     .then(data => console.log(data));
-//    helpHttp().put(`https://ecommerce-users-api-production.up.railway.app/api/users/${newUserData.login.username}`, {
-//     body:{userData : newUserData},
-//   });
 }
   return (
     <form className="user-account__form" onSubmit={handleSubmit}>
