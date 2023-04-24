@@ -1,4 +1,4 @@
-import React, { useState,  useContext } from 'react';
+import React, { useEffect ,useState,  useContext } from 'react';
 import { useModal } from '../hooks/useModal';
 import Modal from './Modal';
 import LoginForm from './LoginForm';
@@ -17,26 +17,29 @@ const UserAccess = () => {
     if (!auth) {
       if (isOpenModalLogin) {
         closeModalModalLogin(true);
-        setAvatar(null)
       } else {
         openModalLogin(true);
       }
     } else {
-      console.log(user.userData.picture.thumbnail)
-     setAvatar(user.userData.picture.thumbnail);
       if (isOpenDash) {
         closeDash(true);
       } else {
         openDash(true);
       }
     }
+    
+     useEffect(() => {
+    if (user) {
+     console.log(user)
+    }
+  }, [user]);
 
   };
 
   return (
     <>
       <div className="header__user">
-        {user ? (
+        {avatar ? (
           <img
             src={avatar}
             className="header__user-avatar"
