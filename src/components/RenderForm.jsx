@@ -53,7 +53,7 @@ const handleSubmit=(e)=>{
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userData: newUserData })
+    body: JSON.stringify(newUserData)
 };
 fetch(`https://ecommerce-users-api-production.up.railway.app/api/users/${username}`, requestOptions)
     .then(response => response.json())
