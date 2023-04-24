@@ -32,7 +32,7 @@ const UserAccess = () => {
       <div className="header__user">
         {auth ? (
           <img
-            src="https://randomuser.me/api/portraits/thumb/women/53.jpg"
+            src={user.userData.picture.thumbnail}
             className="header__user-avatar"
             alt="user avatar"
             onClick={handleLogin}
