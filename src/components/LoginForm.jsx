@@ -1,7 +1,9 @@
 import React from 'react';
 import './LoginForm.css';
+import { useNavigate } from "react-router-dom"; 
 
 const LoginForm = ({ handleAuth }) => {
+  const navigate = useNavigate();
   return (
     <div className="login-container" id="container">
       <div className="form-container sign-up-container">
@@ -76,11 +78,7 @@ const LoginForm = ({ handleAuth }) => {
             <button
               className="ghost"
               id="signUp"
-              onClick={() =>
-                document
-                  .getElementById('container')
-                  .classList.add('right-panel-active')
-              }
+              onClick={() => navigate(`/dashboard/newuser`)}
             >
               Sign Up
             </button>

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Dashboard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   const navigate = useNavigate();

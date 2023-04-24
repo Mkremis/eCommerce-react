@@ -1,15 +1,17 @@
 import React, { useRef } from 'react';
 import useRenderForm from '../hooks/useRenderForm.jsx';
-import './RenderForm.css';
+import './RenderForm.css'; 
+import signFormTemplate from '../helpers/signFormTemplate.js';
 
-const RenderForm = ({ data }) => {
-  console.log(data);
+
+const RenderForm = ({ user }) => {
+ let data = user==="newuser" ?signFormTemplate :user;
 
   const output = useRef(null);
   const { renderFormElements, handleSubmit } = useRenderForm();
 
   return (
-    <form className="user-account__form" onSubmit={handleSubmit}>
+    <form className="user-account__form" onSubmit={(e)=>handleSubmit(e,user, output)}>
       {renderFormElements(data)}
       <input
         type="submit"

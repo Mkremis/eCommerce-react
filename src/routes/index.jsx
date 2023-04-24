@@ -36,7 +36,11 @@ const router = createHashRouter([
           },
           {
             path: '/dashboard/:username',
-            element: <UserDashboard />,
+            element: <UserDashboard newUser={null}/>,
+          },
+          {
+            path: '/dashboard/newuser',
+            element: <UserDashboard newUser={"newuser"}/>,
           },
           {
             path: '/about',

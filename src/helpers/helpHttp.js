@@ -22,16 +22,18 @@ export const helpHttp = () => {
               statusText: res.statusText || 'Ocurrio un error',
             })
       )
-      .then((data) => console.log(data))
+
       .catch((err) => err);
   };
   const get = (url, options = {}) => customFetch(url, options);
   const post = (url, options) => {
     options.method = 'POST';
+    console.log('create')
     return customFetch(url, options);
   };
   const put = (url, options) => {
     options.method = 'PUT';
+    console.log('update')
     return customFetch(url, options);
   };
   const del = (url, options) => {

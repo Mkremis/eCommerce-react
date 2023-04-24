@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import RenderForm from "../components/RenderForm";
 import AuthContext from "../context/AuthContext";
-
-const UserDashboard = () => {
-  const { user } = useContext(AuthContext);
+ 
+const UserDashboard = ({newUser}) => {
+  let { user } = useContext(AuthContext);
+newUser && !user ?user=newUser :user;
 
   return (
     <article>
@@ -16,7 +17,7 @@ const UserDashboard = () => {
       >
         {user ? "User Dashboard" : "loggin out.."}
       </h2>
-      {user && <RenderForm data={user} />}
+      {user && <RenderForm user={user} />}
     </article>
   );
 };

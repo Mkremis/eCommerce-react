@@ -2,7 +2,7 @@ import React from 'react';
 import { helpHttp } from '../helpers/helpHttp';
 
 const useRenderForm = () => {
-  const renderFormElements = (obj) => {
+  const renderFormElements = (obj, output) => {
     return Object.entries(obj).map(([key, value]) => {
       if (typeof value === 'object') {
         return (
@@ -32,7 +32,7 @@ const useRenderForm = () => {
       );
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, user, output) => {
     e.preventDefault();
     let $fieldsets = e.target.querySelectorAll('fieldset'),
       newUserData = {};
@@ -54,14 +54,19 @@ const useRenderForm = () => {
           newObj = { [key]: value };
         Object.assign(newUserData, newObj);
       }
+      
+     let action = user === "newuser" ?"post" :"put";
+    fetchData(newUserData, action, output)
     });
+  function fetchData (newUserData,action, output){
+   
     const username = newUserData.login.username;
     const requestOptions = {
       headers: { 'Content-Type': 'application/json' },
       body: newUserData,
     };
     helpHttp()
-      .put(
+      [action](
         `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`,
         requestOptions
       )
@@ -71,6 +76,7 @@ const useRenderForm = () => {
           output.current.classList.add('--invisible');
         }, 3500);
       });
+  }
   };
   return { renderFormElements, handleSubmit };
 };
