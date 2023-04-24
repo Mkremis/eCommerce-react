@@ -27,7 +27,7 @@ const UserAccess = () => {
         openDash(true);
       }
     }
-    
+  }
      useEffect(() => {
     if (user) {
      console.log(user)
