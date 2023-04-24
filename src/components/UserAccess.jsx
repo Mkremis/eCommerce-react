@@ -45,6 +45,7 @@ const UserAccess = () => {
             src={avatar}
             className="header__user-avatar"
             alt="user avatar"
+            style={{width:39, height:39}}
             onClick={handleLogin}
           />
         ) : (
