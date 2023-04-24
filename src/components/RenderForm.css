@@ -1,57 +1,15 @@
 /* -----------------USER ACCOUNT FORM---------------------- */
-.user-account__form {
-  width: 80%;
-  margin: 2rem auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.7rem;
-}
-.user-account__form > label:not(fieldset),
-.user-account__form > input:not(input[type="submit"]) {
-  align-self: flex-start;
-  min-width: auto;
-  width: 50%;
-}
-.user-account__form h1 {
-  flex: 1 0 2rem;
-  font-size: 1.2rem;
-  color: rgb(41, 92, 133);
-}
+
 .user-account__form fieldset {
   border: 2px solid rgb(41, 92, 133);
-  margin-top: 0.5rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-.user-account__form fieldset label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.user-account__form input:not(input[type="submit"]) {
-  font-size: 0.7rem;
-  flex: 1 0 auto;
-  max-width: 90%;
-  border: thin solid;
-  padding: 0;
-  margin: 0.1rem;
-}
-
-.user-account__form label,
 .user-account__form legend {
   text-transform: capitalize;
   font-weight: bold;
-}
-.user-account__form legend {
   color: var(--Very-vark-blue);
 }
-.user-account__form label {
-  color: var(--Dark-grayish-blue);
-}
+
 .user-account__form-submit {
   cursor: pointer;
   padding: 15px 40px;
@@ -77,7 +35,7 @@
 }
 .user-account__form-submit::after,
 .user-account__form-submit::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   right: 0px;
@@ -95,7 +53,7 @@
 }
 
 .user-account__form-submit::before {
-  content: "";
+  content: '';
   transform: rotate(-135deg) translateX(50%);
   width: 11px;
   height: 11px;
