@@ -57,7 +57,14 @@ const handleSubmit=(e)=>{
 };
 fetch(`https://ecommerce-users-api-production.up.railway.app/api/users/${username}`, requestOptions)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data =>{
+   console.log(data);
+   output.current.classList.remove('--invisible');
+   setTimeout(()=>{
+     output.current.classList.add('--invisible');
+   },3500);
+})
+    .catch(error=>console.log(error))
 }
   return (
     <form className="user-account__form" onSubmit={handleSubmit}>
