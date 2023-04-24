@@ -47,7 +47,7 @@ const handleSubmit=(e)=>{
       }
       
     });
-    console.log(newUserData)
+    console.log(newUserData);
    helpHttp().put(`https://ecommerce-users-api-production.up.railway.app/api/users/:${newUserData.login.username}`, {
     body:newUserData,
   });
