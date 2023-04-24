@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useModal } from '../hooks/useModal';
 import Modal from './Modal';
 import LoginForm from './LoginForm';
@@ -10,6 +10,8 @@ const UserAccess = () => {
   const [isOpenModalLogin, openModalLogin, closeModalModalLogin] =
     useModal(false);
   const [isOpenDash, openDash, closeDash] = useModal();
+  const [avatar, setAvatar] = useState(null);
+  
   if (auth && isOpenModalLogin) closeModalModalLogin(true);
   const handleLogin = () => {
     if (!auth) {
@@ -25,16 +27,21 @@ const UserAccess = () => {
         openDash(true);
       }
     }
-     console.log(user)
-//     console.log(user.userData.picture.thumbnail)
+     useEffect(() => {
+   if(user){
+     setAvatar(user.userData.picture.thumbnail);
+   }else{setAvatar(null);
+      }
+  }, [user]);
+    
   };
 
   return (
     <>
       <div className="header__user">
-        {auth ? (
+        {user ? (
           <img
-            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2FElvis%2F&psig=AOvVaw1L8ZARZXyxroVKftCmUHAZ&ust=1682387411183000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjAsNKzwf4CFQAAAAAdAAAAABAE"
+            src={avatar}
             className="header__user-avatar"
             alt="user avatar"
             onClick={handleLogin}
