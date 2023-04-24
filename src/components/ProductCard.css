@@ -25,8 +25,8 @@
   }
 }
 .product-description {
-  font-size: 3.5vmin;
-  height: 10vmin;
+  font-size: 1rem;
+  height: 4ch;
   max-width: 315px;
 }
 .product-name {
