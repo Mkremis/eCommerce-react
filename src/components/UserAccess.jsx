@@ -1,4 +1,4 @@
-import React, { useEffect ,useState,  useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useModal } from '../hooks/useModal';
 import Modal from './Modal';
 import LoginForm from './LoginForm';
@@ -11,7 +11,13 @@ const UserAccess = () => {
     useModal(false);
   const [isOpenDash, openDash, closeDash] = useModal();
   const [avatar, setAvatar] = useState(null);
-  
+
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+    }
+  }, [user]);
+
   if (auth && isOpenModalLogin) closeModalModalLogin(true);
   const handleLogin = () => {
     if (!auth) {
@@ -27,13 +33,6 @@ const UserAccess = () => {
         openDash(true);
       }
     }
-  }
-     useEffect(() => {
-    if (user) {
-     console.log(user)
-    }
-  }, [user]);
-
   };
 
   return (
