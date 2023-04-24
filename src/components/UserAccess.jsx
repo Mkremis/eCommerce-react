@@ -59,7 +59,7 @@ const UserAccess = () => {
         closeModal={closeModalModalLogin}
         addClass="animate"
       >
-        <LoginForm handleAuth={handleAuth} auth={auth} />
+        <LoginForm handleAuth={handleAuth}  closeModalLogin={closeModalModalLogin}/>
       </Modal>
       {user && (
         <Dashboard

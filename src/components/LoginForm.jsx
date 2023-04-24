@@ -2,10 +2,10 @@ import React from 'react';
 import './LoginForm.css';
 import { useNavigate } from "react-router-dom"; 
 
-const LoginForm = ({ handleAuth }) => {
+const LoginForm = ({ handleAuth, closeModalLogin }) => {
   const navigate = useNavigate();
   return (
-    <div className="login-container" id="container">
+    <div className="login-container" id="container"> 
       <div className="form-container sign-up-container">
         <form>
           <h1>Create Account</h1>
@@ -78,7 +78,9 @@ const LoginForm = ({ handleAuth }) => {
             <button
               className="ghost"
               id="signUp"
-              onClick={() => navigate(`/dashboard/newuser`)}
+              onClick={() => {
+                closeModalLogin();
+                navigate(`/dashboard/newuser`)}}
             >
               Sign Up
             </button>
