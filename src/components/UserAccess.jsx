@@ -25,6 +25,8 @@ const UserAccess = () => {
         openDash(true);
       }
     }
+     console.log(user)
+//     console.log(user.userData.picture.thumbnail)
   };
 
   return (
@@ -32,7 +34,7 @@ const UserAccess = () => {
       <div className="header__user">
         {auth ? (
           <img
-            src={user.userData.picture.thumbnail}
+            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2FElvis%2F&psig=AOvVaw1L8ZARZXyxroVKftCmUHAZ&ust=1682387411183000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjAsNKzwf4CFQAAAAAdAAAAABAE"
             className="header__user-avatar"
             alt="user avatar"
             onClick={handleLogin}
