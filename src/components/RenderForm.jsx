@@ -1,83 +1,13 @@
 import React, { useRef } from 'react';
+import useRenderForm from '../hooks/useRenderForm.jsx';
 import './RenderForm.css';
-import { helpHttp } from '../helpers/helpHttp';
 
 const RenderForm = ({ data }) => {
+  console.log(data);
+
   const output = useRef(null);
-  const renderFormElements = (obj) => {
-    return Object.entries(obj).map(([key, value]) => {
-      if (typeof value === 'object') {
-        return (
-          <fieldset key={key} style={{ padding: '1rem', margin: '1rem' }}>
-            <legend id={key}>{key}</legend>
-            {renderFormElements(value)}
-          </fieldset>
-        );
-      }
+  const { renderFormElements, handleSubmit } = useRenderForm();
 
-      return (
-        <div key={key} className="row">
-          <div className="col">
-            <label htmlFor={key} className="form-label">
-              {key}
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name={key}
-              defaultValue={value}
-              placeholder={key}
-              aria-label={key}
-            />
-          </div>
-        </div>
-      );
-    });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let $fieldsets = e.target.querySelectorAll('fieldset'),
-      newUserData = {};
-    $fieldsets.forEach((fieldset) => {
-      let $legend = fieldset.querySelector('legend');
-      let $inputs = fieldset.querySelectorAll('input');
-      let newObj = Array.from($inputs).reduce(
-          (acum, prev) => ({ ...acum, [prev.name]: prev.value }),
-          {}
-        ),
-        objCons = { [$legend.id]: { ...newObj } };
-      Object.assign(newUserData, objCons);
-    });
-    let $fInputs = document.querySelectorAll('.user-account__form>input');
-    $fInputs.forEach(($input) => {
-      if ($input.type !== 'submit') {
-        let key = $input.name,
-          value = $input.value,
-          newObj = { [key]: value };
-        Object.assign(newUserData, newObj);
-      }
-    });
-    const username = newUserData.login.username;
-
-    const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUserData),
-    };
-    fetch(
-      `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        output.current.classList.remove('--invisible');
-        setTimeout(() => {
-          output.current.classList.add('--invisible');
-        }, 3500);
-      })
-      .catch((error) => console.log(error));
-  };
   return (
     <form className="user-account__form" onSubmit={handleSubmit}>
       {renderFormElements(data)}
