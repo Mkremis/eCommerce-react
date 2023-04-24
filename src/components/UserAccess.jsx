@@ -20,10 +20,10 @@ const UserAccess = () => {
         setAvatar(null)
       } else {
         openModalLogin(true);
-      console.log(user.userData.picture.thumbnail)
-     setAvatar(user.userData.picture.thumbnail);
       }
     } else {
+      console.log(user.userData.picture.thumbnail)
+     setAvatar(user.userData.picture.thumbnail);
       if (isOpenDash) {
         closeDash(true);
       } else {
