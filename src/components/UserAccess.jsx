@@ -14,7 +14,9 @@ const UserAccess = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
+      setAvatar(user.picture.thumbnail);
+    }else{
+      setAvatar(null);
     }
   }, [user]);
 
