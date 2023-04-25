@@ -6,20 +6,6 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
   const navigate = useNavigate();
   return (
     <section className="login-container" id="container"> 
-      <article className="form-container sign-up-container">
-        <form>
-          <h1>Create Account</h1>
-            <button
-              className="ghost"
-              id="signUp"
-              onClick={() => {
-                closeModalLogin();
-                navigate(`/dashboard/newuser`)}}
-            >
-              Sign Up
-            </button>
-        </form>
-      </article>
       <article className="form-container sign-in-container">
         <form
           onSubmit={(e) => {
@@ -33,10 +19,18 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
           <a href="#">Forgot your password?</a>
           <input type="submit" value="Sign In" />
         </form>
+          </article>
+          <article className="form-container sign-up-container">
+          <h1>Or create an account</h1>
+            <button
+              id="signUp"
+              onClick={() => {
+                closeModalLogin();
+                navigate(`/dashboard/newuser`)}}
+            >
+              Sign Up
+            </button>
       </article>
-      
- 
-          
     </section>
   );
 };
