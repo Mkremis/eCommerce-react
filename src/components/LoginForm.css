@@ -90,6 +90,7 @@
   width: 768px;
   max-width: 100%;
   min-height: 480px;
+  display: flex;
 }
 
 .login-container .form-container {
@@ -100,9 +101,8 @@
 }
 
 .login-container .sign-in-container {
-  left: 0;
-  width: 50%;
   z-index: 2;
+  flex: 0 0 50%;
 }
 
 .login-container.right-panel-active .sign-in-container {
@@ -110,10 +110,9 @@
 }
 
 .login-container.sign-up-container {
-  left: 0;
-  width: 50%;
   opacity: 0;
   z-index: 1;
+  flex: 0 0 50%;
 }
 
 .login-container.right-panel-active .sign-up-container {
