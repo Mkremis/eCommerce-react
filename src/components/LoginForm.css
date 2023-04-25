@@ -13,18 +13,6 @@
   text-align: center;
 }
 
-.login-container p {
-  font-size: 14px;
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
-}
-
-.login-container span {
-  font-size: 12px;
-}
-
 .login-container a {
   color: #333;
   font-size: 14px;
@@ -51,11 +39,6 @@
 
 .login-container button:focus {
   outline: none;
-}
-
-.login-container button.ghost {
-  background-color: transparent;
-  border-color: #ffffff;
 }
 
 .login-container form {
@@ -106,25 +89,13 @@
   flex: 0 0 50%;
 }
 
-
 .login-container.sign-up-container {
   opacity: 0;
   z-index: 1;
   flex: 0 0 50%;
-}
-
-
-.social-container {
-  margin: 20px 0;
-}
-
-.social-container a {
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
+  justify-content: center;
 }
+
