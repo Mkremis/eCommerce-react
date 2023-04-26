@@ -54,6 +54,7 @@
 }
 
 .filter-categories {
+  width:100%;
   overflow-y: auto;
   grid-area: content;
   display: grid;
