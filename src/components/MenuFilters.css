@@ -54,6 +54,7 @@
 }
 
 .filter-categories {
+background-color: pink;
   width:100%;
   overflow-y: auto;
   grid-area: content;
