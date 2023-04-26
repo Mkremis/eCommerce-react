@@ -60,7 +60,7 @@
   display: grid;
 }
 .filter-categories > li {
-  
+  padding: 0 0.5rem;
   position: relative;
   list-style: none;
   background-color: rgb(250, 250, 250);
@@ -141,7 +141,7 @@ input[type='checkbox'] {
 
   .filter-categories {
     grid-template-rows: repeat(1, minmax(55px, 1fr));
-    grid-auto-rows: minmax(50px, 1fr);
+    grid-auto-rows: minmax(55px, 1fr);
     grid-template-columns: 100%;
   }
   .filter-categories > li {
@@ -159,12 +159,12 @@ input[type='checkbox'] {
     width: 100%;
     font-size: 0.8rem;
     z-index: 999;
-    grid-template-rows: 2.5rem 1fr;
+    grid-template-rows: 55px 1fr;
   }
 
   .filter-categories {
     width: 100vw;
-    margin: auto auto;
+    
     grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(55px, min-content));
     grid-auto-rows: minmax(55px, min-content);
