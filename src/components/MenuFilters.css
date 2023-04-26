@@ -1,3 +1,4 @@
+
 .filter__mobile {
   background-color: #eee;
   display: grid;
@@ -58,6 +59,7 @@
   overflow-y: auto;
   grid-area: content;
   display: grid;
+  padding-left: unset;
 }
 .filter-categories > li {
   padding: 0 0.5rem;
@@ -168,6 +170,7 @@ input[type='checkbox'] {
     grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(55px, min-content));
     grid-auto-rows: minmax(55px, min-content);
+    padding-left: unset;
   }
   .filter-categories > li {
     border: 1px solid #eee;
