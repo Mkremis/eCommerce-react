@@ -60,12 +60,10 @@
   display: grid;
 }
 .filter-categories > li {
- width:100%;
-  padding: 0 0.5rem;
+  
   position: relative;
   list-style: none;
   background-color: rgb(250, 250, 250);
-  background-color: pink;
   display: flex;
   flex-direction: column;
 }
