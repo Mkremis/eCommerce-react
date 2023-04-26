@@ -164,8 +164,8 @@ input[type='checkbox'] {
 
   .filter-categories {
     width: 100vw;
-    
-    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    margin: auto auto;
+    grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(55px, min-content));
     grid-auto-rows: minmax(55px, min-content);
   }
