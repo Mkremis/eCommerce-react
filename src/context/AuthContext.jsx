@@ -34,19 +34,18 @@ const AuthProvider = ({ children }) => {
       setAuth(null);
     } else {
     const users =  await helpHttp().get("https://ecommerce-users-api-production.up.railway.app/api/users")
-    console.log(users)
+   
     const matchUsername = users.find(
-      (user) => user.username === username.value
+      (user) => user.username && user.username === username.value
     );
-    const matchPassword = 
-            matchUsername.userData.login.password === psw.value ? true : false;
-
+    let matchPassword;
+    if(matchUsername) matchPassword = matchUsername.userData.login.password === psw.value ? true : false;
           if (matchUsername && matchPassword) {
             setUser(matchUsername.userData);
             matchUsername.cart && setCart(matchUsername.cart);
             setAuth(true);
           }
-          if (!matchUsername && matchPassword) {
+          if (!matchUsername) {
             alert(`Not user found with the username ${username.value}.`);
           }
           if (matchUsername && !matchPassword) {
