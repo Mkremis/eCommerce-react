@@ -55,10 +55,10 @@ const useRenderForm = () => {
         Object.assign(newUserData, newObj);
       }
       
-     let action = user === "newuser" ?"post" :"put";
-    fetchData(newUserData, action, output)
+     let method = user === "newuser" ?"post" :"put";
+    fetchData(newUserData, method, output)
     });
-  function fetchData (newUserData,action, output){
+  function fetchData (newUserData,method, output){
    
     const username = newUserData.login.username;
     const requestOptions = {
@@ -66,7 +66,7 @@ const useRenderForm = () => {
       body: newUserData,
     };
     helpHttp()
-      [action](
+      [method](
         `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`,
         requestOptions
       )

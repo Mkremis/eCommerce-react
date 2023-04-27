@@ -1,24 +1,26 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-
 import './ProductDetails.css';
+
 const ProductDetails = ({ product }) => {
   const { pathname } = useLocation();
   const gender = pathname.split('/')[1];
-  const { handlePlusQ, handleMinusQ, productQ, setProductQ, cart, setCart } =
+  const { handlePlusQ, handleMinusQ, productQ, setProductQ, cart, setCart} =
     useContext(AuthContext);
   const handleCart = () => {
-    setCart({
-      ...cart,
-      [product.id]: {
-        gender,
-        prodName: product.name,
-        prodImage: product.media.images[0].url,
-        prodPrice: product.price.current.value,
-        productQ,
-      },
-    });
+    const updatedCart = {
+        ...cart,
+        [product.id]: {
+          gender,
+          prodName: product.name,
+          prodImage: product.media.images[0].url,
+          prodPrice: product.price.current.value,
+          productQ,
+        },
+      };
+    setCart(updatedCart)
+   
   };
 
   useEffect(() => {

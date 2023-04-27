@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const CartReview = () => {
-  const { cart, setCart } = useContext(AuthContext);
+  const { cart, setCart} = useContext(AuthContext);
   const navigate = useNavigate();
+  
   let cartItems = 0;
   const handleRemoveItem = ({ target }) => {
     const item = target.id;
-    const itemToRemove = cart[item];
-    itemToRemove.productQ = 0;
-    setCart({ ...cart, itemToRemove });
-  };
+    setCart({...cart, ...cart[item].productQ = 0})
+}
 
   const reviewItems = () => {
     let totalCart = 0;
@@ -40,7 +39,7 @@ const CartReview = () => {
             </div>
             <div className="cart-modal__delete-container">
               <span
-                class="material-symbols-outlined"
+                className="material-symbols-outlined"
                 style={{ fontSize: '1rem' }}
                 id={item}
                 onClick={handleRemoveItem}

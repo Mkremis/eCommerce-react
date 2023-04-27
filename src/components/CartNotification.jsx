@@ -3,9 +3,8 @@ import AuthContext from '../context/AuthContext';
 import CartModal from './CartModal';
 
 const CartNotification = () => {
-  const { cart, setCart } = useContext(AuthContext);
+  const { cart, setCart, cartItems, setCartItems } = useContext(AuthContext);
   const [shake, setShake] = useState(null);
-  const [cartItems, setCartItems] = useState(0);
   const [isOpen, setIsOpen] = useState(null);
 
   const handleOpenCart = () => {
