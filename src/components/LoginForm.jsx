@@ -21,7 +21,7 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
         </form>
           </article>
           <article className="form-container sign-up-container">
-          <h1>Or create an account</h1>
+          <h4>Or create an account</h4>
             <button
               id="signUp"
               onClick={() => {
