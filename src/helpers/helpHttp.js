@@ -23,7 +23,7 @@ export const helpHttp = () => {
             })
       )
 
-      .catch((err) => err);
+      .catch((err) =>console.log(err));
   };
   const get = (url, options = {}) => customFetch(url, options);
   const post = (url, options) => {
