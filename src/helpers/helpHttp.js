@@ -16,11 +16,12 @@ export const helpHttp = () => {
       .then((res) =>
         res.ok
           ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || '00',
-              statusText: res.statusText || 'Ocurrio un error',
-            })
+          : Promise.reject(res.status)
+          // : Promise.reject({
+          //     err: true,
+          //     status: res.status || '00',
+          //     statusText: res.statusText || 'Ocurrio un error',
+          //   })
       )
 
       .catch((err) =>console.log(err));
