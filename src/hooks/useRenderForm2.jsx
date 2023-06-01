@@ -35,42 +35,48 @@ const useRenderForm = () => {
   const handleSubmit = (e, user, output) => {
     e.preventDefault();
     let $fieldsets = e.target.querySelectorAll('fieldset'),
-      newUserData = [],
-      userName;
+      newUserData = {};
     $fieldsets.forEach((fieldset) => {
       let $legend = fieldset.querySelector('legend');
       let $inputs = fieldset.querySelectorAll('input');
-      Array.from($inputs).map((input) => {
-        if ((input.name = 'username')) userName = input.value;
-        newUserData.push({ [`${$legend.id}_${input.name}`]: input.value });
-      });
+      let newObj = Array.from($inputs).reduce(
+          (acum, prev) => ({ ...acum, [prev.name]: prev.value }),
+          {}
+        ),
+        objCons = { [$legend.id]: { ...newObj } };
+      Object.assign(newUserData, objCons);
     });
-    let method = user === 'newuser' ? 'post' : 'put';
-    fetchData(newUserData, userName, method, output);
+    let $fInputs = document.querySelectorAll('.user-account__form>input');
+    $fInputs.forEach(($input) => {
+      if ($input.type !== 'submit') {
+        let key = $input.name,
+          value = $input.value,
+          newObj = { [key]: value };
+        Object.assign(newUserData, newObj);
+      }
+
+      let method = user === 'newuser' ? 'post' : 'put';
+      fetchData(newUserData, method, output);
+    });
+    function fetchData(newUserData, method, output) {
+      const username = newUserData.login.username;
+      const requestOptions = {
+        headers: { 'Content-Type': 'application/json' },
+        body: newUserData,
+      };
+      helpHttp()
+        [method](
+          `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`,
+          requestOptions
+        )
+        .finally(() => {
+          output.current.classList.remove('--invisible');
+          setTimeout(() => {
+            output.current.classList.add('--invisible');
+          }, 3500);
+        });
+    }
   };
-
-  function fetchData(newUserData, userName, method, output) {
-    const options = {
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUserData),
-    };
-    // const endpoint = `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`;
-    // fetch(endpoint, options)
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
-
-    helpHttp()
-      [method](
-        `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
-        options
-      )
-      .finally(() => {
-        output.current.classList.remove('--invisible');
-        setTimeout(() => {
-          output.current.classList.add('--invisible');
-        }, 3500);
-      });
-  }
   return { renderFormElements, handleSubmit };
 };
 
