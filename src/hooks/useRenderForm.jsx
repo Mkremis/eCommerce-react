@@ -52,7 +52,7 @@ const useRenderForm = () => {
   function fetchData(newUserData, userName, method, output) {
     const options = {
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUserData),
+      body: newUserData,
     };
     // const endpoint = `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`;
     // fetch(endpoint, options)
