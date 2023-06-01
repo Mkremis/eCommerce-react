@@ -1,18 +1,17 @@
-import React from 'react';
-import { helpHttp } from '../helpers/helpHttp';
+import React from "react";
+import { helpHttp } from "../helpers/helpHttp";
 
 const useRenderForm = () => {
-  const renderFormElements = (obj, output) => {
+  const renderFormElements = (obj, fieldName) => {
     return Object.entries(obj).map(([key, value]) => {
-      if (typeof value === 'object') {
+      if (typeof value === "object") {
         return (
-          <fieldset key={key} style={{ padding: '1rem', margin: '1rem' }}>
+          <fieldset key={key} style={{ padding: "1rem", margin: "1rem" }}>
             <legend id={key}>{key}</legend>
-            {renderFormElements(value)}
+            {renderFormElements(value, key)}
           </fieldset>
         );
       }
-
       return (
         <div key={key} className="row">
           <div className="col">
@@ -22,7 +21,7 @@ const useRenderForm = () => {
             <input
               type="text"
               className="form-control"
-              name={key}
+              name={`${fieldName}_${key}`}
               defaultValue={value}
               placeholder={key}
               aria-label={key}
@@ -34,43 +33,32 @@ const useRenderForm = () => {
   };
   const handleSubmit = (e, user, output) => {
     e.preventDefault();
-    let $fieldsets = e.target.querySelectorAll('fieldset'),
-      newUserData = [],
-      userName;
-    $fieldsets.forEach((fieldset) => {
-      let $legend = fieldset.querySelector('legend');
-      let $inputs = fieldset.querySelectorAll('input');
-      Array.from($inputs).map((input) => {
-        if ((input.name = 'username')) userName = input.value;
-        newUserData.push({ [`${$legend.id}_${input.name}`]: input.value });
-      });
-    });
-    let method = user === 'newuser' ? 'post' : 'put';
-    fetchData(newUserData, userName, method, output);
-  };
+    const formData = new FormData(e.target);
+    const newUserData = Object.fromEntries(formData);
+    const body = JSON.stringify(newUserData);
+    const userName = newUserData.login_username;
+    let method = user === "newuser" ? "post" : "put";
 
-  function fetchData(newUserData, userName, method, output) {
     const options = {
-      headers: { 'Content-Type': 'application/json' },
-      body: newUserData,
+      method,
+      headers: { "Content-Type": "application/json" },
+      body,
     };
-    // const endpoint = `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`;
-    // fetch(endpoint, options)
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
 
-    helpHttp()
-      [method](
-        `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
-        options
-      )
+    fetch(
+      `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => console.log(data))
       .finally(() => {
-        output.current.classList.remove('--invisible');
+        output.current.classList.remove("--invisible");
         setTimeout(() => {
-          output.current.classList.add('--invisible');
+          output.current.classList.add("--invisible");
         }, 3500);
       });
-  }
+  };
+
   return { renderFormElements, handleSubmit };
 };
 
