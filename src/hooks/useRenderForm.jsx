@@ -35,14 +35,13 @@ const useRenderForm = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newUserData = Object.fromEntries(formData);
-    const body = JSON.stringify(newUserData);
     const userName = newUserData.login_username;
-    let method = user === "newuser" ? "post" : "put";
+    let method = user === "newuser" ? "POST" : "PUT";
 
     const options = {
       method,
       headers: { "Content-Type": "application/json" },
-      body,
+      body: JSON.stringify(newUserData),
     };
 
     fetch(
