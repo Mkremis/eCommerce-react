@@ -33,23 +33,38 @@ const useRenderForm = () => {
   };
   const handleSubmit = (e, user, output) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const newUserData = Object.fromEntries(formData);
-    const userName = newUserData.login_username;
-    let method = user === "newuser" ? "POST" : "PUT";
+    let $fieldsets = e.target.querySelectorAll('fieldset'),
+      newUserData = {};
+    $fieldsets.forEach((fieldset) => {
+      let $legend = fieldset.querySelector('legend');
+      let $inputs = fieldset.querySelectorAll('input');
+      Array.from($inputs).forEach((input) => {
+        let key = `${$legend.id}_${input.name}`;
+        let val = input.value;
+        let newData = {[key]:val}
+         newUserData ={...newUserData, ...newData}
+      });
+    });
+    console.log(newUserData);
+    let method = user === 'newuser' ? 'POST' : 'PUT';
+     fetchData(newUserData, method, output);
+  };
 
+  function fetchData(newUserData, userName, method, output) {
     const options = {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUserData),
+      headers: { 'Content-Type': 'application/json' },
+      body: newUserData,
     };
+    // const endpoint = `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`;
+    // fetch(endpoint, options)
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
 
-    fetch(
-      `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
-      options
-    )
-      .then((res) => res.json())
-      .then((data) => console.log(data))
+    helpHttp()
+      [method](
+        `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
+        options
+      )
       .finally(() => {
         output.current.classList.remove("--invisible");
         setTimeout(() => {
