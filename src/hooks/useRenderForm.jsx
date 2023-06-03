@@ -33,30 +33,30 @@ const useRenderForm = () => {
   };
   const handleSubmit = (e, user, output) => {
     e.preventDefault();
-    let $fieldsets = e.target.querySelectorAll('fieldset'),
+    let $fieldsets = e.target.querySelectorAll("fieldset"),
       newUserData = {};
     $fieldsets.forEach((fieldset) => {
-      let $legend = fieldset.querySelector('legend');
-      let $inputs = fieldset.querySelectorAll('input');
+      let $legend = fieldset.querySelector("legend");
+      let $inputs = fieldset.querySelectorAll("input");
       Array.from($inputs).forEach((input) => {
         let key = `${$legend.id}_${input.name}`;
         let val = input.value;
-        let newData = {[key]:val}
-         newUserData ={...newUserData, ...newData}
+        let newData = { [key]: val };
+        newUserData = { ...newUserData, ...newData };
       });
     });
-    let method = user === 'newuser' ? 'POST' : 'PUT';
-     fetchData(newUserData, method, output);
+    let method = user === "newuser" ? "POST" : "PUT";
+    fetchData(newUserData, method, output);
   };
 
   function fetchData(newUserData, method, output) {
     const options = {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUserData),
     };
-    let route = method === 'POST' ? 'register' : 'update';
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
+    let route = method === "POST" ? "register" : "update";
+    const endpoint = `http://localhost:3000/api/users/${route}`;
     fetch(endpoint, options)
       .then((res) => res.json())
       .then((data) => console.log(data))
@@ -66,7 +66,7 @@ const useRenderForm = () => {
           output.current.classList.add("--invisible");
         }, 3500);
       });
-  };
+  }
 
   return { renderFormElements, handleSubmit };
 };

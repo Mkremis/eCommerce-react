@@ -29,9 +29,9 @@ const AuthProvider = ({ children }) => {
 
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
-    username = username.value;
-    psw = psw.value;
-    const loginData = { username, password: psw };
+    let login_username = username.value;
+    let login_password = psw.value;
+    const loginData = { login_username, login_password };
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
