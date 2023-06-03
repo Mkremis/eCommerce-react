@@ -18,7 +18,6 @@ const AuthProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
 
-
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
@@ -27,48 +26,59 @@ const AuthProvider = ({ children }) => {
   const handlePlusQ = (e) => setProductQ(productQ + 1);
   const handleMinusQ = (e) =>
     productQ === 0 ? false : setProductQ(productQ - 1);
-    
+
   const handleAuth = async (e) => {
-    const { username, psw } = e.target;
-    if (auth) {
-      setAuth(null);
-    } else {
-    const users =  await helpHttp().get("https://ecommerce-users-api-production.up.railway.app/api/users")
-   
-    const matchUsername = users.find(
-      (user) => user.username && user.username === username.value
-    );
-    let matchPassword;
-    if(matchUsername) matchPassword = matchUsername.userData.login.password === psw.value ? true : false;
-          if (matchUsername && matchPassword) {
-            setUser(matchUsername.userData);
-            matchUsername.cart && setCart(matchUsername.cart);
-            setAuth(true);
-          }
-          if (!matchUsername) {
-            alert(`Not user found with the username ${username.value}.`);
-          }
-          if (matchUsername && !matchPassword) {
-            alert(`Wrong password, please try again.`);
-          }
-  
-    }
+    let { username, psw } = e.target;
+    username = username.value;
+    psw = psw.value;
+    const loginData = { username, password: psw };
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginData),
+    };
+    // const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
+    const endpoint = `http://localhost:3000/api/users/login`;
+    const response = await fetch(endpoint, options).then((res) => res.json());
+    console.log(response);
+
+    // const { username, psw } = e.target;
+    // if (auth) {
+    //   setAuth(null);
+    // } else {
+    // const users =  await helpHttp().get("https://ecommerce-users-api-production.up.railway.app/api/users")
+    // const matchUsername = users.find(
+    //   (user) => user.username && user.username === username.value
+    // );
+    // let matchPassword;
+    // if(matchUsername) matchPassword = matchUsername.userData.login.password === psw.value ? true : false;
+    //       if (matchUsername && matchPassword) {
+    //         setUser(matchUsername.userData);
+    //         matchUsername.cart && setCart(matchUsername.cart);
+    //         setAuth(true);
+    //       }
+    //       if (!matchUsername) {
+    //         alert(`Not user found with the username ${username.value}.`);
+    //       }
+    //       if (matchUsername && !matchPassword) {
+    //         alert(`Wrong password, please try again.`);
+    //       }
+    // }
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const username = user && user.login.username;
-    if(username && cart){
-     const requestOptions = {
-      headers: { 'Content-Type': 'application/json' },
-      body: cart,
-    };
-    helpHttp().put(
-    `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/update-cart`,
-    requestOptions
-  );
-}
-  },[cart]);
+    if (username && cart) {
+      const requestOptions = {
+        headers: { "Content-Type": "application/json" },
+        body: cart,
+      };
+      helpHttp().put(
+        `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/update-cart`,
+        requestOptions
+      );
+    }
+  }, [cart]);
 
   const handleLogout = () => {
     navigate("/");
@@ -93,7 +103,7 @@ const AuthProvider = ({ children }) => {
     setPage,
     refreshPage,
     cartItems,
-    setCartItems
+    setCartItems,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
