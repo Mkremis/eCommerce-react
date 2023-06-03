@@ -39,8 +39,14 @@ const AuthProvider = ({ children }) => {
     };
     // const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
     const endpoint = `http://localhost:3000/api/users/login`;
-    const response = await fetch(endpoint, options).then((res) => res.json());
-    console.log(response);
+    try {
+      const response = await fetch(endpoint, options).then((res) =>
+        res.ok ? res.json() : Promise.reject("INCORRECT PASSWORD")
+      );
+      console.log(response);
+    } catch (error) {
+      alert(error);
+    }
 
     // const { username, psw } = e.target;
     // if (auth) {
