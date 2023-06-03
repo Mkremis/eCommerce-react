@@ -21,7 +21,7 @@ const useRenderForm = () => {
             <input
               type="text"
               className="form-control"
-              name={`${fieldName}_${key}`}
+              name={key}
               defaultValue={value}
               placeholder={key}
               aria-label={key}
