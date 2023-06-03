@@ -45,26 +45,21 @@ const useRenderForm = () => {
          newUserData ={...newUserData, ...newData}
       });
     });
-    console.log(newUserData);
     let method = user === 'newuser' ? 'POST' : 'PUT';
      fetchData(newUserData, method, output);
   };
 
-  function fetchData(newUserData, userName, method, output) {
+  function fetchData(newUserData, method, output) {
     const options = {
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: newUserData,
+      body: JSON.stringify(newUserData),
     };
-    // const endpoint = `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`;
-    // fetch(endpoint, options)
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
-
-    helpHttp()
-      [method](
-        `https://ecommerce-db-geqb34iue-mkremis.vercel.app/api/users/${userName}`,
-        options
-      )
+    let route = method === 'POST' ? 'register' : 'update';
+    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
+    fetch(endpoint, options)
+      .then((res) => res.json())
+      .then((data) => console.log(data))
       .finally(() => {
         output.current.classList.remove("--invisible");
         setTimeout(() => {
