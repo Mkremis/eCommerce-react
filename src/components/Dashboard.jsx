@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   const navigate = useNavigate();
-
+  
   return (
     <article
       className={`user-panel ${isOpen && "is-open"}`}

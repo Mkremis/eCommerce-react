@@ -37,13 +37,21 @@ const AuthProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
     };
-    // const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
-    const endpoint = `http://localhost:3000/api/users/login`;
+    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
     try {
       const response = await fetch(endpoint, options).then((res) =>
         res.ok ? res.json() : Promise.reject("INCORRECT PASSWORD")
       );
-      console.log(response);
+      const userData = response.user;
+      let data={};
+      for (const key in userData) {
+       let keys = key.split("_");
+       let val = {[keys[1]]:userData[key]};
+       data[keys[0]]={...data[keys[0]], ...val};
+      }
+       
+       setUser(data);
+      //  setAuth(true);
     } catch (error) {
       alert(error);
     }
