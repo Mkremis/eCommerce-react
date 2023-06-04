@@ -36,7 +36,7 @@ const router = createHashRouter([
             loader: loaderSort,
           },
           {
-            path: '/dashboard/:username',
+            path: '/dashboard/:username/token/:token',
             element: <UserDashboard newUser={null}/>,
             loader: loaderDashboard,
           },
