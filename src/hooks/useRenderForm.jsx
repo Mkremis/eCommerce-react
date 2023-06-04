@@ -57,6 +57,7 @@ const useRenderForm = () => {
     };
     let route = method === "POST" ? "register" : "update";
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
+
     fetch(endpoint, options)
       .then((res) => res.json())
       .then((data) => console.log(data))

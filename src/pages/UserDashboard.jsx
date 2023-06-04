@@ -3,8 +3,12 @@ import RenderForm from "../components/RenderForm";
 import { useLoaderData } from "react-router-dom";
 
 const UserDashboard = ({newUser}) => {
-  let {user} = useLoaderData();
-  newUser && !user ?user=newUser :user;
+  let user;
+  if (newUser){
+    user = newUser;
+  }else{
+    user = useLoaderData();
+  }
 
   return (
     <article>

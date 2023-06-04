@@ -14,6 +14,6 @@ const loaderDashboard = async ({ params }) => {
        let val = {[keys[1]]:userData[key]};
        user[keys[0]]={...user[keys[0]], ...val};
       }
-      return {user};
+      return user;
   };
   export default loaderDashboard;

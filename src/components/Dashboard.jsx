@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   const navigate = useNavigate();
   const handleDashboard = ()=>navigate(`/dashboard/${user.login.username}`);
-  
+   
   
   return (
     <article
@@ -18,7 +18,6 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
           {user.fullname.title} {user.fullname.first} {user.fullname.last}
         </h3>
         <p className="user-username">{user.login.username}</p>
-        <p className="user-username">{user.email}</p>
       </div>
       <div className="user-buttons">
         <button
