@@ -2,8 +2,11 @@ import React from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom"; 
 
+
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   const navigate = useNavigate();
+  const handleDashboard = ()=>navigate(`/dashboard/${user.login.username}`);
+  
   
   return (
     <article
@@ -20,7 +23,7 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
       <div className="user-buttons">
         <button
           className="user-mangment"
-          onClick={() => navigate(`/dashboard/${user.login.username}`)}
+          onClick={handleDashboard}
         >
           Manage your account
         </button>

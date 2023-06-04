@@ -49,7 +49,6 @@ const AuthProvider = ({ children }) => {
        let val = {[keys[1]]:userData[key]};
        data[keys[0]]={...data[keys[0]], ...val};
       }
-      console.log(data)
       setUser(data);
       setAuth(true);
     } catch (error) {

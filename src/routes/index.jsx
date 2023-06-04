@@ -12,6 +12,7 @@ import loaderSort from '../helpers/loaderSort';
 import loaderDetails from '../helpers/loaderDetails';
 import loaderHome from '../helpers/loaderHome';
 import Checkout from '../pages/Checkout';
+import loaderDashboard from '../helpers/loaderDashboard';
 
 const router = createHashRouter([
   {
@@ -37,6 +38,7 @@ const router = createHashRouter([
           {
             path: '/dashboard/:username',
             element: <UserDashboard newUser={null}/>,
+            loader: loaderDashboard,
           },
           {
             path: '/dashboard/newuser',

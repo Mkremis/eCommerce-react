@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import RenderForm from "../components/RenderForm";
-import AuthContext from "../context/AuthContext";
- 
+import { useLoaderData } from "react-router-dom";
+
 const UserDashboard = ({newUser}) => {
-  let { user } = useContext(AuthContext);
-newUser && !user ?user=newUser :user;
+  let {user} = useLoaderData();
+  newUser && !user ?user=newUser :user;
 
   return (
     <article>
