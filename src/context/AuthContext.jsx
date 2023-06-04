@@ -42,16 +42,16 @@ const AuthProvider = ({ children }) => {
       const response = await fetch(endpoint, options).then((res) =>
         res.ok ? res.json() : Promise.reject("INCORRECT PASSWORD")
       );
-      const userData = response.user;
+      const userData = await response.user;
       let data={};
       for (const key in userData) {
        let keys = key.split("_");
        let val = {[keys[1]]:userData[key]};
        data[keys[0]]={...data[keys[0]], ...val};
       }
-       
-       setUser(data);
-      //  setAuth(true);
+      console.log(data)
+      setUser(data);
+      setAuth(true);
     } catch (error) {
       alert(error);
     }

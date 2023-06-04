@@ -10,7 +10,7 @@ const signFormTemplate = {
   picture: {
     thumbnail: '',
   },
-  fullName: {
+  fullname: {
     last: '',
     first: '',
     title: '',

@@ -12,7 +12,7 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
     >
       <div className="user-info">
         <h3 className="user-fullname">
-          {user.fullName.title} {user.fullName.first} {user.fullName.last}
+          {user.fullname.title} {user.fullname.first} {user.fullname.last}
         </h3>
         <p className="user-username">{user.login.username}</p>
         <p className="user-username">{user.email}</p>
