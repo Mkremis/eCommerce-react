@@ -1,7 +1,40 @@
 import React from "react";
-import { helpHttp } from "../helpers/helpHttp";
+
 
 const useRenderForm = () => {
+
+  const isType=(key)=>{
+    switch (key) {
+      case 'password':
+        return 'password'
+      case 'email':
+        return 'email'
+      case 'phone':
+          return 'tel'
+      case 'thumbnail':
+          return 'url'
+      default: return 'text'
+    }
+  }
+
+  const isRequired=(key)=>{
+    switch (key) {
+      case 'password':
+        return true
+      case 'username':
+        return true
+      case 'first':
+          return true
+      case 'last':
+          return true
+      case 'email':
+            return true
+      case 'phone':
+            return true
+    }
+  }
+
+  
   const renderFormElements = (obj, fieldName) => {
     return Object.entries(obj).map(([key, value]) => {
       if (typeof value === "object") {
@@ -19,12 +52,14 @@ const useRenderForm = () => {
               {key}
             </label>
             <input
-              type="text"
+              type={isType(key)}
               className="form-control"
               name={key}
               defaultValue={value}
               placeholder={key}
               aria-label={key}
+              required={isRequired(key)}
+              autocomplete="off"
             />
           </div>
         </div>
