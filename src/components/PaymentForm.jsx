@@ -6,7 +6,7 @@ import AuthContext from "../context/AuthContext";
 
 
 const PaymentForm = () => {
-  const {cart} = useContext(AuthContext);
+  const {cart, auth} = useContext(AuthContext);
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -14,8 +14,16 @@ const PaymentForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(cart)
-   
+    const requestOptions = {
+      method: "POST",
+      headers: { 
+        'Authorization': `Bearer ${auth}`,
+        'Content-Type': 'application/json', },
+        body: JSON.stringify(cart),
+    };
+    const response = await fetch(`https://ecommerce-users-api-production.up.railway.app/api/create-order`,requestOptions)
+    const data = await response.json();
+    console.log(data)
   };
 
   return (
