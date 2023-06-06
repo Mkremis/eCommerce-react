@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./PaymentForm.css";
+import AuthContext from "../context/AuthContext";
+
+
+
 
 const PaymentForm = () => {
+  const {cart} = useContext(AuthContext);
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add your code here to submit the form data to your server or payment gateway
-    console.log("Form submitted: ", { name, cardNumber, expiryDate, cvv });
+    console.log(cart)
+   
   };
 
   return (
