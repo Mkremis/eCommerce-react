@@ -11,7 +11,7 @@ const CartReview = () => {
     const item = target.id;
     setCart({...cart, ...cart[item].productQ = 0})
 }
-
+console.log('CART', cart)
   const reviewItems = () => {
     let totalCart = 0;
     let toRender = [];

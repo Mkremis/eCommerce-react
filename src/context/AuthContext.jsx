@@ -60,13 +60,15 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if(auth && user.login.username){
+      let userCart = cart === "" ?{} :cart;
       const requestOptions = {
         method: "PUT",
         headers: { 
           'Authorization': `Bearer ${auth}`,
           'Content-Type': 'application/json', },
-          body: JSON.stringify(cart),
+          body: JSON.stringify(userCart),
       };
+      console.log(requestOptions)
       fetch(
         `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`,
         requestOptions
