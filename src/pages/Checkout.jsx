@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
+import { useNavigate } from "react-router-dom";
 
 
 const Checkout = () => {
   const {cart, auth} = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handlePay = async (event) => {
     event.preventDefault();
     const requestOptions = {
@@ -16,7 +19,7 @@ const Checkout = () => {
     };
     const response = await fetch(`https://ecommerce-users-api-production.up.railway.app/api/create-order`,requestOptions)
     const data = await response.json();
-    console.log(data)
+    if (data.init_point) window.location.href=data.init_point;
   };
 
   return (
