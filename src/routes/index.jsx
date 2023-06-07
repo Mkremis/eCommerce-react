@@ -13,6 +13,7 @@ import loaderDetails from '../helpers/loaderDetails';
 import loaderHome from '../helpers/loaderHome';
 import Checkout from '../pages/Checkout';
 import loaderDashboard from '../helpers/loaderDashboard';
+import SuccessPayment from '../pages/SuccessPayment';
 
 const router = createHashRouter([
   {
@@ -55,6 +56,10 @@ const router = createHashRouter([
           {
             path: '/contact',
             element: <Contact />,
+          },
+          {
+            path: '/success-payment',
+            element: <SuccessPayment/>,
           },
         ],
       },
