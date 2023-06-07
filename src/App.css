@@ -244,14 +244,22 @@ img {
 /* Checkout */
 .checkout {
   margin-top: 1rem;
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.payment {
-  flex: 1 0 50%;
+.pay-button{
+  background-color: var(--Orange);
   padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin: auto;
+  width: 10ch;
 }
-.cart-review {
-  flex: 1 0 50%;
-  padding: 1rem;
-}
+
