@@ -1,11 +1,12 @@
 export const helpHttp = () => {
   const customFetch = (endpoint, options) => {
+    console.log(endpoint);
     const defaultHeaders = {
-      accept: 'application/json',
+      accept: "application/json",
     };
     const controller = new AbortController();
     options.signal = controller.signal;
-    options.method = options.method || 'GET';
+    options.method = options.method || "GET";
     options.headers = options.headers
       ? { ...defaultHeaders, ...options.headers }
       : defaultHeaders;
@@ -18,26 +19,26 @@ export const helpHttp = () => {
           ? res.json()
           : Promise.reject({
               err: true,
-              status: res.status || '00',
-              statusText: res.statusText || 'Ocurrio un error',
+              status: res.status || "00",
+              statusText: res.statusText || "Ocurrio un error",
             })
       )
 
-      .catch((err) =>console.log(err));
+      .catch((err) => console.log(err));
   };
   const get = (url, options = {}) => customFetch(url, options);
   const post = (url, options) => {
-    options.method = 'POST';
-    console.log('create')
+    options.method = "POST";
+    console.log("create");
     return customFetch(url, options);
   };
   const put = (url, options) => {
-    options.method = 'PUT';
-    console.log('update')
+    options.method = "PUT";
+    console.log("update");
     return customFetch(url, options);
   };
   const del = (url, options) => {
-    options.method = 'DELETE';
+    options.method = "DELETE";
     return customFetch(url, options);
   };
   return { get, post, put, del };

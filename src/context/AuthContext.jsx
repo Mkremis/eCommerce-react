@@ -22,8 +22,8 @@ const AuthProvider = ({ children }) => {
     navigate(newPage);
   };
 
-  const handlePlusQ = (e) => setProductQ(productQ + 1);
-  const handleMinusQ = (e) =>
+  const handlePlusQ = () => setProductQ(productQ + 1);
+  const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
 
   const handleAuth = async (e) => {
@@ -42,15 +42,15 @@ const AuthProvider = ({ children }) => {
         res.ok ? res.json() : Promise.reject("INCORRECT PASSWORD")
       );
       const userData = await response.user;
-      let data={};
+      let data = {};
       for (const key in userData) {
-        if (key !== "user_cart"){
+        if (key !== "user_cart") {
           let keys = key.split("_");
-          let val = {[keys[1]]:userData[key]};
-          data[keys[0]]={...data[keys[0]], ...val};
+          let val = { [keys[1]]: userData[key] };
+          data[keys[0]] = { ...data[keys[0]], ...val };
         }
       }
-      userData.user_cart && setCart(userData.user_cart)
+      userData.user_cart && setCart(userData.user_cart);
       setUser(data);
       setAuth(response.token);
     } catch (error) {
@@ -59,20 +59,24 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if(auth && user.login.username & cart !== {}){
-      let userCart = cart === "" ?{} :cart;
+    if (auth && user.login.username) {
+      let userCart = cart === "" ? {} : cart;
       const requestOptions = {
         method: "PUT",
-        headers: { 
-          'Authorization': `Bearer ${auth}`,
-          'Content-Type': 'application/json', },
-          body: JSON.stringify(userCart),
+        headers: {
+          Authorization: `Bearer ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCart),
       };
       fetch(
         `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`,
         requestOptions
-      ).then(res=>res.json()).then(data=>console.log(data)).catch(error=>console.log(error))
-    } 
+      )
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+    }
   }, [cart]);
 
   const handleLogout = () => {
