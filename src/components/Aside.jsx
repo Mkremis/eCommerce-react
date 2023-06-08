@@ -8,7 +8,6 @@ const Aside = () => {
   const { pathname } = useLocation();
   const [response, setResponse] = useState(null);
   const [categories, setCategories] = useState(null);
-  let root = pathname.split("/")[1];
   const { refreshPage } = useContext(AuthContext);
 
   options.method = "GET";
@@ -36,11 +35,12 @@ const Aside = () => {
             .children,
         },
       };
+      let root = pathname.split("/")[1];
       setCategories(dataPath[root].url);
     } else {
       setCategories(null);
     }
-  }, [pathname, root, response]);
+  }, [pathname, response]);
 
   return (
     <>
@@ -48,7 +48,7 @@ const Aside = () => {
         <aside id="nav-bar__aside">
           <nav className="modal__sub-nav-bar">
             <ul className="nav__category-items">
-              <header className="asideHeader">{root}</header>
+              <header className="asideHeader">{pathname.split("/")[1]}</header>
               {categories.map((cat) => {
                 return (
                   <li key={`${cat.content.title}_${cat.link.categoryId}`}>
