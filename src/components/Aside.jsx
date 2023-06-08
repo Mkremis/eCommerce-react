@@ -13,13 +13,21 @@ const Aside = () => {
   options.method = "GET";
   // let categories = pathname.includes("sortBy") ? data : null;
   useEffect(() => {
-    fetch(
-      "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
-      options
-    )
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data) => setResponse(data))
-      .catch((err) => console.log("Error reading aside categories", err));
+    const CACHE = JSON.parse(sessionStorage.getItem("categories"));
+    if (CACHE) {
+      setResponse(CACHE);
+    } else {
+      fetch(
+        "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
+        options
+      )
+        .then((res) => (res.ok ? res.json() : Promise.reject()))
+        .then((cat) => {
+          sessionStorage.setItem("categories", JSON.stringify(cat));
+          setResponse(cat);
+        })
+        .catch((err) => console.log("Error reading aside categories", err));
+    }
   }, []);
 
   useEffect(() => {
@@ -36,7 +44,7 @@ const Aside = () => {
         },
       };
       let root = pathname.split("/")[1];
-      setCategories(dataPath[root].url);
+      if (root === "men" || root === "women") setCategories(dataPath[root].url);
     } else {
       setCategories(null);
     }
@@ -48,7 +56,6 @@ const Aside = () => {
         <aside id="nav-bar__aside">
           <nav className="modal__sub-nav-bar">
             <ul className="nav__category-items">
-              <header className="asideHeader">{pathname.split("/")[1]}</header>
               {categories.map((cat) => {
                 return (
                   <li key={`${cat.content.title}_${cat.link.categoryId}`}>
