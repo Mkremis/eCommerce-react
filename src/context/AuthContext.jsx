@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if(auth && user.login.username){
+    if(auth && user.login.username & cart !== {}){
       let userCart = cart === "" ?{} :cart;
       const requestOptions = {
         method: "PUT",
@@ -68,7 +68,6 @@ const AuthProvider = ({ children }) => {
           'Content-Type': 'application/json', },
           body: JSON.stringify(userCart),
       };
-      console.log(requestOptions)
       fetch(
         `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`,
         requestOptions
