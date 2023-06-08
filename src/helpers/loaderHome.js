@@ -11,7 +11,8 @@ export const loaderHome = async () => {
   ]);
   if (!res)
     throw { status: res.status, statusText: res.statusText || "no encontrado" };
-  const homeData = res.map((r) => r.products);
+    let homeData;
+  if (res) homeData = res.map((r) => r.products);
   return { homeData };
 };
 export default loaderHome;
