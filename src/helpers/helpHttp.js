@@ -1,6 +1,5 @@
 export const helpHttp = () => {
   const customFetch = (endpoint, options) => {
-    console.log(endpoint);
     const defaultHeaders = {
       accept: "application/json",
     };

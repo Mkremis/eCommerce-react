@@ -16,13 +16,11 @@ export const loaderHome = async () => {
       );
       let homeData = data.map((d) => d.products);
       sessionStorage.setItem("homeData", JSON.stringify({ homeData }));
-      console.log("fetch", homeData);
       return { homeData };
     } catch (error) {
       console.log(error);
     }
   } else {
-    console.log("CACHE", homeData);
     return homeData;
   }
 };

@@ -8,19 +8,26 @@ const Aside = () => {
   const { pathname } = useLocation();
   const [response, setResponse] = useState(null);
   const [categories, setCategories] = useState(null);
-  let root = pathname.split("/")[1];
   const { refreshPage } = useContext(AuthContext);
 
   options.method = "GET";
   // let categories = pathname.includes("sortBy") ? data : null;
   useEffect(() => {
-    fetch(
-      "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
-      options
-    )
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data) => setResponse(data))
-      .catch((err) => console.log("Error reading aside categories", err));
+    const CACHE = JSON.parse(sessionStorage.getItem("categories"));
+    if (CACHE) {
+      setResponse(CACHE);
+    } else {
+      fetch(
+        "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
+        options
+      )
+        .then((res) => (res.ok ? res.json() : Promise.reject()))
+        .then((cat) => {
+          sessionStorage.setItem("categories", JSON.stringify(cat));
+          setResponse(cat);
+        })
+        .catch((err) => console.log("Error reading aside categories", err));
+    }
   }, []);
 
   useEffect(() => {
@@ -36,11 +43,12 @@ const Aside = () => {
             .children,
         },
       };
-      setCategories(dataPath[root].url);
+      let root = pathname.split("/")[1];
+      if (root === "men" || root === "women") setCategories(dataPath[root].url);
     } else {
       setCategories(null);
     }
-  }, [pathname, root, response]);
+  }, [pathname, response]);
 
   return (
     <>
@@ -48,7 +56,6 @@ const Aside = () => {
         <aside id="nav-bar__aside">
           <nav className="modal__sub-nav-bar">
             <ul className="nav__category-items">
-              <header className="asideHeader">{root}</header>
               {categories.map((cat) => {
                 return (
                   <li key={`${cat.content.title}_${cat.link.categoryId}`}>

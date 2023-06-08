@@ -5,11 +5,12 @@
     margin: auto;
   }
   .nav__category-items {
+    padding: 0;
     height: 65vh;
     width: 100%;
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-areas: 'asideHeader asideHeader' 'asideLinks asideLinks';
+    grid-template-areas: "asideHeader asideHeader" "asideLinks asideLinks";
     grid-auto-flow: row;
     align-items: center;
     grid-area: asideLinks;
@@ -59,11 +60,12 @@
     padding-right: 1%;
   }
   .nav__category-items {
+    padding: 0;
     list-style: none;
     display: grid;
     grid-template-columns: 100px repeat(1, 1fr);
     grid-template-rows: 2rem 2rem;
-    grid-template-areas: 'asideHeader asideLinks' 'asideHeader asideLinks';
+    grid-template-areas: "asideHeader asideLinks" "asideHeader asideLinks";
     grid-area: asideLinks;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
