@@ -83,6 +83,7 @@ img {
 
 .content {
   /* position: relative; */
+  margin-top: 10vh;
   background-color: var(--White);
   /* top: 70vh; */
   display: flex;
@@ -251,7 +252,7 @@ img {
   align-items: center;
   justify-content: center;
 }
-.pay-button{
+.pay-button {
   background-color: var(--Orange);
   padding: 1rem;
   border: none;
@@ -262,4 +263,3 @@ img {
   margin: auto;
   width: 10ch;
 }
-

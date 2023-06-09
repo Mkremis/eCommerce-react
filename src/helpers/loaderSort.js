@@ -1,4 +1,5 @@
 import { options } from "../helpers/api";
+import { helpHttp } from "./helpHttp";
 
 const loaderSort = async ({ params }) => {
   const categories = {
@@ -13,7 +14,7 @@ const loaderSort = async ({ params }) => {
       : `categoryId=${params.category}`;
 
   root = params.search === " " ? root : "";
-  options.method = "GET";
+
   const url = `https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=${
     params.offset
   }&${root && root + "&"}limit=48&${
@@ -21,21 +22,12 @@ const loaderSort = async ({ params }) => {
   }country=US&${params.sortBy !== " " ? params.sortBy + "&" : ""}currency=USD&${
     params.search !== " " ? params.search + "&" : ""
   }sizeSchema=US&lang=en-US`;
-  //https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=96&limit=48&country=US&currency=USD&q=lingerie&sizeSchema=US&lang=en-US
-  //https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=48&categoryId=27108&limit=48&country=US&sort=freshness&currency=USD&sizeSchema=US&lang=en-US
+
   try {
-    const response = await fetch(url, options);
-    const res = await response.json();
+    const res = await helpHttp().get(url, options);
     return { res };
   } catch (error) {
-    console.log(
-      "Error fetching url:",
-      url,
-      "with root:",
-      root,
-      "Error:",
-      error
-    );
+    console.log("Error fetching url:", url, "Error:", error);
     return { res: { products: [] } };
   }
 };

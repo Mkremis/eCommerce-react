@@ -13,7 +13,7 @@
   .product {
     flex: 0 1 25%;
     padding: 1rem;
-    align-items: baseline;
+    align-items: center;
   }
 }
 /* MOBILE */
