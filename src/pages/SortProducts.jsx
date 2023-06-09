@@ -35,18 +35,15 @@ const SortProduct = () => {
     let offset = page * limit;
     if (page === 1) window.scrollTo(0, 0);
     if (page > 1 && hasMore) {
-      console.log("hasMore", hasMore, "offset", offset);
       navigate(
         `/${root}/category/${path[3]}/sortBy/${path[5]}/filter/${path[7]}/search/${path[9]}/offset/${offset}`
       );
     }
-    console.log(res.itemCount);
     if (offset >= res.itemCount) setHasMore(false);
   }, [page, hasMore, setHasMore]);
-
   return (
     <>
-      <Filters facets={res.facets} refreshPage={refreshPage} />
+      <Filters facets={res.facets && res.facets} refreshPage={refreshPage} />
       <section className="content">
         <InfiniteScroll
           dataLength={items.length} //This is important field to render the next data

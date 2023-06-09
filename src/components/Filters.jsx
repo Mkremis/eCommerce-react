@@ -1,15 +1,14 @@
-import React from 'react';
-import './Filter.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useModal } from '../hooks/useModal';
-import ModalTop from './ModalTop';
-import MenuFilters from './MenuFilters';
+import React from "react";
+import "./Filter.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useModal } from "../hooks/useModal";
+import ModalTop from "./ModalTop";
+import MenuFilters from "./MenuFilters";
 
 const Filters = ({ facets, refreshPage }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  let path = location.pathname.split('/');
-  let rootPath = path[1];
+  let path = location.pathname.split("/");
   const handleMenu = () =>
     isOpenModalTop ? closeModalModalTop(true) : openModalTop(true);
   const [isOpenModalTop, openModalTop, closeModalModalTop] = useModal(false);
@@ -17,7 +16,7 @@ const Filters = ({ facets, refreshPage }) => {
   const handleSort = (e) => {
     refreshPage();
     navigate(
-      `/${rootPath}/sortBy/sort=${e.target.value}/filter/${path[5]}/search/${path[7]}/offset/48`
+      `/${path[1]}/category/${path[3]}/sortBy/sort=${e.target.value}/filter/${path[7]}/search/${path[9]}/offset/48`
     );
   };
   return (
@@ -46,8 +45,8 @@ const Filters = ({ facets, refreshPage }) => {
       <ModalTop
         isOpen={isOpenModalTop}
         closeModal={closeModalModalTop}
-        stylesModal={{ justifyContent: 'right', alignItems: 'flex-start' }}
-        stylesClose={{ right: '100%' }}
+        stylesModal={{ justifyContent: "right", alignItems: "flex-start" }}
+        stylesClose={{ right: "100%" }}
         classContainer="filter__mobile"
       >
         <MenuFilters
