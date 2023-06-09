@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const useFilters = (facets, refreshPage) => {
   const location = useLocation();
@@ -48,15 +48,16 @@ const useFilters = (facets, refreshPage) => {
     }
   };
 
-  const handleFilter = ({ target }) => {
-    let query = '';
+  const handleFilter = () => {
+    let query = "";
     for (const filter in filters) {
-      query += `${filter}=${filters[filter].slice().join(',')}&`;
+      query += `${filter}=${filters[filter].slice().join(",")}`;
     }
-    const path = location.pathname.split('/');
+    const path = location.pathname.split("/");
     refreshPage();
+    console.log("query ", query);
     navigate(
-      `/${path[1]}/sortBy/${path[3]}/filter/${query}/search/${path[7]}/offset/48`
+      `/${path[1]}/category/${path[3]}/sortBy/${path[5]}/filter/${query}/search/${path[9]}/offset/48`
     );
   };
   const handleClear = () => {
@@ -64,7 +65,7 @@ const useFilters = (facets, refreshPage) => {
     setSelectedItems([]);
     setShowFilters([]);
   };
-  return [
+  return {
     menu,
     setMenu,
     subMenu,
@@ -77,6 +78,6 @@ const useFilters = (facets, refreshPage) => {
     handleSubMenuChange,
     handleFilter,
     handleClear,
-  ];
+  };
 };
 export default useFilters;

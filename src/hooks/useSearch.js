@@ -36,7 +36,7 @@ const useSearch = () => {
     }
   }, [fetchSearch]);
 
-  const showSearchMobile = (e) => {
+  const showSearchMobile = () => {
     document.querySelector(".autocomplete").style.display = "flex";
     document
       .querySelector(".close-search-button_mobile")
@@ -48,7 +48,7 @@ const useSearch = () => {
       .querySelector(".header__navigation")
       .classList.toggle("--invisible");
   };
-  const closeSearchMobile = (e) => {
+  const closeSearchMobile = () => {
     document.querySelector(".autocomplete").style.display = "none";
     document
       .querySelector(".close-search-button_mobile")
