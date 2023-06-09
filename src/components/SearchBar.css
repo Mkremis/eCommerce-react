@@ -4,6 +4,7 @@
 }
 
 #searchBar {
+  padding-left: 1ch;
   font-size: 0.7rem;
   width: 100%;
   border: 1px solid transparent;
@@ -37,6 +38,7 @@
     width: 50%;
   }
   #searchBar {
+    padding-left: 1ch;
     flex-grow: 1;
     height: 50%;
   }

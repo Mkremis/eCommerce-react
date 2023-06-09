@@ -1,23 +1,22 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const CartReview = () => {
-  const { cart, setCart} = useContext(AuthContext);
+  const { cart, setCart } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   let cartItems = 0;
   const handleRemoveItem = ({ target }) => {
     const item = target.id;
-    setCart({...cart, ...cart[item].productQ = 0})
-}
-console.log('CART', cart)
+    setCart({ ...cart, ...(cart[item].productQ = 0) });
+  };
   const reviewItems = () => {
     let totalCart = 0;
     let toRender = [];
     // if some product quantity in the cart is = 0, this product is deleted from the cart modal (not from the user or session object CART)
     for (const item in cart) {
-      if (cart[item]['productQ'] > 0) {
+      if (cart[item]["productQ"] > 0) {
         cartItems++;
         let totalPrice = cart[item].prodPrice * cart[item].productQ;
         totalCart += totalPrice;
@@ -40,7 +39,7 @@ console.log('CART', cart)
             <div className="cart-modal__delete-container">
               <span
                 className="material-symbols-outlined"
-                style={{ fontSize: '1rem' }}
+                style={{ fontSize: "1rem" }}
                 id={item}
                 onClick={handleRemoveItem}
               >

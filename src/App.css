@@ -100,6 +100,13 @@ img {
  */
 /* end of MAIN/CONTENT */
 /* -------------------------------------WM/M HOME------------------------------------ */
+.home-content {
+  background-color: var(--White);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
 .WM-home,
 .M-home {
   margin-top: 0.5rem;

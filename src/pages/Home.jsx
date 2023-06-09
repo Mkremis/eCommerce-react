@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <section className="content">
+      <section className="home-content">
         <div className="WM-home">
           <GenderHeader gender="women" />
           {womenData &&
