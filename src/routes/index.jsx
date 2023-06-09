@@ -31,8 +31,8 @@ const router = createHashRouter([
             element: <ReviewProduct />,
             loader: loaderDetails,
           },
-          {
-            path: '/:root/sortBy/:sortBy/filter/:filter/search/:search/offset/:offset',
+          { 
+            path: '/:root/category/:category/sortBy/:sortBy/filter/:filter/search/:search/offset/:offset',
             element: <SortProduct />,
             loader: loaderSort,
           },

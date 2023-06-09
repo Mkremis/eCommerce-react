@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
-import './Navbar.css';
+import "./Navbar.css";
 
 const Navbar = () => {
   const { refreshPage } = useContext(AuthContext);
   const handleLink = (e) => {
-    refreshPage(e.target.getAttribute('data-to'));
+    refreshPage(e.target.getAttribute("data-to"));
   };
   return (
     <nav className="nav-bar">
@@ -14,7 +14,7 @@ const Navbar = () => {
         <li>
           <span
             className="navbar__link"
-            data-to="/women/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
+            data-to="/women/category/%20/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
             onClick={handleLink}
           >
             Women
@@ -23,7 +23,7 @@ const Navbar = () => {
         <li>
           <span
             className="navbar__link"
-            data-to="/men/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
+            data-to="/men/category/%20/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
             onClick={handleLink}
           >
             Men
@@ -32,7 +32,7 @@ const Navbar = () => {
         <li>
           <span
             className="navbar__link"
-            data-to="/sneakers/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
+            data-to="/sneakers/category/%20/sortBy/sort=freshness/filter/%20/search/%20/offset/48"
             onClick={handleLink}
           >
             Sneakers

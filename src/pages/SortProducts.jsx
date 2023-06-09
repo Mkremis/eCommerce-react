@@ -33,13 +33,16 @@ const SortProduct = () => {
 
   useEffect(() => {
     let offset = page * limit;
-    if (page > 1 && hasMore)
+    if (page === 1) window.scrollTo(0, 0);
+    if (page > 1 && hasMore) {
       navigate(
-        `/${root}/sortBy/${path[3]}/filter/${path[5]}/search/${path[7]}/offset/${offset}`
+        `/${root}/category/${path[3]}/sortBy/${path[5]}/filter/${path[7]}/search/${path[9]}/offset/${offset}`
       );
+    }
 
     if (offset >= res.itemCount) setHasMore(false);
   }, [page, hasMore, setHasMore]);
+
   return (
     <>
       <Filters facets={res.facets} refreshPage={refreshPage} />
