@@ -43,7 +43,7 @@ const SortProduct = () => {
   }, [page, hasMore, setHasMore]);
   return (
     <>
-      <Filters facets={res.facets && res.facets} refreshPage={refreshPage} />
+      {res.facets && <Filters facets={res.facets} refreshPage={refreshPage} />}
       <section className="content">
         <InfiniteScroll
           dataLength={items.length} //This is important field to render the next data

@@ -107,7 +107,7 @@
 }
 .cart-modal__delete-container {
   cursor: pointer;
-  flex: 0 0 auto;
+  flex: 0 0 10%;
   text-align: right;
 }
 
