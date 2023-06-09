@@ -4,7 +4,7 @@ import colors from 'color-name';
 import useFilters from '../hooks/useFilters';
 
 const MenuFilters = ({ facets, closeModalTop, refreshPage }) => {
-  const [
+  const {
     menu,
     setMenu,
     subMenu,
@@ -17,7 +17,7 @@ const MenuFilters = ({ facets, closeModalTop, refreshPage }) => {
     handleSubMenuChange,
     handleFilter,
     handleClear,
-  ] = useFilters(facets, refreshPage);
+   } = useFilters(facets, refreshPage);
 
   const handleBack = () => {
     if (menu) {

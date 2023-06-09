@@ -1,6 +1,6 @@
 export const options = {
   headers: {
-    "X-RapidAPI-Key": "1693f38f67mshed9ca24b1b2aec1p1fe1b4jsnd9da89021c3a",
+    "X-RapidAPI-Key": "bd78c37743msh7f38da7368a493cp1741ebjsn1c6de7347a4d",
     "X-RapidAPI-Host": "asos2.p.rapidapi.com",
   },
 };
