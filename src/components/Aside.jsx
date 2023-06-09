@@ -10,6 +10,7 @@ const Aside = () => {
   const [categories, setCategories] = useState(null);
   const { refreshPage } = useContext(AuthContext);
 
+  const root = pathname.split("/")[1];
   options.method = "GET";
   // let categories = pathname.includes("sortBy") ? data : null;
   useEffect(() => {
@@ -63,7 +64,7 @@ const Aside = () => {
                       className={"category__link"}
                       onClick={() =>
                         refreshPage(
-                          `/categoryId=${cat.link.categoryId}/sortBy/%20/filter/%20/search/%20/offset/48`
+                          `/${root}/category/${cat.link.categoryId}/sortBy/%20/filter/%20/search/%20/offset/48`
                         )
                       }
                       id={cat.link.categoryId}

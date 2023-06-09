@@ -1,26 +1,26 @@
-import React, { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
-import './GenderHeader.css';
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
+import "./GenderHeader.css";
 const GenderHeader = ({ gender }) => {
   const images = {
     men: {
       mobile:
-        'https://images.asos-media.com/navigation/mw_homebuttonnew_1826147',
+        "https://images.asos-media.com/navigation/mw_homebuttonnew_1826147",
       desktop:
-        'https://images.asos-media.com/navigation/mw_homebuttonnew_1826147',
+        "https://images.asos-media.com/navigation/mw_homebuttonnew_1826147",
     },
     women: {
       mobile:
-        'https://images.asos-media.com/navigation/ww-gl-home-june-refresh-1m',
+        "https://images.asos-media.com/navigation/ww-gl-home-june-refresh-1m",
       desktop:
-        'https://images.asos-media.com/navigation/ww-gl-home-june-refresh-1m',
+        "https://images.asos-media.com/navigation/ww-gl-home-june-refresh-1m",
     },
   };
 
   const { refreshPage } = useContext(AuthContext);
-  const handleLink = (e) => {
+  const handleLink = () => {
     refreshPage(
-      `/${gender}/sortBy/sort=freshness/filter/%20/search/%20/offset/48`
+      `/${gender}/category/%20/sortBy/sort=freshness/filter/%20/search/%20/offset/48`
     );
   };
   return (

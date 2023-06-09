@@ -5,6 +5,7 @@
     margin: auto;
   }
   .nav__category-items {
+    margin: 0;
     padding: 0;
     height: 65vh;
     width: 100%;
@@ -60,6 +61,7 @@
     padding-right: 1%;
   }
   .nav__category-items {
+    margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
