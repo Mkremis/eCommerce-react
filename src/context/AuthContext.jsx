@@ -72,7 +72,6 @@ const AuthProvider = ({ children }) => {
       setUser(userData);
       setAuth(token);
     }
-    console.log(userData, token);
   }, []);
   useEffect(() => {
     if (auth && user.login.username) {
