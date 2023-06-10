@@ -33,9 +33,4 @@
 .contact-form *::placeholder {
   color: black;
 }
-.contact-form [required]:valid {
-  border: thin solid var(--form-ok-color);
-}
-.contact-form [required]:invalid {
-  border: thin solid var(--form-error-color);
-}
+

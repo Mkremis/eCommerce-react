@@ -44,6 +44,13 @@ html {
   font-weight: bolder;
   color: var(--Orange);
 }
+input[required]:valid {
+  border-color: #18bc9c;
+}
+input[required]:invalid {
+  border-color: #ff0039;
+}
+
 img {
   max-width: 100%;
   height: auto;
