@@ -1,9 +1,10 @@
 /* -----------------USER ACCOUNT FORM---------------------- */
-.user-account__form{
+.user-account__form {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .user-account__form fieldset {
   background-color: rgba(255, 235, 205, 0.146);
 }
@@ -40,7 +41,7 @@
 }
 .user-account__form-submit::after,
 .user-account__form-submit::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: 0px;
@@ -58,7 +59,7 @@
 }
 
 .user-account__form-submit::before {
-  content: '';
+  content: "";
   transform: rotate(-135deg) translateX(50%);
   width: 11px;
   height: 11px;
