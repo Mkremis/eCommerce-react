@@ -9,23 +9,19 @@ const initialCart = "";
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState(initialUser);
   const [auth, setAuth] = useState(initialAuth);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
-
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
   };
-
   const handlePlusQ = () => setProductQ(productQ + 1);
   const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
-
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
     let login_username = username.value;
@@ -53,11 +49,31 @@ const AuthProvider = ({ children }) => {
       userData.user_cart && setCart(userData.user_cart);
       setUser(data);
       setAuth(response.token);
+      localStorage.setItem("auth", response.token);
+      localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       alert(error);
     }
   };
+  const handleLogout = () => {
+    navigate("/");
+    setAuth(initialAuth);
+    localStorage.removeItem("auth");
+    setUser(initialUser);
+    localStorage.removeItem("user");
+    setCart(initialCart);
+    setCartItems(0);
+  };
 
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("auth");
+    if (userData && token) {
+      setUser(userData);
+      setAuth(token);
+    }
+    console.log(userData, token);
+  }, []);
   useEffect(() => {
     if (auth && user.login.username) {
       let userCart = cart === "" ? {} : cart;
@@ -78,14 +94,6 @@ const AuthProvider = ({ children }) => {
         .catch((error) => console.log(error));
     }
   }, [cart]);
-
-  const handleLogout = () => {
-    navigate("/");
-    setAuth(initialAuth);
-    setUser(initialUser);
-    setCart(initialCart);
-    setCartItems(0);
-  };
 
   const data = {
     auth,
