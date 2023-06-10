@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
+import React from 'react';
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom"; 
 
 
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
-  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleDashboard = ()=>navigate(`/dashboard/${user.login.username}/token/${auth}`);
-   
+  const handleDashboard = ()=>navigate(`/dashboard/${user.login.username}`);
   
   return (
     <article
