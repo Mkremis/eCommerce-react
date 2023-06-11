@@ -4,6 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({ handleAuth, closeModalLogin }) => {
   const navigate = useNavigate();
+  const handleTogglePass = (e) => {
+    const togglePassword = e.target;
+    const password = togglePassword.previousSibling;
+    const type =
+      password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    // togglePassword.classList.toggle("material-symbols-outlined");
+    type === "password"
+      ? (togglePassword.textContent = "visibility")
+      : (togglePassword.textContent = "visibility_off");
+  };
   return (
     <section className="login-container" id="container">
       <article className="form-container sign-in-container">
@@ -14,8 +25,26 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
           }}
         >
           <h1>Sign in</h1>
-          <input type="text" name="username" placeholder="username" />
-          <input type="password" name="psw" placeholder="password" />
+          <div>
+            <input type="text" name="username" placeholder="username" />
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <input type="password" name="psw" placeholder="password" />
+            <span
+              className="material-symbols-outlined"
+              id="togglePassword"
+              style={{
+                marginLeft: "-30px",
+                cursor: "pointer",
+                color: "#2780e3",
+                zIndex: 100,
+              }}
+              onClick={handleTogglePass}
+            >
+              visibility
+            </span>
+          </div>
+
           <a href="#">Forgot your password?</a>
           <input type="submit" value="Sign In" />
         </form>

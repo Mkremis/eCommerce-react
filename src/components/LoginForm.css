@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
-
-
 .login-container h1 {
   font-weight: bold;
   margin: 0;
@@ -87,4 +85,3 @@
   align-items: center;
   justify-content: space-evenly;
 }
-
