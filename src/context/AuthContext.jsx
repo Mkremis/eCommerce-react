@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { helpAuth } from "../helpers/helpAuth";
 
 const AuthContext = createContext();
 const initialAuth = null;
@@ -28,16 +29,14 @@ const AuthProvider = ({ children }) => {
     let login_password = psw.value;
     const loginData = { login_username, login_password };
     const options = {
-      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
+      body: loginData,
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
-    try {
-      const response = await fetch(endpoint, options).then((res) =>
-        res.ok ? res.json() : Promise.reject("INCORRECT PASSWORD")
-      );
-      const userData = await response.user;
+
+    const responseLogin = await helpAuth().post(endpoint, options);
+    const userData = responseLogin && responseLogin.user;
+    if (userData) {
       let data = {};
       for (const key in userData) {
         if (key !== "user_cart") {
@@ -48,11 +47,9 @@ const AuthProvider = ({ children }) => {
       }
       userData.user_cart && setCart(userData.user_cart);
       setUser(data);
-      setAuth(response.token);
-      localStorage.setItem("auth", response.token);
+      setAuth(responseLogin.token);
+      localStorage.setItem("auth", responseLogin.token);
       localStorage.setItem("user", JSON.stringify(data));
-    } catch (error) {
-      alert(error);
     }
   };
   const handleLogout = () => {
@@ -73,24 +70,18 @@ const AuthProvider = ({ children }) => {
       setAuth(token);
     }
   }, []);
+
   useEffect(() => {
-    if (auth && user.login.username) {
-      let userCart = cart === "" ? {} : cart;
-      const requestOptions = {
-        method: "PUT",
+    if (auth) {
+      const options = {
         headers: {
           Authorization: `Bearer ${auth}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userCart),
+        body: cart,
       };
-      fetch(
-        `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`,
-        requestOptions
-      )
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.log(error));
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
+      helpAuth().put(endpoint, options);
     }
   }, [cart]);
 

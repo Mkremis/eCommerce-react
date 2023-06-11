@@ -2,16 +2,16 @@ import React from "react";
 import RenderForm from "../components/RenderForm";
 import { useLoaderData } from "react-router-dom";
 
-const UserDashboard = ({newUser}) => {
+const UserDashboard = ({ newUser }) => {
   let user;
-  if (newUser){
+  if (newUser) {
     user = newUser;
-  }else{
+  } else {
     user = useLoaderData();
   }
 
   return (
-    <article>
+    <article className="dashboard">
       <h2
         style={{
           textAlign: "center",
