@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { helpAuth } from "../helpers/helpAuth";
 
 const AuthContext = createContext();
 const initialAuth = null;
@@ -29,12 +28,13 @@ const AuthProvider = ({ children }) => {
     let login_password = psw.value;
     const loginData = { login_username, login_password };
     const options = {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: loginData,
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
 
-    const responseLogin = await helpAuth().post(endpoint, options);
+    const responseLogin = await window.fetch(endpoint, options);
     const userData = responseLogin && responseLogin.user;
     if (userData) {
       let data = {};
@@ -74,14 +74,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (auth) {
       const options = {
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${auth}`,
           "Content-Type": "application/json",
         },
-        body: cart,
+        body: JSON.stringify(cart),
       };
       const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
-      helpAuth().put(endpoint, options);
+    const responseUpdateCart = await window.fetch(endpoint, options);
+    console.log(responseUpdateCart)
     }
   }, [cart]);
 

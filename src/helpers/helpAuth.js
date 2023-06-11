@@ -12,18 +12,21 @@ export const helpAuth = () => {
     options.body = JSON.stringify(options.body) || false;
     if (!options.body) delete options.body;
     setTimeout(() => controller.abort(), 9000);
-    return fetch(endpoint, options)
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: res.statusText || "Ocurrio un error",
-            })
-      )
+    return (
+      fetch(endpoint, options)
+        .then((res) => res.json())
+        // .then((res) =>
+        //   res.ok
+        //     ? res.json()
+        //     : Promise.reject({
+        //         err: true,
+        //         status: res.status || "00",
+        //         statusText: res.statusText || "Ocurrio un error",
+        //       })
+        // )
 
-      .catch((err) => alert(err.statusText));
+        .catch((err) => console.log(err))
+    );
   };
   const get = (url, options = {}) => customFetch(url, options);
   const post = (url, options) => {
