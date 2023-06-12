@@ -14,6 +14,8 @@ import loaderHome from "../helpers/loaderHome";
 import Checkout from "../pages/Checkout";
 import loaderDashboard from "../helpers/loaderDashboard";
 import SuccessPayment from "../pages/SuccessPayment";
+import Orders from "../pages/Orders";
+import { loaderOrders } from "../helpers/loaderOrders";
 
 const router = createHashRouter([
   {
@@ -40,6 +42,11 @@ const router = createHashRouter([
             path: "/dashboard/:username",
             element: <UserDashboard newUser={null} />,
             loader: loaderDashboard,
+          },
+          {
+            path: "/orders/:username",
+            element: <Orders />,
+            loader: loaderOrders,
           },
           {
             path: "/dashboard/newuser",
