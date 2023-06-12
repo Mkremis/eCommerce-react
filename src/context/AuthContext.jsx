@@ -2,10 +2,19 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
-const initialAuth = null;
-const initialUser = null;
+const initialAuth = localStorage.getItem("auth") || null;
+const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
-const initialCart = "";
+const initialCart = JSON.parse(localStorage.getItem("cart")) || null || "";
+
+// useEffect(() => {
+//   const userData = JSON.parse(localStorage.getItem("user"));
+//   const token = localStorage.getItem("auth");
+//   if (userData && token) {
+//     setUser(userData);
+//     setAuth(token);
+//   }
+// }, []);
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -30,11 +39,13 @@ const AuthProvider = ({ children }) => {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: loginData,
+      body: JSON.stringify(loginData),
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
 
-    const responseLogin = await window.fetch(endpoint, options);
+    const responseLogin = await window
+      .fetch(endpoint, options)
+      .then((res) => res.json());
     const userData = responseLogin && responseLogin.user;
     if (userData) {
       let data = {};
@@ -45,34 +56,28 @@ const AuthProvider = ({ children }) => {
           data[keys[0]] = { ...data[keys[0]], ...val };
         }
       }
+      localStorage.setItem("auth", responseLogin.token);
+      localStorage.setItem("user", JSON.stringify(data));
+      userData.user_cart && localStorage.setItem("cart", JSON.stringify(cart));
       userData.user_cart && setCart(userData.user_cart);
       setUser(data);
       setAuth(responseLogin.token);
-      localStorage.setItem("auth", responseLogin.token);
-      localStorage.setItem("user", JSON.stringify(data));
     }
   };
   const handleLogout = () => {
     navigate("/");
-    setAuth(initialAuth);
     localStorage.removeItem("auth");
-    setUser(initialUser);
+    setAuth(null);
     localStorage.removeItem("user");
-    setCart(initialCart);
+    setUser(null);
+    localStorage.removeItem("cart");
+    setCart(null);
     setCartItems(0);
   };
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const token = localStorage.getItem("auth");
-    if (userData && token) {
-      setUser(userData);
-      setAuth(token);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (auth) {
+    if (auth && cart) {
+      localStorage.setItem("cart", JSON.stringify(cart));
       const options = {
         method: "PUT",
         headers: {
@@ -82,8 +87,13 @@ const AuthProvider = ({ children }) => {
         body: JSON.stringify(cart),
       };
       const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
-    const responseUpdateCart = await window.fetch(endpoint, options);
-    console.log(responseUpdateCart)
+      window
+        .fetch(endpoint, options)
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) =>
+          console.log("Error updatting the user cart form the server", err)
+        );
     }
   }, [cart]);
 
