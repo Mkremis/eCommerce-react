@@ -5,7 +5,7 @@ const AuthContext = createContext();
 const initialAuth = localStorage.getItem("auth") || null;
 const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
-const initialCart = JSON.parse(localStorage.getItem("cart")) || null || "";
+const initialCart = null;
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -90,6 +90,24 @@ const AuthProvider = ({ children }) => {
         );
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (auth) {
+      const options = {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
+      window
+        .fetch(endpoint, options)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user_cart) setCart(data.user_cart);
+        });
+    }
+  }, [auth]);
 
   const data = {
     auth,
