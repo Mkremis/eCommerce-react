@@ -7,7 +7,6 @@ const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = JSON.parse(localStorage.getItem("cart")) || null || "";
 
-
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(initialUser);
@@ -24,22 +23,21 @@ const AuthProvider = ({ children }) => {
   const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
   const handleAuth = async (e) => {
-    let { username, psw } = e.target;
-    let login_username = username.value;
-    let login_password = psw.value;
-    const loginData = { login_username, login_password };
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
-    };
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
-
-    const responseLogin = await window
-      .fetch(endpoint, options)
-      .then((res) => res.json());
-    const userData = responseLogin && responseLogin.user;
-    if (userData) {
+    try {
+      let { username, psw } = e.target;
+      let login_username = username.value;
+      let login_password = psw.value;
+      const loginData = { login_username, login_password };
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      };
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
+      const login = await window.fetch(endpoint, options);
+      const responseLogin = await login.json();
+      if (login.status !== 200) throw new Error(responseLogin.message);
+      const userData = responseLogin.user;
       let data = {};
       for (const key in userData) {
         if (key !== "user_cart") {
@@ -47,15 +45,19 @@ const AuthProvider = ({ children }) => {
           let val = { [keys[1]]: userData[key] };
           data[keys[0]] = { ...data[keys[0]], ...val };
         }
+        localStorage.setItem("auth", responseLogin.token);
+        localStorage.setItem("user", JSON.stringify(data));
+        userData.user_cart &&
+          localStorage.setItem("cart", JSON.stringify(cart));
+        userData.user_cart && setCart(userData.user_cart);
+        setUser(data);
+        setAuth(responseLogin.token);
       }
-      localStorage.setItem("auth", responseLogin.token);
-      localStorage.setItem("user", JSON.stringify(data));
-      userData.user_cart && localStorage.setItem("cart", JSON.stringify(cart));
-      userData.user_cart && setCart(userData.user_cart);
-      setUser(data);
-      setAuth(responseLogin.token);
+    } catch (error) {
+      alert(error);
     }
   };
+
   const handleLogout = () => {
     navigate("/");
     localStorage.removeItem("auth");
