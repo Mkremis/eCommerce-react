@@ -40,8 +40,8 @@ const useRenderForm = () => {
 
   const validate = {
     password: {
-      pattern: ".{7,60}",
-      title: "7 to 60 characters",
+      pattern: ".{8}",
+      title: "8 characters",
     },
     username: {
       pattern: "^[A-Za-z][A-Za-z0-9_]{8,15}$",
@@ -79,21 +79,21 @@ const useRenderForm = () => {
       pattern: "[A-Za-z]{1,20}",
       title: "only letters max 20 characters",
     },
-    number: {
-      pattern: "^[A-Za-z][A-Za-z0-9_]{1,20}$",
-      title: "numbers and letters max 20 characters",
-    },
+    // number: {
+    //   pattern: "^[A-Za-z][A-Za-z0-9]{1,20}$",
+    //   title: "numbers and letters max 20 characters",
+    // },
     street: {
       pattern: "^[A-Za-z][A-Za-z0-9_]{1,20}$",
       title: "numbers and letters max 20 characters",
     },
     country: {
-      pattern: "[A-Za-z]{1,20}",
+      pattern: "[A-Za-z ]{1,20}",
       title: "only letters max 20 characters",
     },
     postcode: {
-      pattern: "^[A-Za-z][A-Za-z0-9_]{1,10}$",
-      title: "numbers and letters max 10 characters",
+      pattern: "^(d{5}([-]d{4})?)",
+      title: "format is nnnnn or nnnnn-nnnn",
     },
   };
 

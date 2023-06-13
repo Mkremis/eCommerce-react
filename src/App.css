@@ -298,7 +298,7 @@ img {
 @media (min-width: 415px) {
   .orders-table {
     font-size: 1rem;
-    max-width: 90vw;
+    margin: 1rem;
   }
   .orders-table img {
     width: 50%;
