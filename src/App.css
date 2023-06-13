@@ -277,3 +277,23 @@ img {
   margin: auto;
   width: 10ch;
 }
+/* ORDERS */
+.orders-table {
+  max-width: 90vw;
+}
+.orders-table th {
+  padding: 1rem;
+}
+.orders-table td {
+  text-align: center;
+}
+.orders-table td:not(:first-child) {
+  padding: 1rem;
+}
+
+.orders-table__order {
+  cursor: pointer;
+}
+.orders-table__order:hover {
+  background-color: var(--Pale-orange);
+}
