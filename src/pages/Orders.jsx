@@ -7,12 +7,7 @@ const Orders = () => {
   return (
     <article>
       <h1 style={{ textAlign: "center", marginTop: "2rem" }}>Order History</h1>
-      <table
-        border={1}
-        cellSpacing={0}
-        style={{ margin: "2rem auto" }}
-        className="orders-table"
-      >
+      <table border={1} cellSpacing={0} className="orders-table">
         <thead>
           <tr>
             <th>Product Image</th>
@@ -28,11 +23,7 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody className="orders-table__body">
-          {orders.length < 1 ? (
-            <tr>
-              <td colSpan={10}>No orders yet!</td>
-            </tr>
-          ) : (
+          {orders.length > 1 &&
             orders.map((order) => {
               return (
                 <tr
@@ -41,7 +32,7 @@ const Orders = () => {
                   onClick={() => navigate(`/${order.gender}/${order.prodId}`)}
                 >
                   <td>
-                    <img src={order.prodImage} width={"50%"} height={"auto"} />
+                    <img src={order.prodImage} />
                   </td>
                   <td>{new Date(order.transactionDate).toLocaleString()}</td>
                   <td>{order.id}</td>
@@ -54,8 +45,7 @@ const Orders = () => {
                   <td>$ {parseFloat(order.prodPrice) * order.productQ}</td>
                 </tr>
               );
-            })
-          )}
+            })}
         </tbody>
       </table>
     </article>

@@ -279,21 +279,35 @@ img {
 }
 /* ORDERS */
 .orders-table {
-  max-width: 90vw;
+  font-size: 0.5rem;
 }
-.orders-table th {
-  padding: 1rem;
+.orders-table img {
+  width: max-content;
+  height: auto;
 }
 .orders-table td {
   text-align: center;
 }
-.orders-table td:not(:first-child) {
-  padding: 1rem;
-}
-
 .orders-table__order {
   cursor: pointer;
 }
 .orders-table__order:hover {
   background-color: var(--Pale-orange);
+}
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  .orders-table {
+    font-size: 1rem;
+    max-width: 90vw;
+  }
+  .orders-table img {
+    width: 50%;
+    height: auto;
+  }
+  .orders-table th {
+    padding: 1rem;
+  }
+  .orders-table td:not(:first-child) {
+    padding: 1rem;
+  }
 }
