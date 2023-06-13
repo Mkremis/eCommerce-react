@@ -23,7 +23,11 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody className="orders-table__body">
-          {orders.length > 1 &&
+          {orders.length < 1 ? (
+            <tr>
+              <td colSpan={10}>No orders yet</td>
+            </tr>
+          ) : (
             orders.map((order) => {
               return (
                 <tr
@@ -45,7 +49,8 @@ const Orders = () => {
                   <td>$ {parseFloat(order.prodPrice) * order.productQ}</td>
                 </tr>
               );
-            })}
+            })
+          )}
         </tbody>
       </table>
     </article>
