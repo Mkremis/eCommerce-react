@@ -7,14 +7,6 @@ const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = JSON.parse(localStorage.getItem("cart")) || null || "";
 
-// useEffect(() => {
-//   const userData = JSON.parse(localStorage.getItem("user"));
-//   const token = localStorage.getItem("auth");
-//   if (userData && token) {
-//     setUser(userData);
-//     setAuth(token);
-//   }
-// }, []);
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
