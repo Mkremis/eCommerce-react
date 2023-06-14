@@ -123,9 +123,17 @@ img {
   flex-wrap: wrap;
   align-items: baseline;
 }
-
 .home-product {
-  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.home-product > a {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
   text-decoration: none;
   color: var(--Black);
 }
@@ -142,7 +150,6 @@ img {
 @media (min-width: 415px) {
   .home-product {
     flex: 0 0 50%;
-    padding: 1rem;
   }
 }
 /* end of WM/H */

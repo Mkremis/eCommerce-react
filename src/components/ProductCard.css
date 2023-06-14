@@ -38,8 +38,24 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.product-description__footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.product-description__footer > * {
+  flex: 0 0 35%;
+  text-align: center;
+}
+
 .product-price {
   font-weight: bold;
+}
+.product-description__like {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 .product > figure {
   cursor: pointer;

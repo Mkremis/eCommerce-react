@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
+  const [likes, setLikes] = useState([]);
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
@@ -70,6 +71,10 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    localStorage.setItem("likes", JSON.stringify(likes));
+  }, [likes]);
+
+  useEffect(() => {
     if (auth && cart) {
       localStorage.setItem("cart", JSON.stringify(cart));
       const options = {
@@ -110,6 +115,8 @@ const AuthProvider = ({ children }) => {
   }, [auth]);
 
   const data = {
+    likes,
+    setLikes,
     auth,
     handleAuth,
     user,

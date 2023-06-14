@@ -3,6 +3,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import GenderHeader from "../components/GenderHeader";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
+import ProductFooter from "../components/ProductFooter";
 
 const Home = () => {
   const { homeData } = useLoaderData();
@@ -18,19 +19,22 @@ const Home = () => {
             womenData.map((product) => {
               if (product.productType === "Product") {
                 return (
-                  <Link
-                    to={`/women/${product.id}`}
-                    key={product.id}
-                    className="home-product"
-                  >
-                    <ProductCard
-                      key={product.id}
-                      image={`https://${product.imageUrl}`}
-                      name={product.name}
-                      price_curr={product.price.current.text}
+                  <section className="home-product" key={product.id}>
+                    <Link to={`/women/${product.id}`}>
+                      <ProductCard
+                        key={product.id}
+                        image={`https://${product.imageUrl}`}
+                        name={product.name}
+                        id={product.id}
+                      />
+                    </Link>
+                    <ProductFooter
+                      price={product.price.current.text}
                       id={product.id}
+                      name={product.name}
+                      image={`https://${product.imageUrl}`}
                     />
-                  </Link>
+                  </section>
                 );
               }
             })}
@@ -41,18 +45,21 @@ const Home = () => {
             menData.map((product) => {
               if (product.productType === "Product") {
                 return (
-                  <Link
-                    to={`/men/${product.id}`}
-                    key={product.id}
-                    className="home-product"
-                  >
-                    <ProductCard
-                      image={`https://${product.imageUrl}`}
-                      name={product.name}
-                      price_curr={product.price.current.text}
+                  <section className="home-product" key={product.id}>
+                    <Link to={`/men/${product.id}`}>
+                      <ProductCard
+                        image={`https://${product.imageUrl}`}
+                        name={product.name}
+                        id={product.id}
+                      />
+                    </Link>
+                    <ProductFooter
+                      price={product.price.current.text}
                       id={product.id}
+                      name={product.name}
+                      image={`https://${product.imageUrl}`}
                     />
-                  </Link>
+                  </section>
                 );
               }
             })}
