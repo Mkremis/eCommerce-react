@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../context/AuthContext";
 
 const ProductFooter = ({ price, id, name, image }) => {
-  const [like, setLike] = useState(false);
+  const { likes, setLikes } = useContext(AuthContext);
+  const initalLike = likes.find((obj) => obj.id === id) || null;
+  const [like, setLike] = useState(initalLike);
   const product = { id, name, image, price };
-  const handleLike = () => (like ? setLike(null) : setLike(product));
+  const handleLike = () => {
+    if (like) {
+      setLike(false);
+      let newLikes = likes.filter(({ id }) => id !== product.id);
+      setLikes(newLikes);
+    } else {
+      setLike(true);
+      setLikes([...likes, product]);
+    }
+  };
 
   return (
     <div className="product-description__footer">
