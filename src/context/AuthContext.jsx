@@ -6,6 +6,7 @@ const initialAuth = localStorage.getItem("auth") || null;
 const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = null;
+const initialLikes = JSON.parse(localStorage.getItem("likes")) || [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const AuthProvider = ({ children }) => {
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
-  const [likes, setLikes] = useState([]);
+  const [likes, setLikes] = useState(initialLikes);
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
