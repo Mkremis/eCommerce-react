@@ -83,6 +83,7 @@ const SortProduct = () => {
                       id={product.id}
                       name={product.name}
                       image={`https://${product.imageUrl}`}
+                      gender={root}
                     />
                   </section>
                 );
