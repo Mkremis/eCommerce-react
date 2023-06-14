@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
       const userData = responseLogin.user;
       let data = {};
       for (const key in userData) {
-        if (key !== "user_cart") {
+        if (key !== "user_cart" || key !== "user_likes") {
           let keys = key.split("_");
           let val = { [keys[1]]: userData[key] };
           data[keys[0]] = { ...data[keys[0]], ...val };
@@ -51,6 +51,8 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("auth", responseLogin.token);
         localStorage.setItem("user", JSON.stringify(data));
         userData.user_cart && setCart(userData.user_cart);
+        userData.user_likes && setLikes(userData.user_likes);
+
         setUser(data);
         setAuth(responseLogin.token);
       }
@@ -59,66 +61,66 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // UPDATE AUTH STATES WHEN USER LOGOUT
   const handleLogout = () => {
     navigate("/");
     localStorage.removeItem("auth");
     setAuth(null);
     localStorage.removeItem("user");
     setUser(null);
-    setCart(null);
-    setCartItems(0);
+    setCart(initialCart);
+    setCartItems(initialProductQ);
+    setLikes(initialLikes);
   };
 
+  // UPDATE USER LIKES IN USER DB WHEN DETECT A CHANGE IN LIKES STATE
   useEffect(() => {
     if (auth) {
-      if (likes) {
-        const options = {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${auth}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(likes),
-        };
-        const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
-        window
-          .fetch(endpoint, options)
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((err) =>
-            console.log("Error updatting the user likes form the server", err)
-          );
-      }
-    } else {
-      sessionStorage.setItem("likes", JSON.stringify(likes));
+      const likesToUpdate = likes.length === 0 ? null : likes;
+      const options = {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(likesToUpdate),
+      };
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
+      window
+        .fetch(endpoint, options)
+        // .then((res) => res.json())
+        // .then((data) => console.log(data))
+        .catch((err) =>
+          console.log("Error updatting the user likes form the server", err)
+        );
+      // localStorage.setItem("likes", JSON.stringify(likes));
     }
   }, [likes]);
 
+  // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
   useEffect(() => {
     if (auth) {
-      if (cart) {
-        const options = {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${auth}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cart),
-        };
-        const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
-        window
-          .fetch(endpoint, options)
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((err) =>
-            console.log("Error updatting the user cart form the server", err)
-          );
-      }
-    } else {
-      sessionStorage.setItem("cart", JSON.stringify(cart));
+      const options = {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cart),
+      };
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
+      window
+        .fetch(endpoint, options)
+        // .then((res) => res.json())
+        // .then((data) => console.log(data))
+        .catch((err) =>
+          console.log("Error updatting the user cart form the server", err)
+        );
+      // localStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart]);
 
+  // LOAD USER DB CART AND LIKES AND UPDATE CART AND LIKES STATE WHEN USER LOGGED
   useEffect(() => {
     if (auth) {
       const options = {
@@ -135,7 +137,9 @@ const AuthProvider = ({ children }) => {
       ])
         .then((responses) => Promise.all(responses.map((res) => res.json())))
         .then(([cart, likes]) => {
-          if (cart.user_cart) setCart(cart.user_cart);
+          if (cart.user_cart) {
+            setCart(cart.user_cart);
+          }
           setLikes(likes.user_likes);
         });
     }
