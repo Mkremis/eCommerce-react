@@ -1,26 +1,26 @@
-import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
-import './ProductDetails.css';
+import React, { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import Like from "./Like";
+import "./ProductDetails.css";
 
 const ProductDetails = ({ product }) => {
   const { pathname } = useLocation();
-  const gender = pathname.split('/')[1];
-  const { handlePlusQ, handleMinusQ, productQ, setProductQ, cart, setCart} =
+  const gender = pathname.split("/")[1];
+  const { handlePlusQ, handleMinusQ, productQ, setProductQ, cart, setCart } =
     useContext(AuthContext);
   const handleCart = () => {
     const updatedCart = {
-        ...cart,
-        [product.id]: {
-          gender,
-          prodName: product.name,
-          prodImage: product.media.images[0].url,
-          prodPrice: product.price.current.value,
-          productQ,
-        },
-      };
-    setCart(updatedCart)
-   
+      ...cart,
+      [product.id]: {
+        gender,
+        prodName: product.name,
+        prodImage: product.media.images[0].url,
+        prodPrice: product.price.current.value,
+        productQ,
+      },
+    };
+    setCart(updatedCart);
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ProductDetails = ({ product }) => {
         <div
           className="details__description"
           dangerouslySetInnerHTML={{
-            __html: product.brand.description || product.description || '',
+            __html: product.brand.description || product.description || "",
           }}
         />
 
@@ -58,12 +58,12 @@ const ProductDetails = ({ product }) => {
             </p>
             <div
               dangerouslySetInnerHTML={{
-                __html: product.description || '',
+                __html: product.description || "",
               }}
             />
             <div
               dangerouslySetInnerHTML={{
-                __html: product.info.aboutMe || '',
+                __html: product.info.aboutMe || "",
               }}
             />
           </article>
@@ -89,6 +89,17 @@ const ProductDetails = ({ product }) => {
           {product.price.previous.value !== product.price.current.value && (
             <p className="details__before">{product.price.previous.text}</p>
           )}
+        </div>
+        <div style={{ paddingBottom: "1rem" }}>
+          <Like
+            id={product.id}
+            name={product.name}
+            image={product.media.images[0].url}
+            price={product.price.current.value}
+            styles={{
+              fontSize: "3rem",
+            }}
+          />
         </div>
         <div className="details__product-quantity">
           <div className="input">

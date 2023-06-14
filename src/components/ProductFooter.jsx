@@ -5,7 +5,15 @@ const ProductFooter = ({ price, id, name, image }) => {
   return (
     <div className="product-description__footer">
       <span className="product-price">{price}</span>
-      <Like id={id} name={name} image={image} price={price} />
+      <Like
+        id={id}
+        name={name}
+        image={image}
+        price={price}
+        styles={{
+          fontSize: "1rem",
+        }}
+      />
     </div>
   );
 };

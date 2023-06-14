@@ -52,7 +52,7 @@
 .product-price {
   font-weight: bold;
 }
-.product-description__like {
+.like-button {
   background-color: transparent;
   border: none;
   cursor: pointer;

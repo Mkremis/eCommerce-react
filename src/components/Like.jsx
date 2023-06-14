@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 
-const Like = ({ price, id, name, image }) => {
+const Like = ({ price, id, name, image, styles }) => {
   const { likes, setLikes } = useContext(AuthContext);
   const initalLike = likes.find((obj) => obj.id === id) || null;
   const [like, setLike] = useState(initalLike);
@@ -23,7 +23,7 @@ const Like = ({ price, id, name, image }) => {
     }
   };
   return (
-    <button className="product-description__like" onClick={handleLike}>
+    <button className="like-button" onClick={handleLike} style={styles}>
       {like ? "❤" : "🤍"}
     </button>
   );
