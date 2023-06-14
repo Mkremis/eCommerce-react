@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Filters from "../components/Filters";
+import ProductFooter from "../components/ProductFooter";
 const limit = 48;
 
 const SortProduct = () => {
@@ -43,7 +44,9 @@ const SortProduct = () => {
   }, [page, hasMore, setHasMore]);
   return (
     <>
-      {res.facets && <Filters facets={res.facets} refreshPage={refreshPage} />}
+      {res && res.facets && (
+        <Filters facets={res.facets} refreshPage={refreshPage} />
+      )}
       <section className="content">
         <InfiniteScroll
           dataLength={items.length} //This is important field to render the next data
@@ -66,19 +69,22 @@ const SortProduct = () => {
             items.map((product) => {
               if (product.productType === "Product") {
                 return (
-                  <Link
-                    to={`/${root}/${product.id}`}
-                    key={product.id}
-                    className="product"
-                  >
-                    <ProductCard
-                      key={product.id}
-                      image={`https://${product.imageUrl}`}
-                      name={product.name}
-                      price_curr={product.price.current.text}
+                  <section className="product" key={product.id}>
+                    <Link to={`/${root}/${product.id}`}>
+                      <ProductCard
+                        image={`https://${product.imageUrl}`}
+                        name={product.name}
+                        price_curr={product.price.current.text}
+                        id={product.id}
+                      />
+                    </Link>
+                    <ProductFooter
+                      price={product.price.current.text}
                       id={product.id}
+                      name={product.name}
+                      image={`https://${product.imageUrl}`}
                     />
-                  </Link>
+                  </section>
                 );
               }
             })}

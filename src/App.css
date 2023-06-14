@@ -129,23 +129,23 @@ img {
   align-items: center;
   justify-content: center;
 }
-.home-product > a {
+.home-product > a,
+.product > a {
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.8rem;
   text-decoration: none;
   color: var(--Black);
 }
-.home-product > figure {
+.home-product > figure,
+.product > figure {
   cursor: pointer;
 }
-.home-product > figure > img:hover {
-  opacity: 0.5;
-}
-.home-product > figure > figcaption:hover {
+
+/* .home-product > figure > figcaption:hover {
   color: var(--Orange);
-}
+} */
 /* MEDIA QUERY DESKTOP */
 @media (min-width: 415px) {
   .home-product {

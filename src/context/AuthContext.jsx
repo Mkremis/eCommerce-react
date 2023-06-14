@@ -6,7 +6,7 @@ const initialAuth = localStorage.getItem("auth") || null;
 const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = null;
-const initialLikes = JSON.parse(localStorage.getItem("likes")) || [];
+const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const handlePlusQ = () => setProductQ(productQ + 1);
   const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
+
   const handleAuth = async (e) => {
     try {
       let { username, psw } = e.target;
@@ -49,8 +50,6 @@ const AuthProvider = ({ children }) => {
         }
         localStorage.setItem("auth", responseLogin.token);
         localStorage.setItem("user", JSON.stringify(data));
-        userData.user_cart &&
-          localStorage.setItem("cart", JSON.stringify(cart));
         userData.user_cart && setCart(userData.user_cart);
         setUser(data);
         setAuth(responseLogin.token);
@@ -66,34 +65,57 @@ const AuthProvider = ({ children }) => {
     setAuth(null);
     localStorage.removeItem("user");
     setUser(null);
-    localStorage.removeItem("cart");
     setCart(null);
     setCartItems(0);
   };
 
   useEffect(() => {
-    localStorage.setItem("likes", JSON.stringify(likes));
+    if (auth) {
+      if (likes) {
+        const options = {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${auth}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(likes),
+        };
+        const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
+        window
+          .fetch(endpoint, options)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) =>
+            console.log("Error updatting the user likes form the server", err)
+          );
+      }
+    } else {
+      sessionStorage.setItem("likes", JSON.stringify(likes));
+    }
   }, [likes]);
 
   useEffect(() => {
-    if (auth && cart) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-      const options = {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${auth}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cart),
-      };
-      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
-      window
-        .fetch(endpoint, options)
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((err) =>
-          console.log("Error updatting the user cart form the server", err)
-        );
+    if (auth) {
+      if (cart) {
+        const options = {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${auth}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cart),
+        };
+        const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
+        window
+          .fetch(endpoint, options)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) =>
+            console.log("Error updatting the user cart form the server", err)
+          );
+      }
+    } else {
+      sessionStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart]);
 
@@ -105,12 +127,16 @@ const AuthProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       };
-      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
-      window
-        .fetch(endpoint, options)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user_cart) setCart(data.user_cart);
+      const endpointCart = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
+      const endpointLikes = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/likes`;
+      Promise.all([
+        window.fetch(endpointCart, options),
+        window.fetch(endpointLikes, options),
+      ])
+        .then((responses) => Promise.all(responses.map((res) => res.json())))
+        .then(([cart, likes]) => {
+          if (cart.user_cart) setCart(cart.user_cart);
+          setLikes(likes.user_likes);
         });
     }
   }, [auth]);
