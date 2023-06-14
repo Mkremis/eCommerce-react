@@ -33,6 +33,7 @@ const Home = () => {
                       id={product.id}
                       name={product.name}
                       image={`https://${product.imageUrl}`}
+                      gender={"women"}
                     />
                   </section>
                 );
@@ -58,6 +59,7 @@ const Home = () => {
                       id={product.id}
                       name={product.name}
                       image={`https://${product.imageUrl}`}
+                      gender={"men"}
                     />
                   </section>
                 );

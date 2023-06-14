@@ -21,8 +21,17 @@ const UserDashboard = ({ newUser }) => {
           justifyContent: "space-around",
         }}
       >
-        <div style={{ flexBasis: "33%" }}></div>
-        <div style={{ flexBasis: "33%" }}>
+        <div style={{ flexBasis: "33%", textAlign: "center" }}>
+          {user && (
+            <button
+              onClick={() => navigate(`/likeds/${user.login.username}`)}
+              style={{ padding: "0.5rem" }}
+            >
+              View Likeds
+            </button>
+          )}
+        </div>
+        <div style={{ flexBasis: "33%", textAlign: "center" }}>
           <h2
             style={{
               textAlign: "center",

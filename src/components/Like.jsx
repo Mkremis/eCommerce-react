@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 
-const Like = ({ price, id, name, image, styles }) => {
+const Like = ({ price, id, name, image, styles, gender }) => {
   const { likes, setLikes } = useContext(AuthContext);
   const initalLike = likes.find((obj) => obj.id === id) || null;
   const [like, setLike] = useState(initalLike);
-  const product = { id, name, image, price };
+  const product = { id, name, image, price, gender };
 
   useEffect(() => {
     const updatedLikes = likes.find((obj) => obj.id === id) || null;

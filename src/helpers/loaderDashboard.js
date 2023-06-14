@@ -16,13 +16,12 @@ const loaderDashboard = async ({ params }) => {
     const { user } = responseUserData;
     let data = {};
     user.login_password = "";
+    delete user.user_cart;
+    delete user.user_likes;
     for (const key in user) {
-      if (key !== "user_cart") {
-        let keys = key.split("_");
-        let val = { [keys[1]]: user[key] };
-        console.log(keys[1]);
-        data[keys[0]] = { ...data[keys[0]], ...val };
-      }
+      let keys = key.split("_");
+      let val = { [keys[1]]: user[key] };
+      data[keys[0]] = { ...data[keys[0]], ...val };
     }
     return data;
   } catch (error) {

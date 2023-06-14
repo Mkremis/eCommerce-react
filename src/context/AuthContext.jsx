@@ -43,19 +43,18 @@ const AuthProvider = ({ children }) => {
       const userData = responseLogin.user;
       let data = {};
       for (const key in userData) {
-        if (key !== "user_cart" || key !== "user_likes") {
+        if (key !== "user_cart") {
           let keys = key.split("_");
           let val = { [keys[1]]: userData[key] };
           data[keys[0]] = { ...data[keys[0]], ...val };
         }
-        localStorage.setItem("auth", responseLogin.token);
-        localStorage.setItem("user", JSON.stringify(data));
-        userData.user_cart && setCart(userData.user_cart);
-        userData.user_likes && setLikes(userData.user_likes);
-
-        setUser(data);
-        setAuth(responseLogin.token);
       }
+      localStorage.setItem("auth", responseLogin.token);
+      localStorage.setItem("user", JSON.stringify(data));
+      userData.user_cart && setCart(userData.user_cart);
+      userData.user_likes && setLikes(userData.user_likes);
+      setUser(data);
+      setAuth(responseLogin.token);
     } catch (error) {
       alert(error);
     }

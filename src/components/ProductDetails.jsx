@@ -94,8 +94,9 @@ const ProductDetails = ({ product }) => {
           <Like
             id={product.id}
             name={product.name}
-            image={product.media.images[0].url}
+            image={`https://${product.media.images[0].url}`}
             price={product.price.current.value}
+            gender={gender}
             styles={{
               fontSize: "3rem",
             }}

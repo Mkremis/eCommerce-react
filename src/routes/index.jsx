@@ -16,6 +16,7 @@ import loaderDashboard from "../helpers/loaderDashboard";
 import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
 import { loaderOrders } from "../helpers/loaderOrders";
+import Likeds from "../pages/Likeds";
 
 const router = createHashRouter([
   {
@@ -47,6 +48,11 @@ const router = createHashRouter([
             path: "/orders/:username",
             element: <Orders />,
             loader: loaderOrders,
+          },
+          {
+            path: "/likeds/:username",
+            element: <Likeds />,
+            // loader: loaderOrders,
           },
           {
             path: "/dashboard/newuser",
