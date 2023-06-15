@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 import "./Dashboard.css";
-import { useNavigate } from "react-router-dom"; 
-
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({ isOpen, closeDash, user, logout }) => {
   const navigate = useNavigate();
-  const handleDashboard = ()=>navigate(`/dashboard/${user.login.username}`);
-  
+  const handleDashboard = () => navigate(`/dashboard/${user.login.username}`);
+
   return (
     <article
       className={`user-panel ${isOpen && "is-open"}`}
@@ -19,10 +18,7 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
         <p className="user-username">{user.login.username}</p>
       </div>
       <div className="user-buttons">
-        <button
-          className="user-mangment"
-          onClick={handleDashboard}
-        >
+        <button className="user-mangment" onClick={handleDashboard}>
           Manage your account
         </button>
         <button className="user-logout" onClick={logout}>

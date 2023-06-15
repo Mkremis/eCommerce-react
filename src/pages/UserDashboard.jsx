@@ -1,60 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import RenderForm from "../components/RenderForm";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
-const UserDashboard = ({ newUser }) => {
-  const navigate = useNavigate();
-  let user;
-  if (newUser) {
-    user = newUser;
-  } else {
-    user = useLoaderData();
-  }
-
+const UserDashboard = () => {
+  const { auth, user } = useContext(AuthContext);
   return (
     <article className="dashboard">
-      <header>
-        <h2
-          style={{
-            marginTop: "1rem",
-            textAlign: "center",
-            color: "var( --Orange)",
-          }}
-        >
-          {user ? "User Dashboard" : "loggin out.."}
-        </h2>
+      <header className="dashboard_header">
+        <div className="dashboard_title-container">
+          <h1>{auth ? "Dashboard" : "New User Registration"}</h1>
+        </div>
+        {auth && (
+          <nav className="dashboard_nav">
+            <ul className="dashboard_items">
+              <li>
+                <NavLink
+                  to={`/dashboard/${user.login.username}`}
+                  className="dashboard_link"
+                >
+                  User Data
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={`/dashboard/orders/${user.login.username}`}
+                  className="dashboard_link"
+                >
+                  Order History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={`/dashboard/likeds/${user.login.username}`}
+                  className="dashboard_link"
+                >
+                  Likes
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        )}
       </header>
-      <aside
-        style={{
-          width: "90%",
-          margin: "1rem auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div>
-          {user && (
-            <button
-              onClick={() => navigate(`/likeds/${user.login.username}`)}
-              style={{ padding: "0.5rem" }}
-            >
-              View Likeds
-            </button>
-          )}
-        </div>
-        <div>
-          {user && (
-            <button
-              onClick={() => navigate(`/orders/${user.login.username}`)}
-              style={{ padding: "0.5rem" }}
-            >
-              Order History
-            </button>
-          )}
-        </div>
-      </aside>
-      {user && <RenderForm user={user} />}
+      {auth ? <Outlet /> : <RenderForm />}
     </article>
   );
 };

@@ -17,6 +17,7 @@ import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
 import { loaderOrders } from "../helpers/loaderOrders";
 import Likeds from "../pages/Likeds";
+import RenderForm from "../components/RenderForm";
 
 const router = createHashRouter([
   {
@@ -40,20 +41,27 @@ const router = createHashRouter([
             loader: loaderSort,
           },
           {
-            path: "/dashboard/:username",
+            path: "/dashboard",
             element: <UserDashboard newUser={null} />,
-            loader: loaderDashboard,
+            children: [
+              {
+                path: ":username",
+                element: <RenderForm />,
+                loader: loaderDashboard,
+              },
+              {
+                path: "orders/:username",
+                element: <Orders />,
+                loader: loaderOrders,
+              },
+              {
+                path: "likeds/:username",
+                element: <Likeds />,
+                // loader: loaderOrders,
+              },
+            ],
           },
-          {
-            path: "/orders/:username",
-            element: <Orders />,
-            loader: loaderOrders,
-          },
-          {
-            path: "/likeds/:username",
-            element: <Likeds />,
-            // loader: loaderOrders,
-          },
+
           {
             path: "/dashboard/newuser",
             element: <UserDashboard newUser={"newuser"} />,
