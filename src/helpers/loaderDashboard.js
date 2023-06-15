@@ -25,7 +25,7 @@ const loaderDashboard = async ({ params }) => {
     }
     return data;
   } catch (error) {
-    alert(error);
+    console.log(error);
     return [];
   }
 };

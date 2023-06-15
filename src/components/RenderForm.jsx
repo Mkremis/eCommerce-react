@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import useRenderForm from "../hooks/useRenderForm.jsx";
 import "./RenderForm.css";
 import signFormTemplate from "../helpers/signFormTemplate.js";
+import { useLoaderData } from "react-router-dom";
 
-const RenderForm = ({ user }) => {
-  let data = user === "newuser" ? signFormTemplate : user;
+const RenderForm = () => {
+  let user = useLoaderData();
+  let data = user ? user : signFormTemplate;
 
   const output = useRef(null);
   const { renderFormElements, handleSubmit } = useRenderForm();
