@@ -13,15 +13,27 @@ const UserDashboard = ({ newUser }) => {
 
   return (
     <article className="dashboard">
-      <header
+      <header>
+        <h2
+          style={{
+            marginTop: "1rem",
+            textAlign: "center",
+            color: "var( --Orange)",
+          }}
+        >
+          {user ? "User Dashboard" : "loggin out.."}
+        </h2>
+      </header>
+      <aside
         style={{
-          marginTop: "1rem",
+          width: "90%",
+          margin: "1rem auto",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
         }}
       >
-        <div style={{ flexBasis: "33%", textAlign: "center" }}>
+        <div>
           {user && (
             <button
               onClick={() => navigate(`/likeds/${user.login.username}`)}
@@ -31,28 +43,17 @@ const UserDashboard = ({ newUser }) => {
             </button>
           )}
         </div>
-        <div style={{ flexBasis: "33%", textAlign: "center" }}>
-          <h2
-            style={{
-              textAlign: "center",
-              color: "var( --Orange)",
-            }}
-          >
-            {user ? "User Dashboard" : "loggin out.."}
-          </h2>
-        </div>
-        <div style={{ flexBasis: "33%", textAlign: "center" }}>
+        <div>
           {user && (
             <button
               onClick={() => navigate(`/orders/${user.login.username}`)}
               style={{ padding: "0.5rem" }}
             >
-              View Orders
+              Order History
             </button>
           )}
         </div>
-      </header>
-
+      </aside>
       {user && <RenderForm user={user} />}
     </article>
   );

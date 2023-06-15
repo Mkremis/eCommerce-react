@@ -139,7 +139,7 @@ const AuthProvider = ({ children }) => {
           if (cart.user_cart) {
             setCart(cart.user_cart);
           }
-          setLikes(likes.user_likes);
+          likes.user_likes ? setLikes(likes.user_likes) : setLikes([]);
         });
     }
   }, [auth]);
