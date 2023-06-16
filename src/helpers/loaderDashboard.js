@@ -12,7 +12,7 @@ const loaderDashboard = async ({ params }) => {
     const response = await window.fetch(endpoint, options);
 
     const responseUserData = await response.json();
-    if (response.status !== 200) throw new Error(responseUserData);
+    if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = responseUserData;
     let data = {};
     user.login_password = "";
@@ -25,7 +25,8 @@ const loaderDashboard = async ({ params }) => {
     }
     return data;
   } catch (error) {
-    console.log(error);
+    alert(error);
+    console.error(error);
     return [];
   }
 };

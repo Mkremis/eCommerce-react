@@ -8,8 +8,8 @@ export const loaderHome = async () => {
   if (!homeData) {
     try {
       let response = await Promise.all([
-        fetch(urlWM, options),
-        fetch(urlM, options),
+        window.fetch(urlWM, options),
+        window.fetch(urlM, options),
       ]);
       let data = await Promise.all(
         response.map(async (res) => await res.json())
