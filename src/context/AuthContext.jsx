@@ -124,7 +124,7 @@ const AuthProvider = ({ children }) => {
     if (auth) {
       const options = {
         headers: {
-          Authorization: `Bearer ${auth}`,
+          // Authorization: `Bearer ${auth}`,
           "Content-Type": "application/json",
         },
       };
@@ -134,12 +134,23 @@ const AuthProvider = ({ children }) => {
         window.fetch(endpointCart, options),
         window.fetch(endpointLikes, options),
       ])
-        .then((responses) => Promise.all(responses.map((res) => res.json())))
+        .then((responses) =>
+          Promise.all(
+            responses.map((res) =>
+              res.ok ? res.json() : Promise.reject(res.statusText)
+            )
+          )
+        )
         .then(([cart, likes]) => {
           if (cart.user_cart) {
             setCart(cart.user_cart);
           }
           likes.user_likes ? setLikes(likes.user_likes) : setLikes([]);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert(error);
+          handleLogout();
         });
     }
   }, [auth]);
