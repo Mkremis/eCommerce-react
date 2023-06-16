@@ -1,8 +1,5 @@
 /* -----------------USER ACCOUNT FORM---------------------- */
 
-.user-account__form {
-}
-
 .user-account__form-container {
   width: 100%;
   display: flex;
@@ -46,6 +43,12 @@
   flex: 0 0 70%;
   font-size: 1rem;
   padding: 0.5rem;
+}
+.user-account__submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .user-account__form-submit {
   cursor: pointer;

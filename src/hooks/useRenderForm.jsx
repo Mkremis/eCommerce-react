@@ -7,7 +7,6 @@ const useRenderForm = () => {
     const type =
       password.getAttribute("type") === "password" ? "text" : "password";
     password.setAttribute("type", type);
-    // togglePassword.classList.toggle("material-symbols-outlined");
     type === "password"
       ? (togglePassword.textContent = "visibility")
       : (togglePassword.textContent = "visibility_off");
@@ -40,12 +39,14 @@ const useRenderForm = () => {
 
   const validate = {
     password: {
-      pattern: ".{8}",
-      title: "8 characters",
+      pattern: "^[A-Za-z0-9]{8}$",
+      title:
+        "Valid password: 8 characters accept uppercase letters, lowercase letters and numbers",
     },
     username: {
-      pattern: "^[A-Za-z][A-Za-z0-9_]{8,15}$",
-      title: "8 to 15 characters",
+      pattern: "^[a-z0-9_]{6,15}$",
+      title:
+        "Valid username: only lowercase letters, numbers, and underscores. 6 to 15 characters",
     },
     title: {
       pattern: "[A-Za-z]{1,5}",
@@ -59,10 +60,7 @@ const useRenderForm = () => {
       pattern: "[A-Za-z]{1,30}",
       title: "only letters max 30 characters",
     },
-    email: {
-      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,50}$",
-      title: "characters@characters.domain",
-    },
+
     phone: {
       pattern: "((+|00)?[1-9]{2}|0)[1-9]( ?[0-9]){10}",
       title: "only numbers and spaces max 10 characters",
@@ -72,11 +70,11 @@ const useRenderForm = () => {
       title: "Include http://",
     },
     city: {
-      pattern: "[A-Za-z]{1,20}",
+      pattern: "[A-Za-z ]{1,20}",
       title: "only letters max 20 characters",
     },
     state: {
-      pattern: "[A-Za-z]{1,20}",
+      pattern: "[A-Za-z ]{1,20}",
       title: "only letters max 20 characters",
     },
     // number: {
@@ -84,7 +82,7 @@ const useRenderForm = () => {
     //   title: "numbers and letters max 20 characters",
     // },
     street: {
-      pattern: "^[A-Za-z][A-Za-z0-9_]{1,20}$",
+      pattern: "^[A-Za-z0-9 ]{1,20}$",
       title: "numbers and letters max 20 characters",
     },
     country: {
@@ -157,28 +155,34 @@ const useRenderForm = () => {
         newUserData = { ...newUserData, ...newData };
       });
     });
-    let method = user === "newuser" ? "POST" : "PUT";
+    let method = user ? "PUT" : "POST";
     fetchData(newUserData, method, output);
   };
 
-  function fetchData(newUserData, method, output) {
-    const options = {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUserData),
-    };
-    let route = method === "POST" ? "register" : "update";
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
-
-    fetch(endpoint, options)
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .finally(() => {
+  async function fetchData(newUserData, method, output) {
+    try {
+      const options = {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUserData),
+      };
+      let route = method === "POST" ? "register" : "update";
+      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
+      const response = await fetch(endpoint, options);
+      if (response.ok) {
         output.current.classList.remove("--invisible");
         setTimeout(() => {
           output.current.classList.add("--invisible");
         }, 3500);
-      });
+      } else {
+        let error = await response.json();
+        console.log(error);
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      alert(error);
+      console.error(error);
+    }
   }
 
   return { renderFormElements, handleSubmit };
