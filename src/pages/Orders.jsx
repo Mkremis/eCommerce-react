@@ -6,7 +6,6 @@ const Orders = () => {
   const orders = useLoaderData();
   return (
     <article>
-      <h1 style={{ textAlign: "center", marginTop: "2rem" }}>Order History</h1>
       <table border={1} cellSpacing={0} className="orders-table">
         <thead>
           <tr>

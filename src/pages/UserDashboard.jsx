@@ -1,53 +1,52 @@
 import React, { useContext } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import RenderForm from "../components/RenderForm";
 import AuthContext from "../context/AuthContext";
-
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import { Nav, Tab, TabContent, TabPane } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 const UserDashboard = () => {
   const { auth, user } = useContext(AuthContext);
   return (
     <article className="dashboard">
-      <header className="dashboard_header">
-        <h1>{auth ? "Dashboard" : "New User Registration"}</h1>
+      <header>
+        <h2 style={{ textAlign: "center" }}>
+          {auth ? "Dashboard" : "New User Registration"}
+        </h2>
         {auth && (
-          <Navbar bg="light" expand="lg">
-            <Container fluid>
-              <Navbar.Toggle aria-controls="navbarScroll" />
-              <Navbar.Collapse id="navbarScroll">
-                <Nav
-                  className="me-auto my-2 my-lg-0"
-                  style={{ maxHeight: "100px" }}
-                  navbarScroll
-                >
-                  <NavLink
-                    to={`/dashboard/${user.login.username}`}
-                    className="nav-link"
-                  >
-                    User Data
-                  </NavLink>
-                  <NavLink
-                    to={`/dashboard/orders/${user.login.username}`}
-                    className="nav-link"
-                  >
+          <Tab.Container defaultActiveKey="/dashboard/user-data">
+            <Nav variant="tabs">
+              <Nav.Item>
+                <LinkContainer to={`/dashboard/${user.login.username}`}>
+                  <Nav.Link eventKey="/dashboard/user-data">User Data</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+              <Nav.Item>
+                <LinkContainer to={`/dashboard/orders/${user.login.username}`}>
+                  <Nav.Link eventKey="/dashboard/order-history">
                     Order History
-                  </NavLink>
-                  <NavLink
-                    to={`/dashboard/likeds/${user.login.username}`}
-                    className="nav-link"
-                  >
-                    Likes
-                  </NavLink>
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
+                  </Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+              <Nav.Item>
+                <LinkContainer to={`/dashboard/likeds/${user.login.username}`}>
+                  <Nav.Link eventKey="/dashboard/likes">Likes</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+            </Nav>
+
+            <TabContent>
+              <TabPane eventKey="/dashboard/user-data">
+                {/* Contenido para User Data */}
+              </TabPane>
+              <TabPane eventKey="/dashboard/order-history">
+                {/* Contenido para Order History */}
+              </TabPane>
+              <TabPane eventKey="/dashboard/likes">
+                {/* Contenido para Likes */}
+              </TabPane>
+            </TabContent>
+          </Tab.Container>
         )}
       </header>
       {auth ? <Outlet /> : <RenderForm />}
