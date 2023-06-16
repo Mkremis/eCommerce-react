@@ -1,11 +1,14 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import useRenderForm from "../hooks/useRenderForm.jsx";
 import "./RenderForm.css";
 import signFormTemplate from "../helpers/signFormTemplate.js";
 import { useLoaderData } from "react-router-dom";
+import AuthContext from "../context/AuthContext.jsx";
 
 const RenderForm = () => {
+  const { handleLogout } = useContext(AuthContext);
   let user = useLoaderData();
+  if (user && user.length === 0) handleLogout();
   let data = user ? user : signFormTemplate;
 
   const output = useRef(null);

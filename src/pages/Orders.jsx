@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Orders = () => {
+  const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
   const orders = useLoaderData();
+  if (!orders) handleLogout();
+
   return (
     <article>
       <table border={1} cellSpacing={0} className="orders-table">
