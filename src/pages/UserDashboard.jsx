@@ -13,16 +13,19 @@ const UserDashboard = () => {
         <h2 style={{ textAlign: "center" }}>
           {auth ? "Dashboard" : "New User Registration"}
         </h2>
-
-        <nav className="dashboard-nav">
-          <NavLink to={`/dashboard/${user.login.username}`}>User Data</NavLink>
-          <NavLink to={`/dashboard/orders/${user.login.username}`}>
-            Order History
-          </NavLink>
-          <NavLink to={`/dashboard/likeds/${user.login.username}`}>
-            Likes
-          </NavLink>
-        </nav>
+        {auth && (
+          <nav className="dashboard-nav">
+            <NavLink to={`/dashboard/${user.login.username}`}>
+              User Data
+            </NavLink>
+            <NavLink to={`/dashboard/orders/${user.login.username}`}>
+              Order History
+            </NavLink>
+            <NavLink to={`/dashboard/likeds/${user.login.username}`}>
+              Likes
+            </NavLink>
+          </nav>
+        )}
       </header>
       {auth ? <Outlet /> : <RenderForm />}
     </article>
