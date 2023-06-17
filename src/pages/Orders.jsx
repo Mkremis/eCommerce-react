@@ -6,7 +6,7 @@ const Orders = () => {
   const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
   const orders = useLoaderData();
-  if (!orders) handleLogout();
+  if (!orders) return handleLogout();
 
   return (
     <article>

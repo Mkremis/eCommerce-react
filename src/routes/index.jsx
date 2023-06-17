@@ -18,6 +18,7 @@ import Orders from "../pages/Orders";
 import { loaderOrders } from "../helpers/loaderOrders";
 import Likeds from "../pages/Likeds";
 import RenderForm from "../components/RenderForm";
+import { loaderLikes } from "../helpers/loaderLikes";
 
 const router = createHashRouter([
   {
@@ -57,7 +58,7 @@ const router = createHashRouter([
               {
                 path: "likeds/:username",
                 element: <Likeds />,
-                // loader: loaderOrders,
+                loader: loaderLikes,
               },
             ],
           },
