@@ -11,8 +11,7 @@ const Aside = () => {
   const { refreshPage } = useContext(AuthContext);
 
   const root = pathname.split("/")[1];
-  options.method = "GET";
-  // let categories = pathname.includes("sortBy") ? data : null;
+
   useEffect(() => {
     const CACHE = JSON.parse(sessionStorage.getItem("categories"));
     if (CACHE) {
@@ -32,20 +31,26 @@ const Aside = () => {
   }, []);
 
   useEffect(() => {
-    let dataPath;
-    if (response && pathname.includes("sortBy")) {
-      dataPath = {
-        men: {
-          url: response.navigation[0].children[4].children[3].children[1]
-            .children,
-        },
-        women: {
-          url: response.navigation[1].children[4].children[3].children[1]
-            .children,
-        },
+    if (response) {
+      const dataPath = (path) => {
+        switch (path) {
+          case "men":
+            return response.navigation[0].children[4].children[3].children[1]
+              .children;
+          case "women":
+            return response.navigation[1].children[4].children[3].children[1]
+              .children;
+          default:
+            return [
+              ...response.navigation[0].children[4].children[1].children[1]
+                .children,
+              ...response.navigation[1].children[4].children[1].children[1]
+                .children,
+            ];
+        }
       };
       let root = pathname.split("/")[1];
-      if (root === "men" || root === "women") setCategories(dataPath[root].url);
+      setCategories(dataPath(root));
     } else {
       setCategories(null);
     }
@@ -58,18 +63,23 @@ const Aside = () => {
           <nav className="modal__sub-nav-bar">
             <ul className="nav__category-items">
               {categories.map((cat) => {
+                const genre = cat.content.mobileImageUrl.includes("mw")
+                  ? "men"
+                  : "women";
                 return (
                   <li key={`${cat.content.title}_${cat.link.categoryId}`}>
                     <button
                       className={"category__link"}
                       onClick={() =>
                         refreshPage(
-                          `/${root}/category/${cat.link.categoryId}/sortBy/%20/filter/%20/search/%20/offset/48`
+                          `/${root || genre}/category/${
+                            cat.link.categoryId
+                          }/sortBy/%20/filter/%20/search/%20/offset/48`
                         )
                       }
                       id={cat.link.categoryId}
                     >
-                      {cat.content.title.replace("SALE", "")}
+                      {!root && genre.toUpperCase()} {cat.content.title}
                     </button>
                   </li>
                 );

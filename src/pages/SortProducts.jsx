@@ -10,6 +10,7 @@ import {
 import ProductCard from "../components/ProductCard";
 import Filters from "../components/Filters";
 import ProductFooter from "../components/ProductFooter";
+import Aside from "../components/Aside";
 const limit = 48;
 
 const SortProduct = () => {
@@ -91,6 +92,7 @@ const SortProduct = () => {
             })}
         </InfiniteScroll>
       </section>
+      <Aside />
     </>
   );
 };

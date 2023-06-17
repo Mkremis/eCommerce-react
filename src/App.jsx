@@ -3,7 +3,6 @@ import React from "react";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import { Outlet, useNavigation } from "react-router-dom";
-import Aside from "./components/Aside";
 import MediaQuery from "react-responsive";
 import Loader from "./components/Loader";
 
@@ -13,9 +12,7 @@ function App() {
     <main>
       <AuthProvider>
         <Header />
-        <MediaQuery query="(min-width: 415px)">
-          <Aside />
-        </MediaQuery>
+        <MediaQuery query="(min-width: 415px)"></MediaQuery>
         {navigation.state === "loading" && <Loader />}
         <Outlet />
       </AuthProvider>
