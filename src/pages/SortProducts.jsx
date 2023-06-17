@@ -23,7 +23,7 @@ const SortProduct = () => {
   const root = path[1];
 
   useEffect(() => {
-    if (Object.keys(res).length > 0 && res.hasOwnProperty("products")) {
+    if (res && Object.keys(res).length > 0 && res.hasOwnProperty("products")) {
       if (page > 1) {
         setItems([...items, ...res.products]);
       } else {
