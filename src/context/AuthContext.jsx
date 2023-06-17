@@ -124,7 +124,7 @@ const AuthProvider = ({ children }) => {
     if (auth) {
       const options = {
         headers: {
-          // Authorization: `Bearer ${auth}`,
+          Authorization: `Bearer ${auth}`,
           "Content-Type": "application/json",
         },
       };
