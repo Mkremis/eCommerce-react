@@ -9,8 +9,8 @@ const Orders = () => {
   if (!orders) return handleLogout();
 
   return (
-    <article>
-      <table border={1} cellSpacing={0} className="orders-table">
+    <article style={{ backgroundColor: "antiquewhite" }}>
+      <table cellSpacing={0} className="orders-table">
         <thead>
           <tr>
             <th>Product Image</th>

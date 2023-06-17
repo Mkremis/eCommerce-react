@@ -5,15 +5,14 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  font-size: 12px;
+  background-color: antiquewhite;
 }
 
-.user-account__form fieldset {
-  background-color: rgba(255, 235, 205, 0.146);
-}
 /* MEDIA QUERY DESKTOP */
 @media (min-width: 415px) {
   .user-account__form-container {
-    max-height: 70vh;
+    max-height: 80vh;
   }
   .user-account__form fieldset {
     width: 30%;
@@ -23,10 +22,7 @@
 }
 .user-account__form legend {
   text-transform: capitalize;
-  font-weight: bold;
   color: var(--Orange);
-  font-size: 1rem;
-  font-weight: bold;
 }
 .user-account__input-row {
   width: 100%;
@@ -36,12 +32,10 @@
 }
 .user-account__input-row > label {
   flex: 0 0 25%;
-  font-weight: bold;
   text-transform: uppercase;
 }
 .user-account__input-row > input {
   flex: 0 0 70%;
-  font-size: 1rem;
   padding: 0.5rem;
 }
 .user-account__submit-container {
@@ -49,6 +43,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: antiquewhite;
 }
 .user-account__form-submit {
   cursor: pointer;
