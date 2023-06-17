@@ -9,7 +9,10 @@ const Likeds = () => {
   if (!likes) return handleLogout();
 
   return (
-    <article className="content">
+    <article
+      className="content"
+      style={{ backgroundColor: "antiquewhite", marginTop: 0 }}
+    >
       {likes.length > 0 &&
         likes.map((product) => {
           return (

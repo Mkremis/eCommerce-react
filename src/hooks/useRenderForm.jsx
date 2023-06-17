@@ -112,7 +112,6 @@ const useRenderForm = () => {
           </label>
           <input
             type={isType(key)}
-            className="form-control"
             name={key}
             defaultValue={value}
             placeholder={key}
