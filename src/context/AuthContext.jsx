@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
       likesUpdate({ likes, auth, user });
     }
     if (justLogged) setJustLogged(false);
-  }, [likes]);
+  }, [likes, justLogged, auth, setJustLogged]);
 
   // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
   useEffect(() => {
@@ -93,7 +93,7 @@ const AuthProvider = ({ children }) => {
       cartUpdate({ auth, cart, user });
     }
     if (justLogged) setJustLogged(false);
-  }, [cart]);
+  }, [cart, justLogged, auth, setJustLogged]);
 
   // LOAD USER DB CART AND LIKES AND UPDATE CART AND LIKES STATE WHEN USER LOGGED
   useEffect(() => {
