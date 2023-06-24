@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
   // UPDATE USER LIKES IN USER DB WHEN DETECT A CHANGE IN LIKES STATE
   useEffect(() => {
     if (auth && !justLogged) {
-      console.log("updatting likes");
+      console.log("updatting likes", auth, justLogged);
       likesUpdate({ likes, auth, user });
     }
     if (justLogged) setJustLogged(false);
@@ -90,7 +90,7 @@ const AuthProvider = ({ children }) => {
   // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
   useEffect(() => {
     if (auth && !justLogged) {
-      console.log("updatting cart");
+      console.log("updatting cart", auth, justLogged);
       cartUpdate({ auth, cart, user });
     }
     if (justLogged) setJustLogged(false);
