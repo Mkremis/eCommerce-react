@@ -52,14 +52,13 @@ const AuthProvider = ({ children }) => {
           data[keys[0]] = { ...data[keys[0]], ...val };
         }
       }
-
-      localStorage.setItem("auth", responseLogin.token);
-      localStorage.setItem("user", JSON.stringify(data));
+      setJustLogged(true);
+      setAuth(responseLogin.token);
+      setUser(data);
       userData.user_cart && setCart(userData.user_cart);
       userData.user_likes && setLikes(userData.user_likes);
-      setJustLogged(true);
-      setUser(data);
-      setAuth(responseLogin.token);
+      localStorage.setItem("auth", responseLogin.token);
+      localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       alert(error);
       handleLogout();
