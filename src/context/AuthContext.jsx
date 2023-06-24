@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
       ? false
       : justLogged
       ? setJustLogged(false)
-      : likesUpdate({ likes, auth });
+      : likesUpdate({ likes, auth, user });
   }, [likes]);
 
   // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
