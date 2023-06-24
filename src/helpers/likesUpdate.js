@@ -1,4 +1,4 @@
-export const likesUpdate = ({ likes, auth }) => {
+export const likesUpdate = ({ likes, auth, user }) => {
   const likesToUpdate = likes.length === 0 ? null : likes;
   const options = {
     method: "PUT",
