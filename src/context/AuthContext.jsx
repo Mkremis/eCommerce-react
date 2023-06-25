@@ -1,11 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { cartUpdate } from "../helpers/cartUpdate";
 
 const AuthContext = createContext();
 const initialAuth = localStorage.getItem("auth") || null;
 const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
-const initialCart = null;
+const initialCart = {};
 const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
@@ -73,6 +74,10 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
   };
 
+  useEffect(() => {
+    console.log("cart", cart);
+    cartUpdate(auth, cart, user);
+  }, [cart]);
   // // GET CART AND LIKES  WHEN USER LOGGED
   // useEffect(() => {
   //   if (auth) {

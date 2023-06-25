@@ -1,15 +1,7 @@
-import React, { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { cartUpdate } from "../helpers/cartUpdate";
 
 const SuccessPayment = () => {
-  const { cart, setCart, setProductQ, setCartItems, auth, user } =
-    useContext(AuthContext);
-  setCart({});
-  cartUpdate({ auth, cart, user });
-  setProductQ(0);
-  setCartItems(0);
   const navigate = useNavigate();
   setTimeout(() => navigate("/"), 2000);
 
