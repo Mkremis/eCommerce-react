@@ -1,14 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { cartUpdate } from "../helpers/cartUpdate";
 import Like from "./Like";
 import "./ProductDetails.css";
 
 const ProductDetails = ({ product }) => {
   const { pathname } = useLocation();
   const gender = pathname.split("/")[1];
-  const { handlePlusQ, handleMinusQ, productQ, setProductQ, cart, setCart } =
-    useContext(AuthContext);
+  const {
+    handlePlusQ,
+    handleMinusQ,
+    productQ,
+    setProductQ,
+    cart,
+    setCart,
+    auth,
+    user,
+  } = useContext(AuthContext);
   const handleCart = () => {
     const updatedCart = {
       ...cart,
@@ -21,6 +30,7 @@ const ProductDetails = ({ product }) => {
       },
     };
     setCart(updatedCart);
+    cartUpdate({ auth, cart, user });
   };
 
   useEffect(() => {
