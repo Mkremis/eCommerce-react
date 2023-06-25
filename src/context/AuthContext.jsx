@@ -1,7 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { cartUpdate } from "../helpers/cartUpdate";
-import { likesUpdate } from "../helpers/likesUpdate";
 
 const AuthContext = createContext();
 const initialAuth = localStorage.getItem("auth") || null;
@@ -14,7 +12,6 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(initialUser);
   const [auth, setAuth] = useState(initialAuth);
-  const [justLogged, setJustLogged] = useState(false);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
@@ -52,7 +49,6 @@ const AuthProvider = ({ children }) => {
           data[keys[0]] = { ...data[keys[0]], ...val };
         }
       }
-      setJustLogged(true);
       setAuth(responseLogin.token);
       setUser(data);
       userData.user_cart && setCart(userData.user_cart);
@@ -77,59 +73,41 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
   };
 
-  // // UPDATE USER LIKES IN USER DB WHEN DETECT A CHANGE IN LIKES STATE
+  // // GET CART AND LIKES  WHEN USER LOGGED
   // useEffect(() => {
-  //   if (auth && !justLogged) {
-  //     console.log("updatting likes", auth, justLogged);
-  //     likesUpdate({ likes, auth, user });
+  //   if (auth) {
+  //     const options = {
+  //       headers: {
+  //         Authorization: `Bearer ${auth}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+  //     const endpointCart = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
+  //     const endpointLikes = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/likes`;
+  //     Promise.all([
+  //       window.fetch(endpointCart, options),
+  //       window.fetch(endpointLikes, options),
+  //     ])
+  //       .then((responses) =>
+  //         Promise.all(
+  //           responses.map((res) =>
+  //             res.ok ? res.json() : Promise.reject(res.statusText)
+  //           )
+  //         )
+  //       )
+  //       .then(([cart, likes]) => {
+  //         if (cart.user_cart) {
+  //           setCart(cart.user_cart);
+  //         }
+  //         likes.user_likes ? setLikes(likes.user_likes) : setLikes([]);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         alert(error);
+  //         handleLogout();
+  //       });
   //   }
-  //   if (justLogged) setJustLogged(false);
-  // }, [likes, justLogged, auth, setJustLogged]);
-
-  // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
-  // useEffect(() => {
-  //   if (auth && !justLogged) {
-  //     console.log("updatting cart", auth, justLogged);
-  //     cartUpdate({ auth, cart, user });
-  //   }
-  //   if (justLogged) setJustLogged(false);
-  // }, [cart, justLogged, auth, setJustLogged]);
-
-  // LOAD USER DB CART AND LIKES AND UPDATE CART AND LIKES STATE WHEN USER LOGGED
-  useEffect(() => {
-    if (auth) {
-      const options = {
-        headers: {
-          Authorization: `Bearer ${auth}`,
-          "Content-Type": "application/json",
-        },
-      };
-      const endpointCart = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
-      const endpointLikes = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/likes`;
-      Promise.all([
-        window.fetch(endpointCart, options),
-        window.fetch(endpointLikes, options),
-      ])
-        .then((responses) =>
-          Promise.all(
-            responses.map((res) =>
-              res.ok ? res.json() : Promise.reject(res.statusText)
-            )
-          )
-        )
-        .then(([cart, likes]) => {
-          if (cart.user_cart) {
-            setCart(cart.user_cart);
-          }
-          likes.user_likes ? setLikes(likes.user_likes) : setLikes([]);
-        })
-        .catch((error) => {
-          console.error(error);
-          alert(error);
-          handleLogout();
-        });
-    }
-  }, [justLogged]);
+  // }, [auth]);
 
   const data = {
     likes,
