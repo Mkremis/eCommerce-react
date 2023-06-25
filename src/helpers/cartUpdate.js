@@ -8,7 +8,6 @@ export const cartUpdate = (auth, cart, user) => {
       },
       body: JSON.stringify(cart),
     };
-    console.log(options.body);
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
     window
       .fetch(endpoint, options)

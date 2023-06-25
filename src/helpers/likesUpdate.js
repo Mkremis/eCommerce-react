@@ -1,13 +1,12 @@
-export const likesUpdate = ({ likes, auth, user }) => {
+export const likesUpdate = (likes, auth, user) => {
   if (auth) {
-    const likesToUpdate = likes.length === 0 ? {} : likes;
     const options = {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${auth}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(likesToUpdate),
+      body: JSON.stringify(likes),
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
     window
