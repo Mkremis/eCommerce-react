@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AuthContext from '../context/AuthContext';
-import CartModal from './CartModal';
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import CartModal from "./CartModal";
 
 const CartNotification = () => {
   const { cart, setCart, cartItems, setCartItems } = useContext(AuthContext);
@@ -11,17 +11,14 @@ const CartNotification = () => {
     isOpen ? setIsOpen(null) : setIsOpen(true);
   };
   useEffect(() => {
-    if (cart) {
+    let itemsCount = Object.keys(cart).length;
+    setCartItems(itemsCount);
+    if (itemsCount > 0) {
       setShake(true);
-      let count = 0;
-      for (const item in cart) {
-        if (cart[item].productQ > 0) count++;
-      }
-      setCartItems(count);
+      setTimeout(() => {
+        setShake(null);
+      }, 1000);
     }
-    setTimeout(() => {
-      setShake(null);
-    }, 1000);
   }, [cart]);
 
   return (
@@ -34,7 +31,7 @@ const CartNotification = () => {
         )}
         <span
           className="material-symbols-outlined"
-          style={shake && { animation: 'shake 0.5s' }}
+          style={shake && { animation: "shake 0.5s" }}
           onClick={handleOpenCart}
         >
           shopping_cart
