@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import { likesUpdate } from "../helpers/likesUpdate";
 
 const Like = ({ price, id, name, image, styles, gender }) => {
-  const { likes, setLikes } = useContext(AuthContext);
+  const { likes, setLikes, auth, user } = useContext(AuthContext);
   const initalLike = likes.find((obj) => obj.id === id) || null;
   const [like, setLike] = useState(initalLike);
   const product = { id, name, image, price, gender };
@@ -17,9 +18,11 @@ const Like = ({ price, id, name, image, styles, gender }) => {
       setLike(false);
       let newLikes = likes.filter(({ id }) => id !== product.id);
       setLikes(newLikes);
+      likesUpdate({ likes, auth, user });
     } else {
       setLike(true);
       setLikes([...likes, product]);
+      likesUpdate({ likes, auth, user });
     }
   };
   return (

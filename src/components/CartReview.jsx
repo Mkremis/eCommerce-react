@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { cartUpdate } from "../helpers/cartUpdate";
 
 const CartReview = () => {
-  const { cart, setCart } = useContext(AuthContext);
+  const { cart, setCart, auth, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let cartItems = 0;
   const handleRemoveItem = ({ target }) => {
     const item = target.id;
     setCart({ ...cart, ...(cart[item].productQ = 0) });
+    cartUpdate({ auth, cart, user })
   };
   const reviewItems = () => {
     let totalCart = 0;

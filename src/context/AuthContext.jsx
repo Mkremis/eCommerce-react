@@ -77,23 +77,23 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
   };
 
-  // UPDATE USER LIKES IN USER DB WHEN DETECT A CHANGE IN LIKES STATE
-  useEffect(() => {
-    if (auth && !justLogged) {
-      console.log("updatting likes", auth, justLogged);
-      likesUpdate({ likes, auth, user });
-    }
-    if (justLogged) setJustLogged(false);
-  }, [likes, justLogged, auth, setJustLogged]);
+  // // UPDATE USER LIKES IN USER DB WHEN DETECT A CHANGE IN LIKES STATE
+  // useEffect(() => {
+  //   if (auth && !justLogged) {
+  //     console.log("updatting likes", auth, justLogged);
+  //     likesUpdate({ likes, auth, user });
+  //   }
+  //   if (justLogged) setJustLogged(false);
+  // }, [likes, justLogged, auth, setJustLogged]);
 
   // UPDATE USER CART IN USER DB WHEN DETECT A CHANGE IN CART STATE
-  useEffect(() => {
-    if (auth && !justLogged) {
-      console.log("updatting cart", auth, justLogged);
-      cartUpdate({ auth, cart, user });
-    }
-    if (justLogged) setJustLogged(false);
-  }, [cart, justLogged, auth, setJustLogged]);
+  // useEffect(() => {
+  //   if (auth && !justLogged) {
+  //     console.log("updatting cart", auth, justLogged);
+  //     cartUpdate({ auth, cart, user });
+  //   }
+  //   if (justLogged) setJustLogged(false);
+  // }, [cart, justLogged, auth, setJustLogged]);
 
   // LOAD USER DB CART AND LIKES AND UPDATE CART AND LIKES STATE WHEN USER LOGGED
   useEffect(() => {
