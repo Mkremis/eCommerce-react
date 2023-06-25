@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartUpdate } from "../helpers/cartUpdate";
+import { likesUpdate } from "../helpers/likesUpdate";
+import { login } from "../helpers/login";
 
 const AuthContext = createContext();
 const initialAuth = localStorage.getItem("auth") || null;
@@ -27,39 +29,17 @@ const AuthProvider = ({ children }) => {
     productQ === 0 ? false : setProductQ(productQ - 1);
 
   const handleAuth = async (e) => {
-    try {
-      let { username, psw } = e.target;
-      let login_username = username.value;
-      let login_password = psw.value;
-      const loginData = { login_username, login_password };
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
-      };
-      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
-      const login = await window.fetch(endpoint, options);
-      const responseLogin = await login.json();
-      if (login.status !== 200) throw new Error(responseLogin.message);
-      const userData = responseLogin.user;
-      let data = {};
-      for (const key in userData) {
-        if (key !== "user_cart") {
-          let keys = key.split("_");
-          let val = { [keys[1]]: userData[key] };
-          data[keys[0]] = { ...data[keys[0]], ...val };
-        }
-      }
-      setAuth(responseLogin.token);
-      setUser(data);
-      userData.user_cart && setCart(userData.user_cart);
-      userData.user_likes && setLikes(userData.user_likes);
-      localStorage.setItem("auth", responseLogin.token);
-      localStorage.setItem("user", JSON.stringify(data));
-    } catch (error) {
-      alert(error);
-      handleLogout();
-    }
+    let { username, psw } = e.target;
+    const { token, data, userCart, userLikes } = await login(
+      username.value,
+      psw.value
+    );
+    setAuth(token);
+    setUser(data);
+    setCart(userCart);
+    setLikes(userLikes);
+    localStorage.setItem("auth", token);
+    localStorage.setItem("user", JSON.stringify(data));
   };
 
   // UPDATE AUTH STATES WHEN USER LOGOUT
@@ -75,44 +55,12 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("cart", cart);
     cartUpdate(auth, cart, user);
   }, [cart]);
-  // // GET CART AND LIKES  WHEN USER LOGGED
-  // useEffect(() => {
-  //   if (auth) {
-  //     const options = {
-  //       headers: {
-  //         Authorization: `Bearer ${auth}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     const endpointCart = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/cart`;
-  //     const endpointLikes = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/likes`;
-  //     Promise.all([
-  //       window.fetch(endpointCart, options),
-  //       window.fetch(endpointLikes, options),
-  //     ])
-  //       .then((responses) =>
-  //         Promise.all(
-  //           responses.map((res) =>
-  //             res.ok ? res.json() : Promise.reject(res.statusText)
-  //           )
-  //         )
-  //       )
-  //       .then(([cart, likes]) => {
-  //         if (cart.user_cart) {
-  //           setCart(cart.user_cart);
-  //         }
-  //         likes.user_likes ? setLikes(likes.user_likes) : setLikes([]);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         alert(error);
-  //         handleLogout();
-  //       });
-  //   }
-  // }, [auth]);
+
+  useEffect(() => {
+    likesUpdate(likes, auth, user);
+  }, [likes]);
 
   const data = {
     likes,
