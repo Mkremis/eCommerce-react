@@ -15,7 +15,6 @@ const Checkout = () => {
         Authorization: `Bearer ${auth}`,
         "Content-Type": "application/json",
       },
-      credentials: "include",
       body: JSON.stringify(cart),
     };
     const response = await fetch(
