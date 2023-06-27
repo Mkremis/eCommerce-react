@@ -5,6 +5,7 @@ export const cartUpdate = (auth, cart, user) => {
       headers: {
         Authorization: `Bearer ${auth}`,
         "Content-Type": "application/json",
+        credentials: "include",
       },
       body: JSON.stringify(cart),
     };
