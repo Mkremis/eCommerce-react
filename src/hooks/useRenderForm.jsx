@@ -163,6 +163,7 @@ const useRenderForm = () => {
       const options = {
         method,
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(newUserData),
       };
       let route = method === "POST" ? "register" : "update";

@@ -5,6 +5,7 @@ export const loaderOrders = async ({ params }) => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth")}`,
         "Content-Type": "application/json",
+        credentials: "include",
       },
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/orders`;

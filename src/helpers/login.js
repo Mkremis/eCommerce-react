@@ -3,6 +3,7 @@ export const login = async (login_username, login_password, handleLogout) => {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ login_username, login_password }),
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;

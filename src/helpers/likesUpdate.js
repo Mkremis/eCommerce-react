@@ -5,6 +5,7 @@ export const likesUpdate = (likes, auth, user) => {
       headers: {
         Authorization: `Bearer ${auth}`,
         "Content-Type": "application/json",
+        credentials: "include",
       },
       body: JSON.stringify(likes),
     };
