@@ -28,20 +28,6 @@ const AuthProvider = ({ children }) => {
   const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
 
-  const handleAuth = async (e) => {
-    let { username, psw } = e.target;
-    const { token, data, userCart, userLikes } = await login(
-      username.value,
-      psw.value
-    );
-    setAuth(token);
-    setUser(data);
-    setCart(userCart);
-    setLikes(userLikes);
-    localStorage.setItem("auth", token);
-    localStorage.setItem("user", JSON.stringify(data));
-  };
-
   // UPDATE AUTH STATES WHEN USER LOGOUT
   const handleLogout = () => {
     navigate("/");
@@ -52,6 +38,21 @@ const AuthProvider = ({ children }) => {
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
+  };
+
+  const handleAuth = async (e) => {
+    let { username, psw } = e.target;
+    const { token, data, userCart, userLikes } = await login(
+      username.value,
+      psw.value,
+      handleLogout
+    );
+    setAuth(token);
+    setUser(data);
+    setCart(userCart);
+    setLikes(userLikes);
+    localStorage.setItem("auth", token);
+    localStorage.setItem("user", JSON.stringify(data));
   };
 
   useEffect(() => {

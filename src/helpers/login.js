@@ -1,4 +1,4 @@
-export const login = async (login_username, login_password) => {
+export const login = async (login_username, login_password, handleLogout) => {
   try {
     const options = {
       method: "POST",
