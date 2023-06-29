@@ -5,8 +5,10 @@ import Header from "./components/Header";
 import { Outlet, useNavigation } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import Loader from "./components/Loader";
+import useTokenRefresh from "./hooks/useTokenRefresh";
 
 function App() {
+  useTokenRefresh();
   const navigation = useNavigation();
   return (
     <main>
