@@ -1,18 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const LOGIN_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
-// const options = {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ login_username, login_password }),
-//     };
-export const handleLogin = async (
-  login_username,
-  login_password,
-  handleLogout
-) => {
+export const handleLogin = async (login_username, login_password) => {
   try {
     const response = await axios.post(LOGIN_URL, {
       login_username,
@@ -34,7 +24,7 @@ export const handleLogin = async (
     Cookies.set("accessToken", token, { sameSite: "strict" });
 
     return { token, data, userCart, userLikes };
-  } catch (err) {}
+  } catch (err) {
+    console.error(err);
+  }
 };
-
-// .then((response) => {

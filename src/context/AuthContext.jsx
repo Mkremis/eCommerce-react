@@ -44,8 +44,7 @@ const AuthProvider = ({ children }) => {
     let { username, psw } = e.target;
     const { token, data, userCart, userLikes } = await handleLogin(
       username.value,
-      psw.value,
-      handleLogout
+      psw.value
     );
     setAuth(token);
     setUser(data);
