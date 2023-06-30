@@ -18,11 +18,11 @@ const Like = ({ price, id, name, image, styles, gender }) => {
       setLike(false);
       let newLikes = likes.filter(({ id }) => id !== product.id);
       setLikes(newLikes);
-      likesUpdate({ likes, auth, user });
+      likesUpdate(likes, auth, user);
     } else {
       setLike(true);
       setLikes([...likes, product]);
-      likesUpdate({ likes, auth, user });
+      likesUpdate(likes, auth, user);
     }
   };
   return (
