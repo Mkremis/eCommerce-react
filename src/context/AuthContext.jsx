@@ -53,13 +53,13 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(data));
   };
 
-  useEffect(() => {
-    cartUpdate(auth, cart, user);
-  }, [cart]);
+  // useEffect(() => {
+  //   cartUpdate(auth, cart, user);
+  // }, [cart]);
 
-  useEffect(() => {
-    likesUpdate(likes, auth, user);
-  }, [likes]);
+  // useEffect(() => {
+  //   likesUpdate(likes, auth, user);
+  // }, [likes]);
 
   const data = {
     likes,

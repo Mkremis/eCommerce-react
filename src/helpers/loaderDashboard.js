@@ -7,7 +7,7 @@ const loaderDashboard = async ({ params }) => {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-      },
+      }, 
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
     const response = await window.fetch(endpoint, options);
