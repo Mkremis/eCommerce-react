@@ -2,12 +2,14 @@ import Cookies from "js-cookie";
 const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
-    const token = Cookies.get("accessToken");
+    const token = Cookies.get();
+    console.log(token);
     const options = {
+      // credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-      }, 
+      },
     };
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
     const response = await window.fetch(endpoint, options);

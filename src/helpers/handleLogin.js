@@ -3,20 +3,14 @@ import Cookies from "js-cookie";
 
 const LOGIN_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
 export const handleLogin = async (login_username, login_password) => {
-  const options = {
-    method: "POST",
-    body: JSON.stringify({
+  try {
+    const response = await axios.post(LOGIN_URL, {
       login_username,
       login_password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  try {
-    const response = await fetch(LOGIN_URL, options);
-    const responseLogin = await response.json();
-    const userData = responseLogin?.user;
+    });
+    console.log(response);
+    Cookies.set("accessToken", response.data.token, { sameSite: "strict" });
+    const userData = response.data.user;
     let data = {};
     for (const key in userData) {
       if (key !== "user_cart") {
