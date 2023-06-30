@@ -35,16 +35,16 @@ const Aside = () => {
       const dataPath = (path) => {
         switch (path) {
           case "men":
-            return response.navigation[0].children[4].children[3].children[1]
-              .children;
+            return response?.navigation[0]?.children[4]?.children[3]
+              ?.children[1].children;
           case "women":
-            return response.navigation[1].children[4].children[3].children[1]
-              .children;
+            return response?.navigation[1]?.children[4]?.children[3]
+              ?.children[1].children;
           default:
             return [
-              ...response.navigation[0].children[4].children[1].children[1]
+              ...response?.navigation[0]?.children[4]?.children[1]?.children[1]
                 .children,
-              ...response.navigation[1].children[4].children[1].children[1]
+              ...response?.navigation[1]?.children[4]?.children[1]?.children[1]
                 .children,
             ];
         }
@@ -67,7 +67,7 @@ const Aside = () => {
                   ? "men"
                   : "women";
                 return (
-                  <li key={`${cat.content.title}_${cat.link.categoryId}`}>
+                  <li key={cat.id}>
                     <button
                       className={"category__link"}
                       onClick={() =>
