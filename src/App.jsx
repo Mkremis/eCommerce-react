@@ -8,7 +8,7 @@ import Loader from "./components/Loader";
 import useTokenRefresh from "./hooks/useTokenRefresh";
 
 function App() {
-  useTokenRefresh();
+  // useTokenRefresh();
   const navigation = useNavigation();
   return (
     <main>

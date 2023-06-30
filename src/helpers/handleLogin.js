@@ -17,13 +17,11 @@ export const handleLogin = async (login_username, login_password) => {
         data[keys[0]] = { ...data[keys[0]], ...val };
       }
     }
-    const token = response.data.token;
+
     const userCart = userData.user_cart;
     const userLikes = userData.user_likes;
-    // Guardar el token de acceso en una cookie HTTP
-    Cookies.set("accessToken", token, { sameSite: "strict" });
 
-    return { token, data, userCart, userLikes };
+    return { data, userCart, userLikes };
   } catch (err) {
     console.error(err);
   }

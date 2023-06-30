@@ -1,7 +1,8 @@
+import Cookies from "js-cookie";
 const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
-    const token = localStorage.getItem("auth");
+    const token = Cookies.get("accessToken");
     const options = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,6 +19,8 @@ const loaderDashboard = async ({ params }) => {
     user.login_password = "";
     delete user.user_cart;
     delete user.user_likes;
+    delete user.refresh_token;
+
     for (const key in user) {
       let keys = key.split("_");
       let val = { [keys[1]]: user[key] };

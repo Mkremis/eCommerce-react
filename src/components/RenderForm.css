@@ -1,23 +1,40 @@
 /* -----------------USER ACCOUNT FORM---------------------- */
 
-.user-account__form-container {
+.user-account__form {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   font-size: 12px;
   background-color: antiquewhite;
+}
+.login {
+  grid-area: login;
+}
+.contact {
+  grid-area: contact;
+}
+.picture {
+  grid-area: picture;
+}
+.fullname {
+  grid-area: fullname;
+}
+.location {
+  grid-area: location;
 }
 
 /* MEDIA QUERY DESKTOP */
 @media (min-width: 415px) {
-  .user-account__form-container {
-    max-height: 80vh;
-  }
-  .user-account__form fieldset {
-    width: 30%;
-    padding: 1rem;
-    margin: 1rem;
+  .user-account__form {
+    height: 70vh;
+    display: grid;
+    grid-template-areas:
+      "login fullname location"
+      "contact picture location"
+      "contact  picture location"
+      "submit  submit submit";
+    grid-template-rows: repeat(1fr);
+    grid-template-columns: repeat(1fr);
+    font-size: 12px;
+    background-color: antiquewhite;
   }
 }
 .user-account__form legend {
@@ -39,6 +56,7 @@
   padding: 0.5rem;
 }
 .user-account__submit-container {
+  grid-area: submit;
   display: flex;
   flex-direction: column;
   align-items: center;

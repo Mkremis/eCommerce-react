@@ -1,9 +1,11 @@
+import Cookies from "js-cookie";
 export const loaderOrders = async ({ params }) => {
   try {
     const { username } = params;
+    const token = Cookies.get("accessToken");
     const options = {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("auth")}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     };
