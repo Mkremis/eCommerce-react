@@ -1,22 +1,37 @@
 import { useEffect } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 function useTokenRefresh() {
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
-        const response = await axios.post(
+        const refreshToken = Cookies.get("accessToken");
+        if (!refreshToken) {
+          // Manejar el caso en que no haya token de actualización
+          return;
+        } 
+
+        const response = await fetch(
           "https://ecommerce-users-api-production.up.railway.app/refresh-token",
-          {},
           {
-            withCredentials: true,
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
           }
         );
 
-        const { accessToken } = response.data;
-        Cookies.set("accessToken", accessToken, { sameSite: "strict" });
+        if (response.ok) {
+          const { accessToken } = await response.json();
+
+          Cookies.set("accessToken", accessToken, { sameSite: "strict" });
+        } else {
+          // Manejar la respuesta de error del servidor
+        }
       } catch (error) {
+        // Manejar el error de refresco del token
         console.error(error);
       }
     };

@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { cartUpdate } from "../helpers/cartUpdate";
 import { likesUpdate } from "../helpers/likesUpdate";
 import { handleLogin } from "../helpers/handleLogin";
 
 const AuthContext = createContext();
-const initialAuth = localStorage.getItem("auth") || null;
+const initialAuth = Cookies.get("accessToken") || null;
 const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = {};
@@ -31,8 +32,7 @@ const AuthProvider = ({ children }) => {
   // UPDATE AUTH STATES WHEN USER LOGOUT
   const handleLogout = () => {
     navigate("/");
-    localStorage.removeItem("auth");
-    setAuth(null);
+    setAuth(false);
     localStorage.removeItem("user");
     setUser(null);
     setCart(initialCart);
@@ -42,15 +42,14 @@ const AuthProvider = ({ children }) => {
 
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
-    const { token, data, userCart, userLikes } = await handleLogin(
+    const { data, userCart, userLikes } = await handleLogin(
       username.value,
       psw.value
     );
-    setAuth(token);
+    setAuth(true);
     setUser(data);
     setCart(userCart);
     setLikes(userLikes);
-    localStorage.setItem("auth", token);
     localStorage.setItem("user", JSON.stringify(data));
   };
 

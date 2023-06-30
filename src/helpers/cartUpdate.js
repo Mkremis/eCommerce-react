@@ -1,9 +1,11 @@
+import Cookies from "js-cookie";
 export const cartUpdate = (auth, cart, user) => {
   if (auth) {
+    const token = Cookies.get("accessToken");
     const options = {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${auth}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(cart),

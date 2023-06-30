@@ -99,7 +99,7 @@ const useRenderForm = () => {
     return Object.entries(obj).map(([key, value]) => {
       if (typeof value === "object") {
         return (
-          <fieldset key={key}>
+          <fieldset key={key} className={key}>
             <legend id={key}>{key}</legend>
             {renderFormElements(value, key)}
           </fieldset>

@@ -19,9 +19,8 @@ const RenderForm = () => {
       className="user-account__form"
       onSubmit={(e) => handleSubmit(e, user, output)}
     >
-      <section className="user-account__form-container">
-        {renderFormElements(data)}
-      </section>
+      {renderFormElements(data)}
+
       <div className="user-account__submit-container">
         <output ref={output} className="form-output --invisible">
           The user information was successfully updated
