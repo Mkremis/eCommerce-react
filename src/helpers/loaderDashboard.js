@@ -1,22 +1,23 @@
+import axios from "axios";
 import Cookies from "js-cookie";
+
 const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
-    const token = Cookies.get();
-    console.log(token);
+    const accessToken = Cookies.get("accessToken");
+
     const options = {
       // credentials: "include",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
     };
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
-    const response = await window.fetch(endpoint, options);
+    const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
+    const response = await axios(DASH_URL, options);
 
-    const responseUserData = await response.json();
     if (response.status !== 200) throw new Error(responseUserData.message);
-    const { user } = responseUserData;
+    const { user } = response.data;
     let data = {};
     user.login_password = "";
     delete user.user_cart;

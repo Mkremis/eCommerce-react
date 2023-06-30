@@ -13,7 +13,7 @@ export const likesUpdate = (likes, auth, user) => {
     const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
     window
       .fetch(endpoint, options)
-      // .then((res) => res.json())
+      .then((res) => console.log(res))
       // .then((data) => console.log(data))
       .catch((err) =>
         console.error("Error updatting the user likes form the server", err)

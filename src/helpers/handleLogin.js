@@ -8,7 +8,6 @@ export const handleLogin = async (login_username, login_password) => {
       login_username,
       login_password,
     });
-    console.log(response);
     Cookies.set("accessToken", response.data.token, { sameSite: "strict" });
     const userData = response.data.user;
     let data = {};

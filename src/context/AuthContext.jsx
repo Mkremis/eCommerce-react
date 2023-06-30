@@ -6,16 +6,14 @@ import { likesUpdate } from "../helpers/likesUpdate";
 import { handleLogin } from "../helpers/handleLogin";
 
 const AuthContext = createContext();
-const initialAuth = Cookies.get("accessToken") || null;
-const initialUser = JSON.parse(localStorage.getItem("user")) || null;
 const initialProductQ = 0;
 const initialCart = {};
 const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(initialUser);
-  const [auth, setAuth] = useState(initialAuth);
+  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState(false);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
