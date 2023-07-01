@@ -14,7 +14,7 @@ const loaderDashboard = async ({ params }) => {
       },
     };
     const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
-    const response = await axios(DASH_URL, { withCredentials: true });
+    const response = await axios(DASH_URL, options);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
