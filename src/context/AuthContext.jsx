@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
 
-const AuthContext = createContext();
+const AuthContext = createContext({});
 const initialProductQ = 0;
 const initialCart = {};
 const initialLikes = [];
@@ -37,11 +37,14 @@ const AuthProvider = ({ children }) => {
 
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
-    const { data, userCart, userLikes } = await handleLogin(
-      username.value,
-      psw.value
+    username =  username.value;
+    psw = psw.value;
+
+    const { data, accessToken, userCart, userLikes } = await handleLogin(
+      username,
+      psw
     );
-    setAuth(true);
+    setAuth({user: username, pwd: psw, accessToken});
     setUser(data);
     setCart(userCart);
     setLikes(userLikes);

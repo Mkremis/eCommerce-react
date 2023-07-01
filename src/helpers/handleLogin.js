@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from "../api/axios";
 import Cookies from "js-cookie";
 
-const LOGIN_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/login`;
+const LOGIN_URL = `/api/users/login`;
 export const handleLogin = async (login_username, login_password) => {
   try {
     const response = await axios.post(LOGIN_URL, {
@@ -9,6 +9,7 @@ export const handleLogin = async (login_username, login_password) => {
       login_password,
     });
     Cookies.set("accessToken", response.data.token, { sameSite: "strict" });
+    const accessToken = response.data.token;
     const userData = response.data.user;
     let data = {};
     for (const key in userData) {
@@ -22,7 +23,7 @@ export const handleLogin = async (login_username, login_password) => {
     const userCart = userData.user_cart;
     const userLikes = userData.user_likes;
 
-    return { data, userCart, userLikes };
+    return { data, accessToken, userCart, userLikes };
   } catch (err) {
     console.error(err);
   }

@@ -1,7 +1,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+
+
 const loaderDashboard = async ({ params }) => {
+
   try {
     const { username } = params;
     const accessToken = Cookies.get("accessToken");
