@@ -1,8 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { cartUpdate } from "../helpers/cartUpdate";
-import { likesUpdate } from "../helpers/likesUpdate";
 import { handleLogin } from "../helpers/handleLogin";
 
 const AuthContext = createContext();
@@ -50,14 +47,6 @@ const AuthProvider = ({ children }) => {
     setLikes(userLikes);
     localStorage.setItem("user", JSON.stringify(data));
   };
-
-  // useEffect(() => {
-  //   cartUpdate(auth, cart, user);
-  // }, [cart]);
-
-  // useEffect(() => {
-  //   likesUpdate(likes, auth, user);
-  // }, [likes]);
 
   const data = {
     likes,

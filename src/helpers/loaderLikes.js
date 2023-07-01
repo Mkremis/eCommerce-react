@@ -13,7 +13,6 @@ export const loaderLikes = async ({ params }) => {
     };
     const LIKES_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/likes`;
     const response = await axios(LIKES_URL, options);
-    console.log(response);
     if (response.status !== 200) throw new Error(responseOrders.message);
     return response.data.user_likes;
   } catch (error) {
