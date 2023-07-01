@@ -8,9 +8,9 @@ export const handleLogin = async (login_username, login_password) => {
       login_username,
       login_password,
     });
-    Cookies.set("accessToken", response.data.token, { sameSite: "strict" });
-    const accessToken = response.data.token;
-    const userData = response.data.user;
+    const accessToken = response.data.accessToken;
+    const userData = response.data.userData.user;
+    Cookies.set("accessToken", accessToken, { sameSite: "strict" });
     let data = {};
     for (const key in userData) {
       if (key !== "user_cart") {
@@ -22,7 +22,6 @@ export const handleLogin = async (login_username, login_password) => {
 
     const userCart = userData.user_cart;
     const userLikes = userData.user_likes;
-
     return { data, accessToken, userCart, userLikes };
   } catch (err) {
     console.error(err);

@@ -1,26 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import RenderForm from "../components/RenderForm";
 import AuthContext from "../context/AuthContext";
-import axios from "../api/axios";
-
 
 
 const UserDashboard = () => {
   const { auth, user } = useContext(AuthContext);
-  useEffect(()=>{
-
-    const r = async ()=>{
-    
-      const response = await axios.get('/refresh-token', {
-         withCredentials: true
-    });
-    const {data} =  response;
-    console.log(data)
-    }
-    r()
-    
-    },[])
 
   return (
     <article className="dashboard">

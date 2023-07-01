@@ -2,15 +2,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 
-
 const loaderDashboard = async ({ params }) => {
 
   try {
     const { username } = params;
     const accessToken = Cookies.get("accessToken");
-
+console.log(accessToken)
     const options = {
-      // credentials: "include",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
