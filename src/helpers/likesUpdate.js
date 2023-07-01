@@ -1,25 +1,22 @@
+import axios from "axios";
 import Cookies from "js-cookie";
-export const likesUpdate = (likes, auth, user) => {
-  if (auth) {
-    const token = Cookies.get("accessToken");
+
+export const likesUpdate = (likes, user) => {
+     const accessToken = Cookies.get("accessToken");
+  if (accessToken) {
     const options = {
-      method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(likes),
     };
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
-    window
-      .fetch(endpoint, options)
-      .then((res) => console.log(res))
-      // .then((data) => console.log(data))
+    const LIKES_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
+    axios
+      .put(LIKES_UPDATE_URL, JSON.stringify(likes), options)
       .catch((err) =>
         console.error("Error updatting the user likes form the server", err)
       );
   } else {
     return false;
   }
-  // localStorage.setItem("likes", JSON.stringify(likes));
 };

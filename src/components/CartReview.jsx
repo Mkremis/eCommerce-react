@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { cartUpdate } from "../helpers/cartUpdate";
 
 const CartReview = () => {
-  const { cart, setCart } = useContext(AuthContext);
+  const { cart, setCart, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let cartItems = 0;
@@ -12,8 +13,7 @@ const CartReview = () => {
     let newCart = JSON.parse(JSON.stringify(cart));
     delete newCart[item];
     setCart(newCart);
-    console.log("newCart", newCart);
-    // setCart({ ...cart, ...(cart[item].productQ = 0) });
+    cartUpdate(newCart, user);
   };
   const reviewItems = () => {
     let totalCart = 0;

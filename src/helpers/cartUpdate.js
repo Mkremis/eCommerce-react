@@ -1,23 +1,21 @@
+import axios from "axios";
 import Cookies from "js-cookie";
-export const cartUpdate = (auth, cart, user) => {
-  if (auth) {
-    const token = Cookies.get("accessToken");
+
+export const cartUpdate = (cart, user) => {
+  const accessToken = Cookies.get("accessToken");
+  if (accessToken) {
     const options = {
-      method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cart),
     };
-    const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
-    window
-      .fetch(endpoint, options)
-      // .then((res) => res.json())
-      // .then((data) => console.log(data))
+    const CART_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
+    axios
+      .put(CART_UPDATE_URL, JSON.stringify(cart), options)
       .catch((err) =>
         console.error("Error updatting the user cart form the server", err)
-      );
+      ); 
   } else {
     return false;
   }
