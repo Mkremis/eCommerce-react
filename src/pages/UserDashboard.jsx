@@ -9,7 +9,9 @@ import axios from "../api/axios";
 const UserDashboard = () => {
   const { auth, user } = useContext(AuthContext);
   useEffect(()=>{
+
     const r = async ()=>{
+    
       const response = await axios.get('/refresh-token', {
          withCredentials: true
     });
