@@ -8,13 +8,13 @@ export const handleLogin = async (login_username, login_password) => {
       login_username,
       login_password,
     });
-    Cookies.set('accessToken', response.data.accessToken, {
+    Cookies.set('accessToken', response?.data?.accessToken, {
       httpOnly: true,
       sameSite: "None",
       secure: true,
       expires: 1
     })
-    const userData = response.data.userData.user;
+    const userData = response?.data?.userData?.user;
     let data = {};
     for (const key in userData) {
       if (key !== "user_cart") {
