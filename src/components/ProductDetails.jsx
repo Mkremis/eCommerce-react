@@ -15,7 +15,7 @@ const ProductDetails = ({ product }) => {
     setProductQ,
     cart,
     setCart,
-    user,
+    auth
   } = useContext(AuthContext);
 
   const handleCart = () => {
@@ -30,7 +30,7 @@ const ProductDetails = ({ product }) => {
       },
     };
     setCart(updatedCart);
-    cartUpdate(updatedCart, user);
+    cartUpdate(updatedCart, auth);
   };
 
   useEffect(() => {

@@ -6,19 +6,19 @@ import AuthContext from '../context/AuthContext';
 import Dashboard from './Dashboard';
 
 const UserAccess = () => {
-  const { auth, handleAuth, user, handleLogout } = useContext(AuthContext);
+  const { auth, handleAuth, handleLogout } = useContext(AuthContext);
   const [isOpenModalLogin, openModalLogin, closeModalModalLogin] =
     useModal(false);
   const [isOpenDash, openDash, closeDash] = useModal();
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
-    if (user) {
-      setAvatar(user.picture.thumbnail);
+    if (auth) {
+      setAvatar(auth.picture.thumbnail);
     }else{
       setAvatar(null);
     }
-  }, [user]);
+  }, [auth]);
 
   if (auth && isOpenModalLogin) closeModalModalLogin(true);
   const handleLogin = () => {
@@ -61,11 +61,11 @@ const UserAccess = () => {
       >
         <LoginForm handleAuth={handleAuth}  closeModalLogin={closeModalModalLogin}/>
       </Modal>
-      {user && (
+      {auth && (
         <Dashboard
           isOpen={isOpenDash}
           closeDash={closeDash}
-          user={user}
+          user={auth}
           logout={handleLogout}
         />
       )}

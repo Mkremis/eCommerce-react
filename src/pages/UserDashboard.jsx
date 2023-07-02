@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext";
 
 
 const UserDashboard = () => {
-  const { auth, user } = useContext(AuthContext);
+  const { auth} = useContext(AuthContext);
 
   return (
     <article className="dashboard">
@@ -15,13 +15,13 @@ const UserDashboard = () => {
         </h2>
         {auth && (
           <nav className="dashboard-nav">
-            <NavLink to={`/dashboard/${user.login.username}`}>
+            <NavLink to={`/dashboard/${auth.login.username}`}>
               User Data
             </NavLink>
-            <NavLink to={`/dashboard/orders/${user.login.username}`}>
+            <NavLink to={`/dashboard/orders/${auth.login.username}`}>
               Order History
             </NavLink>
-            <NavLink to={`/dashboard/likeds/${user.login.username}`}>
+            <NavLink to={`/dashboard/likeds/${auth.login.username}`}>
               Likes
             </NavLink>
           </nav>

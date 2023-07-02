@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const likesUpdate = (likes, user) => {
+export const likesUpdate = (likes, auth) => {
      const accessToken = Cookies.get("accessToken");
   if (accessToken) {
     const options = {
@@ -10,7 +10,7 @@ export const likesUpdate = (likes, user) => {
         "Content-Type": "application/json",
       },
     };
-    const LIKES_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-likes`;
+    const LIKES_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${auth.login.username}/update-likes`;
     axios
       .put(LIKES_UPDATE_URL, JSON.stringify(likes), options)
       .catch((err) =>

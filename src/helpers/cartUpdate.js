@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const cartUpdate = (cart, user) => {
+export const cartUpdate = (cart, auth) => {
   const accessToken = Cookies.get("accessToken");
   if (accessToken) {
     const options = {
@@ -10,7 +10,7 @@ export const cartUpdate = (cart, user) => {
         "Content-Type": "application/json",
       },
     };
-    const CART_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${user.login.username}/update-cart`;
+    const CART_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${auth.login.username}/update-cart`;
     axios
       .put(CART_UPDATE_URL, JSON.stringify(cart), options)
       .catch((err) =>

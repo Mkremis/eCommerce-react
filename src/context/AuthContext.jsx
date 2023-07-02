@@ -9,8 +9,7 @@ const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('auth'))||null);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
@@ -28,8 +27,7 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     navigate("/");
     setAuth(false);
-    localStorage.removeItem("user");
-    setUser(null);
+    localStorage.removeItem("auth");
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
@@ -40,15 +38,14 @@ const AuthProvider = ({ children }) => {
     username =  username.value;
     psw = psw.value;
 
-    const { data, accessToken, userCart, userLikes } = await handleLogin(
+    const { data, userCart, userLikes } = await handleLogin(
       username,
       psw
     );
-    setAuth({user: username, pwd: psw, accessToken});
-    setUser(data);
+    setAuth(data);
     setCart(userCart);
     setLikes(userLikes);
-    localStorage.setItem("user", JSON.stringify(data));
+    localStorage.setItem("auth", JSON.stringify(data));
   };
 
   const data = {
@@ -56,7 +53,6 @@ const AuthProvider = ({ children }) => {
     setLikes,
     auth,
     handleAuth,
-    user,
     handleLogout,
     handlePlusQ,
     handleMinusQ,

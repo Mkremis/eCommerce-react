@@ -1,22 +1,19 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 const loaderDashboard = async ({ params }) => {
-
   try {
     const { username } = params;
     const accessToken = Cookies.get("accessToken");
-console.log(accessToken)
     const options = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
-        withCredentials: true,
       },
+      withCredentials: true,
     };
     const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/dashboard/${username}`;
-    const response = await axios.post(DASH_URL,{}, options);
+    const response = await axios.post(DASH_URL, {}, options);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
@@ -38,4 +35,5 @@ console.log(accessToken)
     return [];
   }
 };
+
 export default loaderDashboard;
