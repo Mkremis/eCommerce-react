@@ -12,6 +12,7 @@ console.log(accessToken)
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
+        withCredentials: true,
       },
     };
     const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}`;
