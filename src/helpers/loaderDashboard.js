@@ -16,7 +16,7 @@ console.log(accessToken)
       },
     };
     const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/dashboard/${username}`;
-    const response = await axios.post(DASH_URL, options);
+    const response = await axios.post(DASH_URL,{}, options);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
