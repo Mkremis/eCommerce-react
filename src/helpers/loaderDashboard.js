@@ -5,6 +5,7 @@ const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
     const accessToken = Cookies.get("accessToken");
+    console.log(Cookies.get())
     const options = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
