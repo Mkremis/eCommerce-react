@@ -9,14 +9,12 @@ const useRefreshToken = () => {
             },
             withCredentials: true,
           };
-          const URL = `/refresh`
+          const URL = `api/users/refresh`
           const refreshToken = Cookies.get("refreshToken");
           const response =  await client.post(URL,
            JSON.stringify({refreshToken}), options);
-           console.log(response.data)
            Cookies.set('accessToken', response?.data?.accessToken)
-           Cookies.set('refreshToken', response?.data?.refreshToken)
-           const userData = response?.data?.userData?.user;
+           const userData = response?.data?.userData;
            let data = {};
            for (const key in userData) {
              if (key !== "user_cart") {
