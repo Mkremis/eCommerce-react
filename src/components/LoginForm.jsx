@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const LoginForm = ({ handleAuth, closeModalLogin }) => {
+  const {persist, setPersist} = useContext(AuthContext)
+
+  const togglePersist = () => {
+    setPersist(prev => !prev);
+}
+useEffect(()=>{
+  persist
+  ?localStorage.setItem('persist', true)
+  :localStorage.removeItem('persist')
+}, [persist])
   const navigate = useNavigate();
   const handleTogglePass = (e) => {
     const togglePassword = e.target;
@@ -44,8 +55,15 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
               visibility
             </span>
           </div>
-
-          <a href="#">Forgot your password?</a>
+          <div className="persistCheck">
+                    <input
+                        type="checkbox"
+                        id="persist"
+                        onChange={togglePersist}
+                        checked={persist}
+                    />
+                    <label htmlFor="persist">Trust This Device</label>
+                </div>
           <input type="submit" value="Sign In" />
         </form>
       </article>

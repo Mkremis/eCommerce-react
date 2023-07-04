@@ -9,7 +9,7 @@ const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('auth'))||null);
+  const [auth, setAuth] = useState(null);
   const [productQ, setProductQ] = useState(initialProductQ);
   const [cart, setCart] = useState(initialCart);
   const [cartItems, setCartItems] = useState(0);
@@ -27,8 +27,9 @@ const AuthProvider = ({ children }) => {
   // UPDATE AUTH STATES WHEN USER LOGOUT
   const handleLogout = () => {
     navigate("/");
-    setAuth(false);
-    localStorage.removeItem("auth");
+    setAuth(null);
+    localStorage.removeItem('persist');
+    setPersist(false);
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
@@ -47,12 +48,12 @@ const AuthProvider = ({ children }) => {
     setAuth(data);
     setCart(userCart);
     setLikes(userLikes);
-    localStorage.setItem("persist", true);
   };
 
 
   const data = {
     persist,
+    setPersist,
     likes,
     setLikes,
     auth,

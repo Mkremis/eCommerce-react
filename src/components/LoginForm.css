@@ -85,3 +85,13 @@
   align-items: center;
   justify-content: space-evenly;
 }
+.persistCheck{
+  width: 100%;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.persistCheck>label{
+  flex: 1 0 80%;
+}

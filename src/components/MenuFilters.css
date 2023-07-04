@@ -73,7 +73,7 @@
   background-color: var(--Pale-orange);
 }
 
-input[type='checkbox'] {
+.filter-categories  input[type='checkbox'] {
   position: absolute;
   cursor: pointer;
   appearance: none;
