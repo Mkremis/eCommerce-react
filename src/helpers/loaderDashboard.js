@@ -1,5 +1,5 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 const loaderDashboard = async ({ params }) => {
   try {
@@ -13,8 +13,8 @@ const loaderDashboard = async ({ params }) => {
       },
       withCredentials: true,
     };
-    const DASH_URL = `https://mkremis-super-waffle-gvgwrqvrwwp397j7-3500.preview.app.github.dev/api/users/dashboard/${username}`;
-    const response = await axios.post(DASH_URL, JSON.stringify({refreshToken}), options);
+    const URL = `/api/users/dashboard/${username}`;
+    const response = await client.post(URL, JSON.stringify({refreshToken}), options);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;

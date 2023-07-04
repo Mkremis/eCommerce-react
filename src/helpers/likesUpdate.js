@@ -1,5 +1,5 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 export const likesUpdate = (likes, auth) => {
      const accessToken = Cookies.get("accessToken");
@@ -10,9 +10,9 @@ export const likesUpdate = (likes, auth) => {
         "Content-Type": "application/json",
       },
     };
-    const LIKES_UPDATE_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${auth.login.username}/update-likes`;
-    axios
-      .put(LIKES_UPDATE_URL, JSON.stringify(likes), options)
+    const URL = `/api/users/${auth.login.username}/update-likes`;
+    client
+      .put(URL, JSON.stringify(likes), options)
       .catch((err) =>
         console.error("Error updatting the user likes form the server", err)
       );

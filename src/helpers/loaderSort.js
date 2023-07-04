@@ -1,5 +1,5 @@
+import axios from "axios";
 import { options } from "../helpers/api";
-import { helpHttp } from "./helpHttp";
 
 const loaderSort = async ({ params }) => {
   const categories = {
@@ -15,7 +15,7 @@ const loaderSort = async ({ params }) => {
 
   root = params.search === " " ? root : "";
 
-  const url = `https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=${
+  const URL = `https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=${
     params.offset
   }&${root && root + "&"}limit=48&${
     params.filter !== " " ? params.filter + "&" : ""
@@ -24,11 +24,12 @@ const loaderSort = async ({ params }) => {
   }sizeSchema=US&lang=en-US`;
 
   try {
-    const res = await helpHttp().get(url, options);
-    return { res };
-  } catch (error) {
-    console.log("Error fetching url:", url, "Error:", error);
-    return { res: { products: [] } };
+    const response = await axios.get(URL, options);
+    const { data } = response;
+    return data
+  } catch (err) {
+    console.error(err)
+    return { data: { products: [] } };
   }
 };
 export default loaderSort;

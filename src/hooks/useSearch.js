@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { options } from "../helpers/api";
-import { helpHttp } from "../helpers/helpHttp";
+import axios from "axios";
 
 const useSearch = () => {
   const [search, setSearch] = useState("");
@@ -15,12 +15,12 @@ const useSearch = () => {
       setSearch("");
     }
     if (search.length > 2 && !fetchSearch) {
-      const url = `https://asos2.p.rapidapi.com/v2/auto-complete?q=${search}&store=US&country=US&currency=USD&sizeSchema=US&lang=en-US`;
-      helpHttp()
-        .get(url, options)
+      const URL = `https://asos2.p.rapidapi.com/v2/auto-complete?q=${search}&store=US&country=US&currency=USD&sizeSchema=US&lang=en-US`;
+      axios
+        .get(URL, options)
         .then((res) =>
           setSuggestions(
-            res.suggestionGroups[0].suggestions.map((obj) => obj.searchTerm)
+            res.data.suggestionGroups[0].suggestions.map((obj) => obj.searchTerm)
           )
         );
     }

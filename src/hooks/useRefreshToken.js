@@ -1,5 +1,5 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 const useRefreshToken = () => {
     const refresh = async (setAuth, setCart, setLikes) => {
@@ -9,8 +9,9 @@ const useRefreshToken = () => {
             },
             withCredentials: true,
           };
+          const URL = `/refresh`
           const refreshToken = Cookies.get("refreshToken");
-          const response =  await axios.post('https://mkremis-super-waffle-gvgwrqvrwwp397j7-3500.preview.app.github.dev/refresh',
+          const response =  await client.post(URL,
            JSON.stringify({refreshToken}), options);
            console.log(response.data)
            Cookies.set('accessToken', response?.data?.accessToken)

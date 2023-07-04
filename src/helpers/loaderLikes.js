@@ -1,5 +1,5 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 export const loaderLikes = async ({ params }) => {
   const accessToken = Cookies.get("accessToken");
@@ -11,13 +11,11 @@ export const loaderLikes = async ({ params }) => {
         "Content-Type": "application/json",
       },
     };
-    const LIKES_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/likes`;
-    const response = await axios(LIKES_URL, options);
-    if (response.status !== 200) throw new Error(responseOrders.message);
+    const URL = `/api/users/${username}/likes`;
+    const response = await client(URL, options);
     return response.data.user_likes;
-  } catch (error) {
-    alert(error);
-    console.error(error);
-    return null;
+  } catch (err) {
+    console.error(err);
+    return [];
   }
 };

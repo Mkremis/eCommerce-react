@@ -3,9 +3,9 @@ import { useLoaderData } from "react-router-dom";
 import ProductView from "../components/ProductView";
 
 const ReviewProduct = () => {
-  const { res } = useLoaderData();
+  const { data } = useLoaderData();
 
-  return <ProductView product={res} />;
+  return <ProductView product={data} />;
 };
 
 export default ReviewProduct;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { helpHttp } from "../helpers/helpHttp";
+import axios from "axios";
 
 export const useForm = (initialForm, validateForm) => {
   const [form, setForm] = useState(initialForm);
@@ -20,7 +20,7 @@ export const useForm = (initialForm, validateForm) => {
     setErrors(validateForm(form));
     if (Object.keys(errors).length === 0) {
       setLoading(true);
-      helpHttp()
+      axios
         .post("https://formsubmit.co/ajax/martinkremis@gmail.com", {
           body: form,
           headers: {

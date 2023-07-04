@@ -17,21 +17,21 @@ const SortProduct = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const { page, setPage, refreshPage } = useContext(AuthContext);
-  const { res } = useLoaderData();
+  const data  = useLoaderData();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const path = pathname.split("/");
   const root = path[1];
 
   useEffect(() => {
-    if (res && Object.keys(res).length > 0 && res.hasOwnProperty("products")) {
+    if (data && Object.keys(data).length > 0 && data.hasOwnProperty("products")) {
       if (page > 1) {
-        setItems([...items, ...res.products]);
+        setItems([...items, ...data.products]);
       } else {
-        setItems([...res.products]);
+        setItems([...data.products]);
       }
     }
-  }, [res, setItems]);
+  }, [data, setItems]);
 
   useEffect(() => {
     let offset = page * limit;
@@ -41,12 +41,12 @@ const SortProduct = () => {
         `/${root}/category/${path[3]}/sortBy/${path[5]}/filter/${path[7]}/search/${path[9]}/offset/${offset}`
       );
     }
-    if (offset >= res.itemCount) setHasMore(false);
+    if (offset >= data.itemCount) setHasMore(false);
   }, [page, hasMore, setHasMore]);
   return (
     <>
-      {res && res.facets && (
-        <Filters facets={res.facets} refreshPage={refreshPage} />
+      {data && data.facets && (
+        <Filters facets={data.facets} refreshPage={refreshPage} />
       )}
       <section className="content">
         <InfiniteScroll

@@ -1,10 +1,10 @@
-import axios from "../api/axios";
+import client from "../api/axiosClient";
 import Cookies from "js-cookie";
 
-const LOGIN_URL = `/api/users/login`;
+const URL = `/api/users/login`;
 export const handleLogin = async (login_username, login_password) => {
   try {
-    const response = await axios.post(LOGIN_URL, {
+    const response = await client.post(URL, {
       login_username,
       login_password,
     });

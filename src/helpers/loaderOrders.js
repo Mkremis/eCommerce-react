@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 export const loaderOrders = async ({ params }) => {
   try {
@@ -11,13 +12,11 @@ export const loaderOrders = async ({ params }) => {
         "Content-Type": "application/json",
       },
     };
-    const ORDERS_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/${username}/orders`;
-    const response = await axios(ORDERS_URL, options);
-    if (response.status !== 200) throw new Error(responseOrders.message);
+    const URL = `/api/users/${username}/orders`;
+    const response = await client(URL, options);
     return response.data.orders;
-  } catch (error) {
-    alert(error);
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return null;
   }
 };
