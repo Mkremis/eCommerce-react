@@ -9,6 +9,7 @@ export const handleLogin = async (login_username, login_password) => {
       login_password,
     });
     Cookies.set('accessToken', response?.data?.accessToken)
+    Cookies.set('refreshToken', response?.data?.refreshToken)
     const userData = response?.data?.userData?.user;
     let data = {};
     for (const key in userData) {

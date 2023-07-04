@@ -5,7 +5,7 @@ const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
     const accessToken = Cookies.get("accessToken");
-    console.log(Cookies.get())
+    const refreshToken = Cookies.get("refreshToken");
     const options = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -13,8 +13,8 @@ const loaderDashboard = async ({ params }) => {
       },
       withCredentials: true,
     };
-    const DASH_URL = `https://ecommerce-users-api-production.up.railway.app/api/users/dashboard/${username}`;
-    const response = await axios.post(DASH_URL, {}, options);
+    const DASH_URL = `https://mkremis-super-waffle-gvgwrqvrwwp397j7-3500.preview.app.github.dev/api/users/dashboard/${username}`;
+    const response = await axios.post(DASH_URL, JSON.stringify({refreshToken}), options);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;

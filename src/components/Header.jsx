@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import { useModal } from '../hooks/useModal';
@@ -11,6 +11,8 @@ import UserAccess from './UserAccess';
 import CartNotification from './CartNotification';
 import logo from '../assets/logo.png';
 import GenderHeader from './GenderHeader';
+import AuthContext from '../context/AuthContext';
+import useRefreshToken from '../hooks/useRefreshToken';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,6 +20,19 @@ const Header = () => {
     isOpenModalTop ? closeModalModalTop(true) : openModalTop(true);
 
   const [isOpenModalTop, openModalTop, closeModalModalTop] = useModal(false);
+
+  const refresh = useRefreshToken();
+  const {auth, setAuth, setCart, setLikes, persist} = useContext(AuthContext)
+    useEffect(() => {
+        const verifyRefreshToken = async () => {
+        try {
+          await refresh(setAuth, setCart, setLikes);
+        } catch (err) {
+          console.error(err);
+        } 
+      };
+      !auth && persist && verifyRefreshToken() 
+    }, []);
 
   return (
     <header className="header">

@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
   const [likes, setLikes] = useState(initialLikes);
+  const [persist, setPersist] = useState(JSON.parse(localStorage.getItem('persist'))||false);
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
@@ -33,6 +34,7 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
   };
 
+
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
     username =  username.value;
@@ -45,13 +47,16 @@ const AuthProvider = ({ children }) => {
     setAuth(data);
     setCart(userCart);
     setLikes(userLikes);
-    localStorage.setItem("auth", JSON.stringify(data));
+    localStorage.setItem("persist", true);
   };
 
+
   const data = {
+    persist,
     likes,
     setLikes,
     auth,
+    setAuth,
     handleAuth,
     handleLogout,
     handlePlusQ,
