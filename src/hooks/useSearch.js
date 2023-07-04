@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { options } from "../helpers/api";
+import { options } from "../api/apiConfig"
 import axios from "axios";
 
 const useSearch = () => {

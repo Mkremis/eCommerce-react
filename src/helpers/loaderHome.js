@@ -1,4 +1,4 @@
-import { options } from "../helpers/api";
+import { options } from "../api/apiConfig"
 
 export const loaderHome = async () => {
   const urlWM = `https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=0&categoryId=16661&limit=48&country=US&sort=freshness&currency=USD&sizeSchema=US&lang=en-US`,

@@ -1,4 +1,4 @@
-import { options } from "../helpers/api";
+import { options } from "../api/apiConfig"
 import axios from "axios";
 
 const loaderDetails = async ({ params }) => {

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { options } from "../helpers/api";
+import { options } from "../api/apiConfig";
+
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
