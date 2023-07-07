@@ -67,9 +67,7 @@ const Header = () => {
             <div
               style={{
                 width: '100%',
-                height: '15vh',
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'space-evenly',
               }}

@@ -9,9 +9,18 @@
 .gender-header_img-container {
   position: relative;
   cursor: pointer;
+  padding: 12px;
 }
-.gender-header img {
-  max-width: 45vw;
+
+
+/* MEDIA QUERY DESKTOP */
+@media (min-width: 415px) {
+  .gender-header img {
+    max-width: 45vw;
+  }
+  .gender-header_img-container {
+    padding: 0;
+  }
 }
 .gender-title {
   position: absolute;
