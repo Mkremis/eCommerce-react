@@ -1,4 +1,6 @@
 import React from "react";
+import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 
 const useRenderForm = () => {
   const handleTogglePass = (e) => {
@@ -159,25 +161,27 @@ const useRenderForm = () => {
   };
 
   async function fetchData(newUserData, method, output) {
+    const accessToken = Cookies.get("accessToken");
+    const refreshToken = Cookies.get("refreshToken");
     try {
-      const options = {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUserData),
-      };
-      let route = method === "POST" ? "register" : "update";
-      const endpoint = `https://ecommerce-users-api-production.up.railway.app/api/users/${route}`;
-      const response = await fetch(endpoint, options);
-      if (response.ok) {
+      const response = method === 'PUT'
+       ?await client.put('/api/users/update', JSON.stringify({userData:newUserData, refreshToken}),{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      : await client.post('/api/users/register', JSON.stringify(newUserData),{
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+  
         output.current.classList.remove("--invisible");
         setTimeout(() => {
           output.current.classList.add("--invisible");
         }, 3500);
-      } else {
-        let error = await response.json();
-        console.log(error);
-        throw new Error(error.message);
-      }
     } catch (error) {
       alert(error);
       console.error(error);
