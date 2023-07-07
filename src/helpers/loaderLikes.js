@@ -3,6 +3,7 @@ import client from "../api/axiosClient";
 
 export const loaderLikes = async ({ params }) => {
   const accessToken = Cookies.get("accessToken");
+  const refreshToken = Cookies.get("refreshToken");
   try {
     const { username } = params;
     const options = {
@@ -12,7 +13,7 @@ export const loaderLikes = async ({ params }) => {
       },
     };
     const URL = `/api/users/${username}/likes`;
-    const response = await client(URL, options);
+    const response = await client.post(URL,JSON.stringify({refreshToken}),options);
     return response.data.user_likes;
   } catch (err) {
     console.error(err);

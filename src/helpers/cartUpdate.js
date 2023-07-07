@@ -3,6 +3,7 @@ import client from "../api/axiosClient";
 
 export const cartUpdate = (cart, auth) => {
   const accessToken = Cookies.get("accessToken");
+  const refreshToken = Cookies.get("refreshToken");
   if (accessToken) {
     const options = {
       headers: {
@@ -12,7 +13,7 @@ export const cartUpdate = (cart, auth) => {
     };
     const URL = `/api/users/${auth.login.username}/update-cart`;
     client
-      .put(URL, JSON.stringify(cart), options)
+      .put(URL, JSON.stringify({cart, refreshToken}), options)
       .catch((err) =>
         console.error("Error updatting the user cart form the server", err)
       ); 

@@ -3,6 +3,7 @@ import client from "../api/axiosClient";
 
 export const likesUpdate = (likes, auth) => {
      const accessToken = Cookies.get("accessToken");
+     const refreshToken = Cookies.get("refreshToken");
   if (accessToken) {
     const options = {
       headers: {
@@ -12,7 +13,7 @@ export const likesUpdate = (likes, auth) => {
     };
     const URL = `/api/users/${auth.login.username}/update-likes`;
     client
-      .put(URL, JSON.stringify(likes), options)
+      .put(URL, JSON.stringify({likes, refreshToken}), options)
       .catch((err) =>
         console.error("Error updatting the user likes form the server", err)
       );

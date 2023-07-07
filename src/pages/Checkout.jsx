@@ -1,27 +1,28 @@
 import React, { useContext } from "react";
+import Cookies from "js-cookie";
+import client from "../api/axiosClient";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { cart, auth } = useContext(AuthContext);
+  const { cart } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handlePay = async (event) => {
     event.preventDefault();
-    const requestOptions = {
+    const accessToken = Cookies.get("accessToken");
+    const refreshToken = Cookies.get("refreshToken");
+    const options = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${auth}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cart),
     };
-    const response = await fetch(
-      `https://ecommerce-users-api-production.up.railway.app/api/create-order`,
-      requestOptions
-    );
-    const data = await response.json();
+    const URL = `/api/create-order`
+    const response = await client.post(URL,JSON.stringify({cart, refreshToken}), options);
+    const {data} =  response;
     if (data.init_point) window.location.href = data.init_point;
   };
 
