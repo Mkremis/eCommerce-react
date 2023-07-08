@@ -1,12 +1,17 @@
 import React from "react";
 import "./ProductCard.css";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({ image, name, id }) => {
+const ProductCard = ({ gender, image, name, id, children }) => {
   return (
     <figure id={id}>
-      <img className="product-image" src={image} alt={name} />
+      <Link to={`/${gender}/${id}`}>
+        <img className="product-image" src={image} alt={name} />
+      </Link>
       <figcaption className="product-description" id={id}>
-        <span className="product-name">{name}</span>
+        <Link to={`/${gender}/${id}`}>{name}</Link>
+
+        {children}
       </figcaption>
     </figure>
   );

@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  Link,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Filters from "../components/Filters";
 import ProductFooter from "../components/ProductFooter";
@@ -17,14 +12,18 @@ const SortProduct = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const { page, setPage, refreshPage } = useContext(AuthContext);
-  const data  = useLoaderData();
+  const data = useLoaderData();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const path = pathname.split("/");
   const root = path[1];
 
   useEffect(() => {
-    if (data && Object.keys(data).length > 0 && data.hasOwnProperty("products")) {
+    if (
+      data &&
+      Object.keys(data).length > 0 &&
+      data.hasOwnProperty("products")
+    ) {
       if (page > 1) {
         setItems([...items, ...data.products]);
       } else {
@@ -71,21 +70,21 @@ const SortProduct = () => {
               if (product.productType === "Product") {
                 return (
                   <section className="product" key={product.id}>
-                    <Link to={`/${root}/${product.id}`}>
-                      <ProductCard
-                        image={`https://${product.imageUrl}`}
-                        name={product.name}
-                        price_curr={product.price.current.text}
-                        id={product.id}
-                      />
-                    </Link>
-                    <ProductFooter
-                      price={product.price.current.text}
-                      id={product.id}
-                      name={product.name}
+                    <ProductCard
                       image={`https://${product.imageUrl}`}
+                      name={product.name}
+                      price_curr={product.price.current.text}
+                      id={product.id}
                       gender={root}
-                    />
+                    >
+                      <ProductFooter
+                        price={product.price.current.text}
+                        id={product.id}
+                        name={product.name}
+                        image={`https://${product.imageUrl}`}
+                        gender={root}
+                      />
+                    </ProductCard>
                   </section>
                 );
               }
