@@ -3,7 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { likesUpdate } from "../helpers/likesUpdate";
 
 const Like = ({ price, id, name, image, styles, gender }) => {
-  const { likes, setLikes, auth} = useContext(AuthContext);
+  const { likes, setLikes, auth } = useContext(AuthContext);
   const initalLike = likes.find((obj) => obj.id === id) || null;
   const [like, setLike] = useState(initalLike);
   const product = { id, name, image, price, gender };
