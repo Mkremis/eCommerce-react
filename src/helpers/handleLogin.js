@@ -8,6 +8,7 @@ export const handleLogin = async (login_username, login_password) => {
       login_username,
       login_password,
     });
+   
     Cookies.set("accessToken", response?.data?.accessToken);
     Cookies.set("refreshToken", response?.data?.refreshToken);
     const userData = response?.data?.userData;
@@ -21,6 +22,7 @@ export const handleLogin = async (login_username, login_password) => {
     }
     const userCart = userData.user_cart;
     const userLikes = userData.user_likes;
+    
     return { data, userCart, userLikes };
   } catch (err) {
     console.error(err);
