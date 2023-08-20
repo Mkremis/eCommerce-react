@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
+import { serverLogout } from "../helpers/serverLogout";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -35,7 +36,7 @@ const AuthProvider = ({ children }) => {
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
-    handleLogout();
+    serverLogout();
   };
 
   const handleAuth = async (e) => {
