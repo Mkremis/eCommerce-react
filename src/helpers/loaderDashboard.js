@@ -1,20 +1,9 @@
-import Cookies from "js-cookie";
 import client from "../api/axiosClient";
 
 const loaderDashboard = async ({ params }) => {
   try {
     const { username } = params;
-    const accessToken = Cookies.get("accessToken");
-    const refreshToken = Cookies.get("refreshToken");
-    const options = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
-    const URL = `/api/users/dashboard/${username}`;
-    const response = await client.post(URL, JSON.stringify({refreshToken}), options);
+    const response = await client.post(`/api/users/dashboard/${username}`);
 
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
