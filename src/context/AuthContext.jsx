@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
-import Cookies from "js-cookie";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -36,14 +35,13 @@ const AuthProvider = ({ children }) => {
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
-    Cookies.remove("accessToken");
+    handleLogout();
   };
 
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
     username = username.value;
     psw = psw.value;
-
     const { data, userCart, userLikes } = await handleLogin(username, psw);
     setAuth(data);
     setCart(userCart || initialCart);
