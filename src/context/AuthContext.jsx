@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -15,7 +16,9 @@ const AuthProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
   const [likes, setLikes] = useState(initialLikes);
-  const [persist, setPersist] = useState(JSON.parse(localStorage.getItem('persist'))||false);
+  const [persist, setPersist] = useState(
+    JSON.parse(localStorage.getItem("persist")) || false
+  );
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
@@ -28,28 +31,24 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     navigate("/");
     setAuth(null);
-    localStorage.removeItem('persist');
+    localStorage.removeItem("persist");
     setPersist(false);
     setCart(initialCart);
     setCartItems(initialProductQ);
     setLikes(initialLikes);
+    Cookies.remove("accessToken");
   };
-
 
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
-    username =  username.value;
+    username = username.value;
     psw = psw.value;
 
-    const { data, userCart, userLikes } = await handleLogin(
-      username,
-      psw
-    );
+    const { data, userCart, userLikes } = await handleLogin(username, psw);
     setAuth(data);
-    setCart(userCart);
-    setLikes(userLikes);
+    setCart(userCart || initialCart);
+    setLikes(userLikes || initialLikes);
   };
-
 
   const data = {
     persist,
