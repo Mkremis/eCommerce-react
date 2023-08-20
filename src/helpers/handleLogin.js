@@ -1,16 +1,12 @@
 import client from "../api/axiosClient";
-import Cookies from "js-cookie";
 
-const URL = `/api/users/login`;
 export const handleLogin = async (login_username, login_password) => {
   try {
-    const response = await client.post(URL, {
+    const response = await client.post(`/api/users/login`, {
       login_username,
       login_password,
     });
-   
-    Cookies.set("accessToken", response?.data?.accessToken);
-    Cookies.set("refreshToken", response?.data?.refreshToken);
+
     const userData = response?.data?.userData;
     let data = {};
     for (const key in userData) {
@@ -22,7 +18,7 @@ export const handleLogin = async (login_username, login_password) => {
     }
     const userCart = userData.user_cart;
     const userLikes = userData.user_likes;
-    
+
     return { data, userCart, userLikes };
   } catch (err) {
     console.error(err);
