@@ -2,8 +2,8 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
 import { serverLogout } from "../helpers/serverLogout";
-import { verifySession } from "../helpers/verifySession";
 import { processUserData } from "../helpers/processUserData";
+import { reloadSession } from "../helpers/reloadSession";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
     const checkLogin = async () => {
       if (!persist) return;
       try {
-        const response = await verifySession();
+        const response = await reloadSession();
         const { userData } = response?.data;
         const userCart = userData.user_cart;
         const userLikes = userData.user_likes;
