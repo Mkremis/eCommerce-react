@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const LoginForm = ({ handleAuth, closeModalLogin }) => {
-  const {persist, setPersist} = useContext(AuthContext)
+  const { errors: loginErrors, persist, setPersist } = useContext(AuthContext);
 
   const togglePersist = () => {
-    setPersist(prev => !prev);
-}
-useEffect(()=>{
-  persist
-  ?localStorage.setItem('persist', true)
-  :localStorage.removeItem('persist')
-}, [persist])
+    setPersist((prev) => !prev);
+  };
+  useEffect(() => {
+    persist
+      ? localStorage.setItem("persist", true)
+      : localStorage.removeItem("persist");
+  }, [persist]);
   const navigate = useNavigate();
   const handleTogglePass = (e) => {
     const togglePassword = e.target;
@@ -29,6 +29,22 @@ useEffect(()=>{
   return (
     <section className="login-container" id="container">
       <article className="form-container sign-in-container">
+        <div
+          style={{
+            backgroundColor: "red",
+            color: "white",
+            fontSize: 12,
+            width: "100%",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          {loginErrors.map((error, i) => (
+            <p style={{ margin: "6px 0" }} key={i}>
+              {error}
+            </p>
+          ))}
+        </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -56,14 +72,14 @@ useEffect(()=>{
             </span>
           </div>
           <div className="persistCheck">
-                    <input
-                        type="checkbox"
-                        id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
-                    />
-                    <label htmlFor="persist">Trust This Device</label>
-                </div>
+            <input
+              type="checkbox"
+              id="persist"
+              onChange={togglePersist}
+              checked={persist}
+            />
+            <label htmlFor="persist">Trust This Device</label>
+          </div>
           <input type="submit" value="Sign In" />
         </form>
       </article>

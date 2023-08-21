@@ -24,7 +24,7 @@
 /* MEDIA QUERY DESKTOP */
 @media (min-width: 415px) {
   .user-account__form {
-    height: 70vh;
+    height: 90vh;
     display: grid;
     grid-template-areas:
       "login fullname location"
@@ -83,9 +83,14 @@
   opacity: 0.65;
 }
 .form-output {
-  color: rgb(11, 177, 11);
   font-weight: bold;
   align-self: center;
+}
+.success {
+  color: rgb(11, 177, 11);
+}
+.error {
+  color: red;
 }
 .user-account__form-submit::after,
 .user-account__form-submit::before {
