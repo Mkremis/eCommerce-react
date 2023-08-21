@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
 import { serverLogout } from "../helpers/serverLogout";
-import Cookies from "js-cookie";
 import { verifySession } from "../helpers/verifySession";
 import { processUserData } from "../helpers/processUserData";
 
@@ -46,8 +45,6 @@ const AuthProvider = ({ children }) => {
     const checkLogin = async () => {
       if (!persist) return;
       try {
-        const cookies = Cookies.get();
-        console.log(cookies);
         const response = await verifySession();
         const { userData } = response?.data;
         const userCart = userData.user_cart;
