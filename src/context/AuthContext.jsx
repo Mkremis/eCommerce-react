@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
 import { serverLogout } from "../helpers/serverLogout";
 import Cookies from "js-cookie";
-import { verifyTokenRequest } from "../helpers/verifyToken";
+import { verifySession } from "../helpers/verifySession";
+import { processUserData } from "../helpers/processUserData";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -29,7 +30,6 @@ const AuthProvider = ({ children }) => {
   const handleMinusQ = () =>
     productQ === 0 ? false : setProductQ(productQ - 1);
 
-  // UPDATE AUTH STATES WHEN USER LOGOUT
   const handleLogout = () => {
     navigate("/");
     setAuth(null);
@@ -41,35 +41,34 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
     serverLogout();
   };
+
   useEffect(() => {
     const checkLogin = async () => {
-      const cookies = Cookies.get();
-      console.log(cookies);
-      if (!cookies.accessToken) {
-        setAuth(null);
-        return;
-      }
-
+      if (!persist) return;
       try {
-        const res = await verifyTokenRequest();
-        console.log(res);
-        // if (!res.data) return setIsAuthenticated(false);
-        // setIsAuthenticated(true);
-        // setUser(res.data);
-        // setLoading(false);
+        const cookies = Cookies.get();
+        console.log(cookies);
+        const response = await verifySession();
+        const { userData } = response?.data;
+        const userCart = userData.user_cart;
+        const userLikes = userData.user_likes;
+        const userInfo = processUserData({ userData });
+        setAuth(userInfo);
+        setCart(userCart || initialCart);
+        setLikes(userLikes || initialLikes);
       } catch (error) {
-        setAuth(null);
+        handleLogout();
       }
     };
     checkLogin();
   }, []);
-  
+
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
     username = username.value;
     psw = psw.value;
-    const { data, userCart, userLikes } = await handleLogin(username, psw);
-    setAuth(data);
+    const { userInfo, userCart, userLikes } = await handleLogin(username, psw);
+    setAuth(userInfo);
     setCart(userCart || initialCart);
     setLikes(userLikes || initialLikes);
   };
