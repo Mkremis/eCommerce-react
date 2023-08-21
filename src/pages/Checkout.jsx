@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Cookies from "js-cookie";
 import client from "../api/axiosClient";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
@@ -9,20 +8,18 @@ const Checkout = () => {
   const { cart } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handlePay = async (event) => {
-    event.preventDefault();
-    const accessToken = Cookies.get("accessToken");
-    const refreshToken = Cookies.get("refreshToken");
+  const handlePay = async () => {
     const options = {
-      method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
     };
-    const URL = `/api/create-order`
-    const response = await client.post(URL,JSON.stringify({cart, refreshToken}), options);
-    const {data} =  response;
+    const response = await client.post(
+      `/api/create-order`,
+      JSON.stringify({ cart }),
+      options
+    );
+    const { data } = response;
     if (data.init_point) window.location.href = data.init_point;
   };
 
