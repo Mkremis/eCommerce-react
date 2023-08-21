@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleLogin } from "../helpers/handleLogin";
 import { serverLogout } from "../helpers/serverLogout";
+import Cookies from "js-cookie";
+import { verifyTokenRequest } from "../helpers/verifyToken";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -31,6 +33,7 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     navigate("/");
     setAuth(null);
+    Cookies.remove("accessToken");
     localStorage.removeItem("persist");
     setPersist(false);
     setCart(initialCart);
@@ -38,7 +41,29 @@ const AuthProvider = ({ children }) => {
     setLikes(initialLikes);
     serverLogout();
   };
+  useEffect(() => {
+    const checkLogin = async () => {
+      const cookies = Cookies.get();
+      console.log(cookies);
+      if (!cookies.accessToken) {
+        setAuth(null);
+        return;
+      }
 
+      try {
+        const res = await verifyTokenRequest();
+        console.log(res);
+        // if (!res.data) return setIsAuthenticated(false);
+        // setIsAuthenticated(true);
+        // setUser(res.data);
+        // setLoading(false);
+      } catch (error) {
+        setAuth(null);
+      }
+    };
+    checkLogin();
+  }, []);
+  
   const handleAuth = async (e) => {
     let { username, psw } = e.target;
     username = username.value;

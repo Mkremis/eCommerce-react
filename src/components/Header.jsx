@@ -1,18 +1,17 @@
-import React, { useContext, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Header.css';
-import { useModal } from '../hooks/useModal';
-import ModalTop from './ModalTop';
-import MediaQuery from 'react-responsive';
-import Navbar from './Navbar';
-import Aside from './Aside';
-import SearchBar from './SearchBar';
-import UserAccess from './UserAccess';
-import CartNotification from './CartNotification';
-import logo from '../assets/logo.png';
-import GenderHeader from './GenderHeader';
-import AuthContext from '../context/AuthContext';
-import useRefreshToken from '../hooks/useRefreshToken';
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Header.css";
+import { useModal } from "../hooks/useModal";
+import ModalTop from "./ModalTop";
+import MediaQuery from "react-responsive";
+import Navbar from "./Navbar";
+import Aside from "./Aside";
+import SearchBar from "./SearchBar";
+import UserAccess from "./UserAccess";
+import CartNotification from "./CartNotification";
+import logo from "../assets/logo.png";
+import GenderHeader from "./GenderHeader";
+import AuthContext from "../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,18 +20,17 @@ const Header = () => {
 
   const [isOpenModalTop, openModalTop, closeModalModalTop] = useModal(false);
 
-  const refresh = useRefreshToken();
-  const {auth, setAuth, setCart, setLikes, persist} = useContext(AuthContext)
-    useEffect(() => {
-        const verifyRefreshToken = async () => {
-        try {
-          await refresh(setAuth, setCart, setLikes);
-        } catch (err) {
-          console.error(err);
-        } 
-      };
-      !auth && persist && verifyRefreshToken() 
-    }, []);
+  // const {auth, setAuth, setCart, setLikes, persist} = useContext(AuthContext)
+  // useEffect(() => {
+  //     const verifyRefreshToken = async () => {
+  //     try {
+  //       await refresh(setAuth, setCart, setLikes);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+  //   !auth && persist && verifyRefreshToken()
+  // }, []);
 
   return (
     <header className="header">
@@ -40,7 +38,7 @@ const Header = () => {
         <div className="header__menu-container">
           {
             <span className="material-symbols-outlined" onClick={handleMenu}>
-              {isOpenModalTop ? 'menu_open' : 'menu'}
+              {isOpenModalTop ? "menu_open" : "menu"}
             </span>
           }
         </div>
@@ -50,7 +48,7 @@ const Header = () => {
           width={150}
           height={50}
           alt="logo"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
         />
         {/* navbar mobile */}
         <MediaQuery query="(max-width: 415px)">
@@ -58,22 +56,22 @@ const Header = () => {
             isOpen={isOpenModalTop}
             closeModal={closeModalModalTop}
             stylesModal={{
-              justifyContent: 'left',
-              alignItems: 'flex-start',
+              justifyContent: "left",
+              alignItems: "flex-start",
             }}
-            stylesClose={{ left: '100%' }}
+            stylesClose={{ left: "100%" }}
           >
             {/* <Navbar /> */}
             <div
               style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-evenly",
               }}
             >
-              <GenderHeader gender={'women'} />
-              <GenderHeader gender={'men'} />
+              <GenderHeader gender={"women"} />
+              <GenderHeader gender={"men"} />
             </div>
             <Aside />
           </ModalTop>
