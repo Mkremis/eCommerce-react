@@ -2,9 +2,7 @@ import client from "../api/axiosClient";
 
 const loaderDashboard = async ({ params }) => {
   try {
-    const { username } = params;
     const response = await client.get(`/api/users/dashboard`);
-
     if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
     let data = {};
