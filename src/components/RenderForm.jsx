@@ -14,26 +14,17 @@ const RenderForm = () => {
   const output = useRef(null);
   const { renderFormElements } = useRenderForm();
   const [messages, setMessages] = useState([]);
-  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (errors.length > 0) {
-      output.current.classList.add("error");
-      const timer = setTimeout(() => {
-        setErrors([]);
-        output.current.classList.remove("error");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
     if (messages.length > 0) {
-      output.current.classList.add("success");
       const timer = setTimeout(() => {
-        setErrors([]);
+        setMessages([]);
+        output.current.classList.remove("error");
         output.current.classList.remove("success");
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [errors, messages]);
+  }, [messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +51,7 @@ const RenderForm = () => {
           },
         }
       );
+      output.current.classList.add("success");
       setMessages([
         `The user information was ${
           method === "post" ? "registered" : "updated"
@@ -67,7 +59,8 @@ const RenderForm = () => {
       ]);
     } catch (error) {
       console.error(error);
-      setErrors(error.response.data.message);
+      output.current.classList.add("error");
+      setMessages(error.response.data.message);
     }
   };
 
@@ -77,11 +70,6 @@ const RenderForm = () => {
 
       <div className="user-account__submit-container">
         <div ref={output} className="form-output">
-          {errors.map((error, i) => (
-            <p style={{ margin: "6px 0" }} key={i}>
-              {error}
-            </p>
-          ))}
           {messages.map((error, i) => (
             <p style={{ margin: "6px 0" }} key={i}>
               {error}
