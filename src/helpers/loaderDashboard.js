@@ -1,14 +1,18 @@
-import { dashboard } from "../api/authRequests";
+import client from "../api/axiosClient";
 
-const loaderDashboard = async () => {
+const loaderDashboard = async ({ params }) => {
   try {
-    const response = await dashboard();
+    const { username } = params;
+    
+
+    if (response.status !== 200) throw new Error(responseUserData.message);
     const { user } = response.data;
     let data = {};
     user.login_password = "";
     delete user.user_cart;
     delete user.user_likes;
     delete user.refresh_token;
+
     for (const key in user) {
       let keys = key.split("_");
       let val = { [keys[1]]: user[key] };
@@ -21,3 +25,5 @@ const loaderDashboard = async () => {
     return [];
   }
 };
+
+export default loaderDashboard;

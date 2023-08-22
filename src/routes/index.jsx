@@ -43,7 +43,6 @@ const router = createHashRouter([
           {
             path: "/dashboard",
             element: <UserDashboard />,
-
             children: [
               {
                 path: ":username",

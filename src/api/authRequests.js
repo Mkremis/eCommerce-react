@@ -18,4 +18,4 @@ export const updateUser = async (userData) =>
     },
   });
 
-export const dashboard = () => client.get(`/api/users/dashboard`);
+export const getDashboard = async () => client.get(`/api/users/dashboard`);
