@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleLogin } from "../helpers/handleLogin";
 import { serverLogout } from "../helpers/serverLogout";
 import { processUserData } from "../helpers/processUserData";
 import { reloadSession } from "../helpers/reloadSession";
+import { login } from "../api/authRequests";
 
 const AuthContext = createContext({});
 const initialProductQ = 0;
@@ -66,15 +66,16 @@ const AuthProvider = ({ children }) => {
       let { username, psw } = e.target;
       username = username.value;
       psw = psw.value;
-      const { userInfo, userCart, userLikes } = await handleLogin(
-        username,
-        psw
-      );
+      const response = await login(username, psw);
+      const { userData } = response?.data;
+      const userCart = userData?.user_cart;
+      const userLikes = userData?.user_likes;
+      const userInfo = processUserData({ userData });
       setAuth(userInfo);
       setCart(userCart || initialCart);
       setLikes(userLikes || initialLikes);
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
       setErrors(error.response.data.message);
     }
   };

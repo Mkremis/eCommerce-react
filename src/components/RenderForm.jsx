@@ -5,6 +5,7 @@ import "./RenderForm.css";
 import signFormTemplate from "../helpers/signFormTemplate.js";
 import { useLoaderData } from "react-router-dom";
 import AuthContext from "../context/AuthContext.jsx";
+import { register, updateUser } from "../api/authRequests";
 
 const RenderForm = () => {
   const { handleLogout } = useContext(AuthContext);
@@ -40,23 +41,21 @@ const RenderForm = () => {
         newUserData = { ...newUserData, ...newData };
       });
     });
-    let method = user ? "put" : "post";
+
     try {
-      await client[method](
-        `/api/users/${method === "post" ? "register" : "update"}`,
-        JSON.stringify(newUserData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      output.current.classList.add("success");
-      setMessages([
-        `The user information was ${
-          method === "post" ? "registered" : "updated"
-        } successfully`,
-      ]);
+      let response = user
+        ? await updateUser(newUserData)
+        : await register(newUserData);
+
+      if (response.status === 200) {
+        console.log(response);
+        output.current.classList.add("success");
+        setMessages([
+          `The user information was ${
+            user ? "updated" : "registered"
+          } successfully`,
+        ]);
+      }
     } catch (error) {
       console.error(error);
       output.current.classList.add("error");
@@ -67,7 +66,6 @@ const RenderForm = () => {
   return (
     <form className="user-account__form" onSubmit={handleSubmit}>
       {renderFormElements(data)}
-
       <div className="user-account__submit-container">
         <div ref={output} className="form-output">
           {messages.map((error, i) => (
