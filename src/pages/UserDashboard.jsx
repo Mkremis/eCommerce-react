@@ -1,18 +1,17 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import RenderForm from "../components/RenderForm";
 import AuthContext from "../context/AuthContext";
 
-
 const UserDashboard = () => {
-  const { auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   return (
     <article className="dashboard">
       <header>
-        <h2 style={{ textAlign: "center" }}>
+        {/* <h2 style={{ textAlign: "center" }}>
           {auth ? "Dashboard" : "New User Registration"}
-        </h2>
+        </h2> */}
         {auth && (
           <nav className="dashboard-nav">
             <NavLink to={`/dashboard/${auth.login.username}`}>

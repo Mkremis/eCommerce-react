@@ -21,6 +21,8 @@ const AuthProvider = ({ children }) => {
   const [persist, setPersist] = useState(
     JSON.parse(localStorage.getItem("persist")) || false
   );
+  const [errors, setErrors] = useState([]);
+
   const refreshPage = (newPage = null) => {
     setPage(1);
     navigate(newPage);
@@ -32,7 +34,6 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     navigate("/");
     setAuth(null);
-    Cookies.remove("accessToken");
     localStorage.removeItem("persist");
     setPersist(false);
     setCart(initialCart);
@@ -61,16 +62,34 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const handleAuth = async (e) => {
-    let { username, psw } = e.target;
-    username = username.value;
-    psw = psw.value;
-    const { userInfo, userCart, userLikes } = await handleLogin(username, psw);
-    setAuth(userInfo);
-    setCart(userCart || initialCart);
-    setLikes(userLikes || initialLikes);
+    try {
+      let { username, psw } = e.target;
+      username = username.value;
+      psw = psw.value;
+      const { userInfo, userCart, userLikes } = await handleLogin(
+        username,
+        psw
+      );
+      setAuth(userInfo);
+      setCart(userCart || initialCart);
+      setLikes(userLikes || initialLikes);
+    } catch (error) {
+      console.log(error.response.data);
+      setErrors(error.response.data.message);
+    }
   };
+  // clear errors after 5 seconds
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   const data = {
+    errors,
     persist,
     setPersist,
     likes,
