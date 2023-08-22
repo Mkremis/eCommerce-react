@@ -8,10 +8,7 @@ import { register, updateUser } from "../api/authRequests";
 
 const RenderForm = () => {
   const { handleLogout } = useContext(AuthContext);
-  const loadDashboard = async ()=>{
-    const response = get
-  }
-  let user = useLoaderData();
+  const user = useLoaderData();
   if (user && user.length === 0) handleLogout();
   let data = user ? user : signFormTemplate;
   const output = useRef(null);
