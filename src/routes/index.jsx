@@ -12,7 +12,6 @@ import loaderSort from "../helpers/loaderSort";
 import loaderDetails from "../helpers/loaderDetails";
 import loaderHome from "../helpers/loaderHome";
 import Checkout from "../pages/Checkout";
-import loaderDashboard from "../helpers/loaderDashboard";
 import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
 import { loaderOrders } from "../helpers/loaderOrders";
@@ -48,7 +47,6 @@ const router = createHashRouter([
               {
                 path: ":username",
                 element: <RenderForm />,
-                loader: loaderDashboard,
               },
               {
                 path: "orders/:username",

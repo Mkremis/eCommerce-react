@@ -17,3 +17,5 @@ export const updateUser = async (userData) =>
       "Content-Type": "application/json",
     },
   });
+
+export const getDashboard = async () => client.get(`/api/users/dashboard`);
