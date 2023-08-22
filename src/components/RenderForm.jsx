@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import client from "../api/axiosClient";
 import useRenderForm from "../hooks/useRenderForm.jsx";
 import "./RenderForm.css";
 import signFormTemplate from "../helpers/signFormTemplate.js";
@@ -9,6 +8,9 @@ import { register, updateUser } from "../api/authRequests";
 
 const RenderForm = () => {
   const { handleLogout } = useContext(AuthContext);
+  const loadDashboard = async ()=>{
+    const response = get
+  }
   let user = useLoaderData();
   if (user && user.length === 0) handleLogout();
   let data = user ? user : signFormTemplate;
