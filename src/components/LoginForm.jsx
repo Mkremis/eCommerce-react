@@ -21,7 +21,7 @@ const LoginForm = ({ handleAuth, closeModalLogin }) => {
     const type =
       password.getAttribute("type") === "password" ? "text" : "password";
     password.setAttribute("type", type);
-    // togglePassword.classList.toggle("material-symbols-outlined");
+
     type === "password"
       ? (togglePassword.textContent = "visibility")
       : (togglePassword.textContent = "visibility_off");
