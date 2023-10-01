@@ -67,13 +67,12 @@ const AuthProvider = ({ children }) => {
       username = username.value;
       psw = psw.value;
       const response = await login(username, psw);
-      const { userData } = response?.data;
-      const userCart = userData?.user_cart;
-      const userLikes = userData?.user_likes;
-      const userInfo = processUserData({ userData });
-      setAuth(userInfo);
-      setCart(userCart || initialCart);
-      setLikes(userLikes || initialLikes);
+      console.log(response);
+      const { user_data, user_cart, user_likes } = response.data;
+      console.log(user_likes);
+      setAuth(processUserData(user_data));
+      setCart(user_cart || initialCart);
+      setLikes(user_likes || initialLikes);
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.message);
