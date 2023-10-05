@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useModal } from '../hooks/useModal';
-import Modal from './Modal';
-import LoginForm from './LoginForm';
-import AuthContext from '../context/AuthContext';
-import Dashboard from './Dashboard';
+import React, { useEffect, useState, useContext } from "react";
+import { useModal } from "../hooks/useModal";
+import Modal from "./Modal";
+import LoginForm from "./LoginForm";
+import AuthContext from "../context/AuthContext";
+import Dashboard from "./Dashboard";
 
 const UserAccess = () => {
   const { auth, handleAuth, handleLogout } = useContext(AuthContext);
@@ -14,8 +14,8 @@ const UserAccess = () => {
 
   useEffect(() => {
     if (auth) {
-      setAvatar(auth.picture.thumbnail);
-    }else{
+      setAvatar(auth.thumbnail);
+    } else {
       setAvatar(null);
     }
   }, [auth]);
@@ -45,7 +45,7 @@ const UserAccess = () => {
             src={avatar}
             className="header__user-avatar"
             alt="user avatar"
-            style={{width:39, height:39}}
+            style={{ width: 39, height: 39 }}
             onClick={handleLogin}
           />
         ) : (
@@ -59,7 +59,10 @@ const UserAccess = () => {
         closeModal={closeModalModalLogin}
         addClass="animate"
       >
-        <LoginForm handleAuth={handleAuth}  closeModalLogin={closeModalModalLogin}/>
+        <LoginForm
+          handleAuth={handleAuth}
+          closeModalLogin={closeModalModalLogin}
+        />
       </Modal>
       {auth && (
         <Dashboard

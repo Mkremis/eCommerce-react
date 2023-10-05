@@ -17,8 +17,9 @@ import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
 import { loaderOrders } from "../helpers/loaderOrders";
 import Likeds from "../pages/Likeds";
-import RenderForm from "../components/RenderForm";
+// import RenderForm from "../components/RenderForm";
 import { loaderLikes } from "../helpers/loaderLikes";
+import RegistrationForm from "../components/RegistrationForm";
 
 const router = createHashRouter([
   {
@@ -47,7 +48,7 @@ const router = createHashRouter([
             children: [
               {
                 path: ":username",
-                element: <RenderForm />,
+                element: <RegistrationForm />,
                 loader: loaderDashboard,
               },
               {

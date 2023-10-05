@@ -1,126 +1,132 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { registerUser, updateUser } from "../api/authRequests";
 
-const RegistrationForm = ({ onSubmit, user }) => {
-  const [formData, setFormData] = useState({
-    login_username: "",
-    login_password: "",
-    fullname_title: "",
-    fullname_first: "",
-    fullname_last: "",
-    contact_email: "",
-    contact_phone: "",
-    picture_thumbnail: "",
-    location_city: "",
-    location_state: "",
-    location_number: "",
-    location_street: "",
-    location_country: "",
-    location_postcode: "",
-  });
+import TextInput from "./TextInput";
+// import { StatusOnlineIcon } from "@heroicons/react/outline";
+import {
+  Card,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeaderCell,
+  TableBody,
+  TableCell,
+  Text,
+  Title,
+  Badge,
+  Button,
+} from "@tremor/react";
+import { useFormik } from "formik";
+import { registerSchema } from "../schemas/users.schema";
+import { useLoaderData } from "react-router-dom";
+import { set } from "zod";
 
-  const [errors, setErrors] = useState({});
+const FORM_DATA = {
+  username: { type: "text", required: true, initialValue: "" },
+  password: { type: "password", required: true, initialValue: "" },
+  title: { type: "text", required: false, initialValue: "" },
+  first: { type: "text", required: false, initialValue: "" },
+  last: { type: "text", required: false, initialValue: "" },
+  email: { type: "email", required: true, initialValue: "" },
+  phone: { type: "tel", required: false, initialValue: "" },
+  thumbnail: { type: "url", required: false, initialValue: "" },
+  city: { type: "text", required: false, initialValue: "" },
+  state: { type: "text", required: false, initialValue: "" },
+  street_number: { type: "text", required: false, initialValue: "" },
+  street: { type: "text", required: false, initialValue: "" },
+  country: { type: "text", required: false, initialValue: "" },
+  postcode: { type: "text", required: false, initialValue: "" },
+};
+const RegistrationForm = () => {
+  const user = useLoaderData();
+
   const [isUpdate, setIsUpdate] = useState(false);
+  const [message, setMessage] = useState([]);
+  const [submitErrors, setSubmitErrors] = useState(false);
+
+  const formik = useFormik({
+    onSubmit: async (values) => {
+      try {
+        const response = isUpdate
+          ? await updateUser(values)
+          : await registerUser(values);
+        if (response.status === 200) {
+          setSubmitErrors(false);
+          setMessage([`User ${isUpdate ? "updated" : "created"} successfully`]);
+          setTimeout(() => {
+            setMessage([]);
+          }, 4000);
+        } else {
+          setMessage(response.data.message);
+        }
+        return response;
+      } catch (error) {
+        setSubmitErrors(true);
+        setMessage(error.response.data.message);
+      }
+    },
+    initialValues: Object.keys(FORM_DATA).reduce(
+      (prev, curr) => ({ ...prev, [curr]: FORM_DATA[curr].initialValue }),
+      {}
+    ),
+    validate: (values) => {
+      const result = registerSchema.safeParse(values);
+      if (result.success) return;
+      const errors = result.error.issues.reduce(
+        (prev, curr) => ({ ...prev, [curr.path[0]]: curr.message }),
+        {}
+      );
+      return errors;
+    },
+  });
 
   useEffect(() => {
     if (user) {
-      setFormData(user); // Si hay datos de usuario, rellena el formulario con ellos
+      formik.setValues(user);
       setIsUpdate(true);
     }
   }, [user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length === 0) {
-      onSubmit(formData, isUpdate);
-    } else {
-      setErrors(validationErrors);
-    }
-  };
-
-  const validateForm = (data) => {
-    const errors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!data.login_username.trim()) {
-      errors.login_username = "Username is required";
-    }
-
-    if (!data.login_password.trim()) {
-      errors.login_password = "Password is required";
-    }
-
-    if (!data.contact_email.trim()) {
-      errors.contact_email = "Email is required";
-    } else if (!emailRegex.test(data.contact_email)) {
-      errors.contact_email = "Invalid email format";
-    }
-
-    // Aquí puedes agregar más validaciones para otros campos si es necesario
-
-    return errors;
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="login_username">Username *</label>
-        <input
-          type="text"
-          id="login_username"
-          name="login_username"
-          value={formData.login_username}
-          onChange={handleChange}
-        />
-        {errors.login_username && <p>{errors.login_username}</p>}
-      </div>
-      <div>
-        <label htmlFor="login_password">Password *</label>
-        <input
-          type="password"
-          id="login_password"
-          name="login_password"
-          value={formData.login_password}
-          onChange={handleChange}
-        />
-        {errors.login_password && <p>{errors.login_password}</p>}
-      </div>
-      <div>
-        <label htmlFor="fullname_title">Title</label>
-        <input
-          type="text"
-          id="fullname_title"
-          name="fullname_title"
-          value={formData.fullname_title}
-          onChange={handleChange}
-        />
-        {/* Aquí puedes mostrar un mensaje de error si es necesario */}
-      </div>
-      <div>
-        <label htmlFor="fullname_first">First Name</label>
-        <input
-          type="text"
-          id="fullname_first"
-          name="fullname_first"
-          value={formData.fullname_first}
-          onChange={handleChange}
-        />
-        {/* Aquí puedes mostrar un mensaje de error si es necesario */}
-      </div>
-      {/* Agrega más campos aquí para los demás datos del usuario */}
-      <div>
-        <button type="submit">
-          {isUpdate ? "Update Profile" : "Register"}
-        </button>
-      </div>
+    <form onSubmit={formik.handleSubmit}>
+      <Card>
+        <Title>User Dashboard</Title>
+        <Table className="mt-5">
+          <TableBody>
+            {Object.keys(FORM_DATA).map((input) => (
+              <TableRow key={input}>
+                <TableCell className="capitalize">{input}</TableCell>
+                <TableCell>
+                  <TextInput
+                    errorMessage={formik.errors[input]}
+                    value={formik.values[input]}
+                    handleChange={formik.handleChange}
+                    type={FORM_DATA[input].type}
+                    name={input}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="flex items-center">
+          <Button size="xl" type="submit" className="ml-5">
+            <span>{isUpdate ? "Update Profile" : "Register"}</span>
+          </Button>
+          <div className="ml-5">
+            {message.map((message, index) => (
+              <p
+                key={index}
+                className={`text-xl font-bold ${
+                  submitErrors ? "text-red-800" : "text-green-800"
+                }`}
+              >
+                {message}
+              </p>
+            ))}
+          </div>
+        </div>
+      </Card>
     </form>
   );
 };

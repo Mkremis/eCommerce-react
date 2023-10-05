@@ -47,10 +47,10 @@ const AuthProvider = ({ children }) => {
       if (!persist) return;
       try {
         const response = await reloadSession();
-        const { userData } = response?.data;
-        const userCart = userData.user_cart;
-        const userLikes = userData.user_likes;
-        const userInfo = processUserData({ userData });
+        const { user_data, user_cart, user_likes } = response.data;
+        const userCart = user_cart;
+        const userLikes = user_likes;
+        const userInfo = user_data;
         setAuth(userInfo);
         setCart(userCart || initialCart);
         setLikes(userLikes || initialLikes);
@@ -67,10 +67,8 @@ const AuthProvider = ({ children }) => {
       username = username.value;
       psw = psw.value;
       const response = await login(username, psw);
-      console.log(response);
       const { user_data, user_cart, user_likes } = response.data;
-      console.log(user_likes);
-      setAuth(processUserData(user_data));
+      setAuth(user_data);
       setCart(user_cart || initialCart);
       setLikes(user_likes || initialLikes);
     } catch (error) {
