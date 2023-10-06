@@ -15,7 +15,7 @@ export const registerSchema = z.object({
     }),
   title: z
     .string()
-    .max(7, { message: "Title must not exceed 5 characters" })
+    .max(5, { message: "Title must not exceed 5 characters" })
     .optional(),
   first: z
     .string()
@@ -90,6 +90,7 @@ export const updateSchema = z.object({
     .min(6, {
       message: "Password must be at least 6 characters",
     })
+    .nullable()
     .optional(),
   title: z
     .string()

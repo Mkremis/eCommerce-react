@@ -6,6 +6,7 @@ export default function Text_Input({
   errorMessage,
   type,
   name,
+  isRequired,
 }) {
   // const isError = errorMessage ? true : false;
   // console.log(errorMessage);
@@ -19,6 +20,7 @@ export default function Text_Input({
       placeholder={`Type the ${name} here`}
       name={name}
       autoComplete="false"
+      required={isRequired}
     />
   );
 }
