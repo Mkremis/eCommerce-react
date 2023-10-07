@@ -1,21 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { registerUser, updateUser } from "../api/authRequests";
 
 import TextInput from "./TextInput";
 import {
   Card,
   Table,
-  TableHead,
   TableRow,
-  TableHeaderCell,
   TableBody,
   TableCell,
-  Text,
   Title,
-  Badge,
   Button,
 } from "@tremor/react";
-import { useFormik } from "formik";
 import { registerSchema, updateSchema } from "../schemas/users.schema";
 import { useLoaderData } from "react-router-dom";
 
@@ -40,76 +35,106 @@ const RegistrationForm = () => {
   const user = useLoaderData();
 
   const [isUpdate, setIsUpdate] = useState(false);
-  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [submitErrors, setSubmitErrors] = useState(false);
-  const [schema, setSchema] = useState(updateSchema);
-
-  const formik = useFormik({
-    onSubmit: async (values) => {
-      try {
-        const response = isUpdate
-          ? await updateUser(values)
-          : await registerUser(values);
-        if (response.status === 200) {
-          setSubmitErrors(false);
-          setMessage([`User ${isUpdate ? "updated" : "created"} successfully`]);
-          setTimeout(() => {
-            setMessage([]);
-          }, 4000);
-        } else {
-          setMessage(response.data.message);
-        }
-        return response;
-      } catch (error) {
-        setSubmitErrors(true);
-        setMessage(error.response.data.message);
-      }
-    },
-    initialValues: Object.keys(FORM_DATA).reduce(
-      (prev, curr) => ({ ...prev, [curr]: "" }),
+  const [inputErrors, setInputErrors] = useState(
+    Object.keys(FORM_DATA).reduce(
+      (prev, curr) => ({ ...prev, [curr]: false }),
       {}
-    ),
-    validate: (values) => {
-      const result = schema.safeParse(values);
-      if (result.success) return;
-      const errors = result.error.issues.reduce(
-        (prev, curr) => ({ ...prev, [curr.path[0]]: curr.message }),
+    )
+  );
+  const [formData, setFormData] = useState(
+    Object.keys(FORM_DATA).reduce((prev, curr) => ({ ...prev, [curr]: "" }), {})
+  );
+
+  const handleChange = (name, value) => {
+    const schema = isUpdate ? updateSchema : registerSchema;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    let inputValidate;
+    if (isUpdate && !value) return;
+    inputValidate = schema.safeParse({ [name]: value });
+    const errorMessage = inputValidate?.error?.issues[0]?.message;
+
+    if (errorMessage) {
+      setInputErrors((prevInputErrors) => ({
+        ...prevInputErrors,
+        [name]: errorMessage,
+      }));
+    } else {
+      setInputErrors((prevInputErrors) => ({
+        ...prevInputErrors,
+        [name]: false,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formErrors = Object.keys(inputErrors).some(
+      (input) => inputErrors[input]
+    );
+
+    if (formErrors) {
+      setSubmitErrors(true);
+      setMessages(["You have errors in your form"]);
+      return;
+    }
+    try {
+      const updateData = Object.keys(formData).reduce(
+        (prev, curr) =>
+          formData[curr] ? { ...prev, [curr]: formData[curr] } : prev,
         {}
       );
-      return errors;
-    },
-  });
+      const response = isUpdate
+        ? await updateUser(updateData)
+        : await registerUser(formData);
+      if (response.status === 200) {
+        setSubmitErrors(false);
+        setMessages([`User ${isUpdate ? "updated" : "created"} successfully`]);
+        setTimeout(() => {
+          setMessages([]);
+        }, 4000);
+      } else {
+        setMessages(response.data.message);
+      }
+      return response;
+    } catch (error) {
+      console.log(error);
+      setSubmitErrors(true);
+      setMessages(error.response.data.message);
+    }
+  };
 
   useEffect(() => {
     if (user) {
-      setSchema(updateSchema);
-      user.password = null;
-      formik.setValues(user);
+      delete user.id;
+      user.password = "";
+      setFormData(user);
       setIsUpdate(true);
     } else {
-      setSchema(registerSchema);
       setIsUpdate(false);
     }
-    console.log("formik.values.password:", formik.values.password);
   }, [user]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Card>
         <Title>User Dashboard</Title>
         <Table className="mt-5">
           <TableBody>
-            {Object.keys(FORM_DATA).map((input) => (
-              <TableRow key={input}>
-                <TableCell className="capitalize">{input}</TableCell>
+            {Object.entries(formData).map(([name, value]) => (
+              <TableRow key={name}>
+                <TableCell className="capitalize">{name}</TableCell>
                 <TableCell>
                   <TextInput
-                    errorMessage={formik.errors[input]}
-                    value={formik.values[input]}
-                    handleChange={formik.handleChange}
-                    type={FORM_DATA[input].type}
-                    name={input}
-                    isRequired={false}
+                    errorMessage={inputErrors[name]}
+                    value={value}
+                    handleChange={(e) => handleChange(name, e.target.value)}
+                    type={FORM_DATA[name].type}
+                    name={name}
                   />
                 </TableCell>
               </TableRow>
@@ -121,7 +146,7 @@ const RegistrationForm = () => {
             <span>{isUpdate ? "Update Profile" : "Register"}</span>
           </Button>
           <div className="ml-5">
-            {message.map((message, index) => (
+            {messages.map((message, index) => (
               <p
                 key={index}
                 className={`text-xl font-bold ${
