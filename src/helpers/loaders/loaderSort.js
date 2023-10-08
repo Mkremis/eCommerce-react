@@ -1,5 +1,5 @@
 import axios from "axios";
-import { options } from "../api/apiConfig"
+import { options } from "../../api/apiConfig";
 
 const loaderSort = async ({ params }) => {
   const categories = {
@@ -26,9 +26,9 @@ const loaderSort = async ({ params }) => {
   try {
     const response = await axios.get(URL, options);
     const { data } = response;
-    return data
+    return data;
   } catch (err) {
-    console.error(err)
+    console.error(err);
     return { data: { products: [] } };
   }
 };

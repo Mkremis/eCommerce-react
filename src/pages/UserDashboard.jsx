@@ -10,9 +10,6 @@ const UserDashboard = () => {
   return (
     <article className="dashboard">
       <header>
-        {/* <h2 style={{ textAlign: "center" }}>
-          {user ? "Dashboard" : "New User Registration"}
-        </h2> */}
         {user && (
           <nav className="dashboard-nav">
             <NavLink to={`/dashboard/${user.username}`}>User Data</NavLink>

@@ -8,86 +8,89 @@ import NotFound from "../pages/NotFound";
 import ReviewProduct from "../pages/ReviewProduct";
 import SortProduct from "../pages/SortProducts";
 import UserDashboard from "../pages/UserDashboard";
-import loaderSort from "../helpers/loaderSort";
-import loaderDetails from "../helpers/loaderDetails";
-import loaderHome from "../helpers/loaderHome";
 import Checkout from "../pages/Checkout";
-import loaderDashboard from "../helpers/loaderDashboard";
 import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
-import { loaderOrders } from "../helpers/loaderOrders";
 import Likeds from "../pages/Likeds";
-// import RenderForm from "../components/RenderForm";
-import { loaderLikes } from "../helpers/loaderLikes";
 import RegistrationForm from "../components/RegistrationForm";
+import {
+  loaderHome,
+  loaderDetails,
+  loaderSort,
+  loaderDashboard,
+  loaderOrders,
+  loaderLikes,
+} from "../helpers/loaders";
 
-const router = createHashRouter([
+const routes = [
   {
     path: "/",
     element: <App />,
-    errorElement: <NotFound />,
     children: [
       {
-        errorElement: <NotFound />,
+        path: "/",
+        element: <Home />,
+        loader: loaderHome,
+      },
+      {
+        path: "/:root/:id",
+        element: <ReviewProduct />,
+        loader: loaderDetails,
+      },
+      {
+        path: "/:root/category/:category/sortBy/:sortBy/filter/:filter/search/:search/offset/:offset",
+        element: <SortProduct />,
+        loader: loaderSort,
+      },
+      {
+        path: "/dashboard",
+        element: <UserDashboard />,
         children: [
-          { index: true, element: <Home />, loader: loaderHome },
-
           {
-            path: "/:root/:id",
-            element: <ReviewProduct />,
-            loader: loaderDetails,
+            path: ":username",
+            element: <RegistrationForm />,
+            loader: loaderDashboard,
           },
           {
-            path: "/:root/category/:category/sortBy/:sortBy/filter/:filter/search/:search/offset/:offset",
-            element: <SortProduct />,
-            loader: loaderSort,
+            path: "orders/:username",
+            element: <Orders />,
+            loader: loaderOrders,
           },
           {
-            path: "/dashboard",
+            path: "likeds/:username",
+            element: <Likeds />,
+            loader: loaderLikes,
+          },
+          {
+            path: "newuser",
             element: <UserDashboard />,
-            children: [
-              {
-                path: ":username",
-                element: <RegistrationForm />,
-                loader: loaderDashboard,
-              },
-              {
-                path: "orders/:username",
-                element: <Orders />,
-                loader: loaderOrders,
-              },
-              {
-                path: "likeds/:username",
-                element: <Likeds />,
-                loader: loaderLikes,
-              },
-            ],
-          },
-
-          {
-            path: "/dashboard/newuser",
-            element: <UserDashboard newUser={"newuser"} />,
-          },
-          {
-            path: "/about",
-            element: <About />,
-          },
-          {
-            path: "/checkout",
-            element: <Checkout />,
-          },
-          {
-            path: "/contact",
-            element: <Contact />,
-          },
-          {
-            path: "/success-payment",
-            element: <SuccessPayment />,
           },
         ],
       },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/success-payment",
+        element: <SuccessPayment />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
   },
-]);
+];
+
+const router = createHashRouter(routes);
 
 export default router;

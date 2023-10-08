@@ -1,6 +1,6 @@
 import client from "../api/axiosClient";
 
-export const cartUpdate = (cart, auth) => {
+export const cartUpdate = (cart, user) => {
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export const cartUpdate = (cart, auth) => {
   };
   client
     .put(
-      `/api/users/${auth.login.username}/update-cart`,
+      `/api/users/${user.username}/update-cart`,
       JSON.stringify({ cart }),
       options
     )

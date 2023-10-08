@@ -4,7 +4,7 @@ import AuthContext from "../context/AuthContext";
 import { cartUpdate } from "../helpers/cartUpdate";
 
 const CartReview = () => {
-  const { cart, setCart, auth } = useContext(AuthContext);
+  const { cart, setCart, auth: user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let cartItems = 0;
@@ -13,11 +13,12 @@ const CartReview = () => {
     let newCart = JSON.parse(JSON.stringify(cart));
     delete newCart[item];
     setCart(newCart);
-    cartUpdate(newCart, auth);
+    cartUpdate(newCart, user);
   };
   const reviewItems = () => {
     let totalCart = 0;
     let toRender = [];
+
     for (const item in cart) {
       cartItems++;
       let totalPrice = cart[item].prodPrice * cart[item].productQ;

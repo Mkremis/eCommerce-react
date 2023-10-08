@@ -3,7 +3,8 @@ import AuthContext from "../context/AuthContext";
 import { likesUpdate } from "../helpers/likesUpdate";
 
 const Like = ({ price, id, name, image, styles, gender }) => {
-  const { likes, setLikes, auth } = useContext(AuthContext);
+  const { likes, setLikes, auth: user } = useContext(AuthContext);
+
   const initalLike = likes.find((obj) => obj.id === id) || null;
   const [like, setLike] = useState(initalLike);
   const product = { id, name, image, price, gender };
@@ -18,12 +19,12 @@ const Like = ({ price, id, name, image, styles, gender }) => {
       setLike(false);
       const newLikes = likes.filter(({ id }) => id !== product.id);
       setLikes(newLikes);
-      likesUpdate(newLikes, auth);
+      likesUpdate(newLikes, user);
     } else {
       setLike(true);
       const newLikes = [...likes, product];
       setLikes(newLikes);
-      likesUpdate(newLikes, auth);
+      likesUpdate(newLikes, user);
     }
   };
   return (

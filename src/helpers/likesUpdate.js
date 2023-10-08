@@ -1,6 +1,6 @@
 import client from "../api/axiosClient";
 
-export const likesUpdate = (likes, auth) => {
+export const likesUpdate = (likes, user) => {
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export const likesUpdate = (likes, auth) => {
   };
   client
     .put(
-      `/api/users/${auth.login.username}/update-likes`,
+      `/api/users/${user.username}/update-likes`,
       JSON.stringify({ likes }),
       options
     )

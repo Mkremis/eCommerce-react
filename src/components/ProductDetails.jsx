@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { cartUpdate } from "../helpers/cartUpdate";
@@ -6,36 +6,46 @@ import Like from "./Like";
 import "./ProductDetails.css";
 
 const ProductDetails = ({ product }) => {
+  const { cart, setCart, auth: user } = useContext(AuthContext);
+  const [productQ, setProductQ] = useState(0);
+
   const { pathname } = useLocation();
   const gender = pathname.split("/")[1];
-  const {
-    handlePlusQ,
-    handleMinusQ,
-    productQ,
-    setProductQ,
-    cart,
-    setCart,
-    auth
-  } = useContext(AuthContext);
 
-  const handleCart = () => {
-    const updatedCart = {
-      ...cart,
-      [product.id]: {
-        gender,
-        prodName: product.name,
-        prodImage: product.media.images[0].url,
-        prodPrice: product.price.current.value,
-        productQ,
-      },
+  function handleCart() {
+    const addQ = () => {
+      const newQ = productQ + 1;
+      setProductQ(newQ);
+      if (product.id in cart) updateCart({ newQ });
     };
-    setCart(updatedCart);
-    cartUpdate(updatedCart, auth);
-  };
+    const removeQ = () => {
+      const newQ = productQ - 1;
+      productQ === 0 ? false : setProductQ(newQ);
+      if (product.id in cart) updateCart({ newQ });
+    };
+
+    const updateCart = ({ newQ = productQ }) => {
+      const newCart = {
+        ...cart,
+        [product.id]: {
+          gender,
+          prodName: product.name,
+          prodImage: product.media.images[0].url,
+          prodPrice: product.price.current.value,
+          productQ: newQ,
+        },
+      };
+      console.log(newQ);
+      setCart(newCart);
+      user && cartUpdate(newCart, user);
+    };
+    return { addQ, removeQ, updateCart };
+  }
 
   useEffect(() => {
-    setProductQ(0);
-  }, []);
+    Object.keys(cart).some((key) => parseInt(key) === product.id) &&
+      setProductQ(cart[product.id].productQ);
+  }, [product]);
 
   return (
     <article className="details">
@@ -114,20 +124,25 @@ const ProductDetails = ({ product }) => {
         </div>
         <div className="details__product-quantity">
           <div className="input">
-            <button className="input__minus" onClick={handleMinusQ}>
+            <button
+              className="input__minus"
+              onClick={handleCart().removeQ}
+              disabled={productQ === 0 ? true : false}
+            >
               -
             </button>
+
             <input
               className="input__number"
               type="number"
               value={productQ}
               readOnly
             />
-            <button className="input__plus" onClick={handlePlusQ}>
+            <button className="input__plus" onClick={handleCart().addQ}>
               +
             </button>
           </div>
-          <button className="details__button" onClick={handleCart}>
+          <button className="details__button" onClick={handleCart().updateCart}>
             <span className="material-symbols-outlined">add_shopping_cart</span>
             <span>Add to cart</span>
           </button>
