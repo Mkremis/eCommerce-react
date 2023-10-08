@@ -18,7 +18,7 @@ const ProductDetails = ({ product }) => {
       setProductQ(newQ);
       if (product.id in cart) updateCart({ newQ });
     };
-    const removeQ = () => {
+    const subsQ = () => {
       const newQ = productQ - 1;
       productQ === 0 ? false : setProductQ(newQ);
       if (product.id in cart) updateCart({ newQ });
@@ -35,11 +35,10 @@ const ProductDetails = ({ product }) => {
           productQ: newQ,
         },
       };
-      console.log(newQ);
       setCart(newCart);
       user && cartUpdate(newCart, user);
     };
-    return { addQ, removeQ, updateCart };
+    return { addQ, subsQ, updateCart };
   }
 
   useEffect(() => {

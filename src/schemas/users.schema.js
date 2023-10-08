@@ -97,14 +97,17 @@ export const updateSchema = z.object({
   title: z
     .string()
     .max(5, { message: "Title must not exceed 5 characters" })
+    .nullable()
     .optional(),
   first: z
     .string()
     .max(30, { message: "First name must not exceed 30 characters" })
+    .nullable()
     .optional(),
   last: z
     .string()
     .max(30, { message: "Last name must not exceed 30 characters" })
+    .nullable()
     .optional(),
   email: z
     .string()
@@ -112,34 +115,42 @@ export const updateSchema = z.object({
       message: "Email is not valid",
     })
     .max(50, { message: "Email must not exceed 50 characters" })
+    .nullable()
     .optional(),
   phone: z
     .string()
     .max(10, { message: "Phone number must not exceed 10 characters" })
+    .nullable()
     .optional(),
-  thumbnail: z.string().optional(),
+  thumbnail: z.string().nullable().optional(),
   city: z
     .string()
     .max(20, { message: "City must not exceed 20 characters" })
+    .nullable()
     .optional(),
   state: z
     .string()
     .max(20, { message: "State must not exceed 20 characters" })
+    .nullable()
     .optional(),
   street_number: z
     .string()
     .max(20, { message: "Location number must not exceed 20 characters" })
+    .nullable()
     .optional(),
   street: z
     .string()
     .max(20, { message: "Street must not exceed 20 characters" })
+    .nullable()
     .optional(),
   country: z
     .string()
     .max(20, { message: "Country must not exceed 20 characters" })
+    .nullable()
     .optional(),
   postcode: z
     .string()
     .max(10, { message: "Postcode must not exceed 10 characters" })
+    .nullable()
     .optional(),
 });

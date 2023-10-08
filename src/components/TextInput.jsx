@@ -6,12 +6,13 @@ export default function Text_Input({
   errorMessage,
   type,
   name,
+  // isReadOnly,
 }) {
   return (
     <TextInput
       type={type}
       value={value}
-      readOnly={name === "username"}
+      // readOnly={isReadOnly}
       error={errorMessage}
       errorMessage={errorMessage}
       onChange={handleChange}

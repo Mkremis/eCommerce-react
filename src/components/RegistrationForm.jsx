@@ -47,30 +47,6 @@ const RegistrationForm = () => {
     Object.keys(FORM_DATA).reduce((prev, curr) => ({ ...prev, [curr]: "" }), {})
   );
 
-  const handleChange = (name, value) => {
-    const schema = isUpdate ? updateSchema : registerSchema;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-    let inputValidate;
-    if (isUpdate && !value) return;
-    inputValidate = schema.safeParse({ [name]: value });
-    const errorMessage = inputValidate?.error?.issues[0]?.message;
-
-    if (errorMessage) {
-      setInputErrors((prevInputErrors) => ({
-        ...prevInputErrors,
-        [name]: errorMessage,
-      }));
-    } else {
-      setInputErrors((prevInputErrors) => ({
-        ...prevInputErrors,
-        [name]: false,
-      }));
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = Object.keys(inputErrors).some(
@@ -91,7 +67,7 @@ const RegistrationForm = () => {
       const response = isUpdate
         ? await updateUser(updateData)
         : await registerUser(formData);
-      if (response.status === 200) {
+      if (response.status === 204) {
         setSubmitErrors(false);
         setMessages([`User ${isUpdate ? "updated" : "created"} successfully`]);
         setTimeout(() => {
@@ -105,6 +81,34 @@ const RegistrationForm = () => {
       console.log(error);
       setSubmitErrors(true);
       setMessages(error.response.data.message);
+    }
+  };
+
+  const handleChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    // Verifica si el valor no es nulo ni vacío antes de validar
+    if (value.trim() !== "") {
+      // Realiza la validación usando el esquema correspondiente (updateSchema)
+      const schema = updateSchema;
+      const field = schema.shape[name];
+
+      try {
+        // Intenta validar el valor ingresado
+        field.parse(value);
+        // Si no hay errores de validación, marca el campo como válido
+        setInputErrors({ ...inputErrors, [name]: false });
+      } catch (error) {
+        // Si hay errores de validación, marca el campo como inválido y muestra el mensaje de error
+        const errorMessage = JSON.parse(error)[0].message;
+        setInputErrors({ ...inputErrors, [name]: errorMessage });
+      }
+    } else {
+      // Si el campo está vacío, marca el campo como válido
+      setInputErrors({ ...inputErrors, [name]: false });
     }
   };
 
@@ -135,6 +139,7 @@ const RegistrationForm = () => {
                     handleChange={(e) => handleChange(name, e.target.value)}
                     type={FORM_DATA[name].type}
                     name={name}
+                    // isReadOnly={isUpdate && name === "username"}
                   />
                 </TableCell>
               </TableRow>
