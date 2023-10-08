@@ -20,7 +20,7 @@ import {
   loaderDashboard,
   loaderOrders,
   loaderLikes,
-} from "../helpers/loaders";
+} from "../loaders";
 
 const routes = [
   {

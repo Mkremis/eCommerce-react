@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { registerUser, updateUser } from "../api/authRequests";
+import { registerUser, updateUser } from "../api/clientRequests";
 
 import TextInput from "./TextInput";
 import {

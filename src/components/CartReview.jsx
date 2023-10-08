@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { cartUpdate } from "../helpers/cartUpdate";
+import { cartUpdate } from "../api/clientRequests";
 
 const CartReview = () => {
   const { cart, setCart, auth: user } = useContext(AuthContext);

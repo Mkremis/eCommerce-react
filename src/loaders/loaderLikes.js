@@ -1,4 +1,4 @@
-import client from "../../api/axiosClient";
+import client from "../api/axiosClient";
 
 const loaderLikes = async ({ params }) => {
   try {

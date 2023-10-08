@@ -1,4 +1,4 @@
-import client from "../../api/axiosClient";
+import client from "../api/axiosClient";
 
 const loaderDashboard = async ({ params }) => {
   try {

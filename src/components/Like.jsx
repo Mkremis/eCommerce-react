@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
-import { likesUpdate } from "../helpers/likesUpdate";
+import { likesUpdate } from "../api/clientRequests";
 
 const Like = ({ price, id, name, image, styles, gender }) => {
   const { likes, setLikes, auth: user } = useContext(AuthContext);

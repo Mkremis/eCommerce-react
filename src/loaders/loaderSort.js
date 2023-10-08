@@ -1,5 +1,5 @@
 import axios from "axios";
-import { options } from "../../api/apiConfig";
+import { options } from "../api/apiConfig";
 
 const loaderSort = async ({ params }) => {
   const categories = {

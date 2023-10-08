@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { serverLogout } from "../helpers/serverLogout";
-import { reloadSession } from "../helpers/reloadSession";
-import { login } from "../api/authRequests";
+import { login, reloadSession, serverLogout } from "../api/clientRequests";
 
 const AuthContext = createContext({});
 const initialCart = {};
@@ -42,12 +40,9 @@ const AuthProvider = ({ children }) => {
       try {
         const response = await reloadSession();
         const { user_data, user_cart, user_likes } = response.data;
-        const userCart = user_cart;
-        const { likes } = user_likes;
-        const userInfo = user_data;
-        setAuth(userInfo);
-        setCart(userCart || initialCart);
-        setLikes(likes || initialLikes);
+        setAuth(user_data);
+        setCart(user_cart.cart || initialCart);
+        setLikes(user_likes.likes || initialLikes);
       } catch (error) {
         handleLogout();
       }

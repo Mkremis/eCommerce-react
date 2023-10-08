@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { cartUpdate } from "../helpers/cartUpdate";
+
 import Like from "./Like";
 import "./ProductDetails.css";
+import { cartUpdate } from "../api/clientRequests";
 
 const ProductDetails = ({ product }) => {
   const { cart, setCart, auth: user } = useContext(AuthContext);
