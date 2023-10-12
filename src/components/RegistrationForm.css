@@ -21,21 +21,21 @@
 }
 
 /* Estilos para los mensajes de error o éxito */
-.error-message {
+.registration-form.error-message {
   color: var(--form-error);
   font-weight: bold;
   margin: auto;
 }
 
-.success-message {
+.registration-form.success-message {
   color: var(--form-ok);
   font-weight: bold;
 }
-.input-container {
+.i.registration-formnput-container {
   width: 100%;
 }
 /* Estilos para los campos de entrada de texto */
-.input-wrapper {
+.registration-form.input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -44,17 +44,17 @@
   margin: auto;
 }
 
-.label {
+.registration-form.label {
   text-transform: capitalize;
   margin: auto;
 }
-.text-input-container {
+.registration-form.text-input-container {
   display: flex;
   align-items: center;
   width: 100%;
   padding: 0 5rem;
 }
-input {
+.registration-form input {
   margin: auto;
   width: 100%;
   padding: 0.5rem;
@@ -66,7 +66,7 @@ input {
 }
 
 /* Estilos para el botón */
-button {
+.registration-form button {
   background-color: var(--Orange);
   color: var(--White);
   padding: 0.5rem 1rem;
@@ -78,21 +78,21 @@ button {
   margin: 1rem 0;
 }
 
-button:hover {
+.registration-form button:hover {
   opacity: 0.8;
 }
 
 /* Estilos para la disposición de los elementos en dispositivos móviles */
 @media (max-width: 600px) {
-  .input-wrapper {
+  .registration-form.input-wrapper {
     align-items: stretch;
   }
 
-  .label {
+  .registration-form.label {
     text-align: left;
   }
 
-  input {
+  .registration-form input {
     margin-top: 0.5rem;
   }
 }
