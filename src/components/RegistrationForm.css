@@ -21,21 +21,21 @@
 }
 
 /* Estilos para los mensajes de error o éxito */
-.registration-form.error-message {
+.error-message {
   color: var(--form-error);
   font-weight: bold;
   margin: auto;
 }
 
-.registration-form.success-message {
+.success-message {
   color: var(--form-ok);
   font-weight: bold;
 }
-.i.registration-formnput-container {
+.input-container {
   width: 100%;
 }
 /* Estilos para los campos de entrada de texto */
-.registration-form.input-wrapper {
+.input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -44,11 +44,11 @@
   margin: auto;
 }
 
-.registration-form.label {
+.registration-form label {
   text-transform: capitalize;
   margin: auto;
 }
-.registration-form.text-input-container {
+.text-input-container {
   display: flex;
   align-items: center;
   width: 100%;
@@ -84,11 +84,11 @@
 
 /* Estilos para la disposición de los elementos en dispositivos móviles */
 @media (max-width: 600px) {
-  .registration-form.input-wrapper {
+  .input-wrapper {
     align-items: stretch;
   }
 
-  .registration-form.label {
+  .registration-form label {
     text-align: left;
   }
 
