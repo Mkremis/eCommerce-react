@@ -1,0 +1,98 @@
+/* RegistrationForm.css */
+
+/* Estilos generales del formulario */
+.registration-form {
+  max-width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--Light-grayish-blue);
+  border: 1px solid var(--Grayish-blue);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 1rem;
+}
+
+.registration-form h4 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+/* Estilos para los mensajes de error o éxito */
+.error-message {
+  color: var(--form-error);
+  font-weight: bold;
+  margin: auto;
+}
+
+.success-message {
+  color: var(--form-ok);
+  font-weight: bold;
+}
+.input-container {
+  width: 100%;
+}
+/* Estilos para los campos de entrada de texto */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  height: 7rem;
+  margin: auto;
+}
+
+.label {
+  text-transform: capitalize;
+  margin: auto;
+}
+.text-input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 5rem;
+}
+input {
+  margin: auto;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--Grayish-blue);
+  border-radius: 4px;
+  font-family: var(--Futura);
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+/* Estilos para el botón */
+button {
+  background-color: var(--Orange);
+  color: var(--White);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Estilos para la disposición de los elementos en dispositivos móviles */
+@media (max-width: 600px) {
+  .input-wrapper {
+    align-items: stretch;
+  }
+
+  .label {
+    text-align: left;
+  }
+
+  input {
+    margin-top: 0.5rem;
+  }
+}

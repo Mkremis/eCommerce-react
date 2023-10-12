@@ -12,6 +12,9 @@
   --Black: #2d2d2d;
   --Black-modal: hsl(0, 0%, 0%, 0.5);
   --Black-modal2: hsl(0, 0%, 0%, 0.8);
+  /* FORM VALIDATIONS */
+  --form-ok: #4caf50;
+  --form-error: #f44336;
   /* FONT FAMILY */
   --Futura: "Futura PT", sans-serif;
   --Kumbh: "Kumbh Sans", sans-serif;

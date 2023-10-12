@@ -2,17 +2,10 @@ import React, { useState, useEffect } from "react";
 import { registerUser, updateUser } from "../api/clientRequests";
 
 import TextInput from "./TextInput";
-import {
-  Card,
-  Table,
-  TableRow,
-  TableBody,
-  TableCell,
-  Title,
-  Button,
-} from "@tremor/react";
+
 import { registerSchema, updateSchema } from "../schemas/users.schema";
 import { useLoaderData } from "react-router-dom";
+import "./RegistrationForm.css";
 
 const FORM_DATA = {
   username: { type: "text" },
@@ -93,7 +86,7 @@ const RegistrationForm = () => {
     // Verifica si el valor no es nulo ni vacío antes de validar
     if (value.trim() !== "") {
       // Realiza la validación usando el esquema correspondiente (updateSchema)
-      const schema = updateSchema;
+      const schema = isUpdate ? updateSchema : registerSchema;
       const field = schema.shape[name];
 
       try {
@@ -124,46 +117,37 @@ const RegistrationForm = () => {
   }, [user]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Card>
-        <Title>User Dashboard</Title>
-        <Table className="mt-5">
-          <TableBody>
-            {Object.entries(formData).map(([name, value]) => (
-              <TableRow key={name}>
-                <TableCell className="capitalize">{name}</TableCell>
-                <TableCell>
-                  <TextInput
-                    errorMessage={inputErrors[name]}
-                    value={value}
-                    handleChange={(e) => handleChange(name, e.target.value)}
-                    type={FORM_DATA[name].type}
-                    name={name}
-                    // isReadOnly={isUpdate && name === "username"}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div className="flex items-center">
-          <Button size="xl" type="submit" className="ml-5">
-            <span>{isUpdate ? "Update Profile" : "Register"}</span>
-          </Button>
-          <div className="ml-5">
-            {messages.map((message, index) => (
-              <p
-                key={index}
-                className={`text-xl font-bold ${
-                  submitErrors ? "text-red-800" : "text-green-800"
-                }`}
-              >
-                {message}
-              </p>
-            ))}
-          </div>
+    <form onSubmit={handleSubmit} className="registration-form">
+      <h4>{isUpdate ? "User Dashboard" : "User Registration"}</h4>
+      <div className="input-container">
+        {Object.entries(formData).map(([name, value]) => (
+          <TextInput
+            key={name}
+            labelText={name}
+            errorMessage={inputErrors[name]}
+            value={value}
+            handleChange={(e) => handleChange(name, e.target.value)}
+            type={FORM_DATA[name].type}
+            name={name}
+          />
+        ))}
+      </div>
+
+      <div className="button-container">
+        <button type="submit">
+          {isUpdate ? "Update Profile" : "Register"}
+        </button>
+        <div className="message-container">
+          {messages.map((message, index) => (
+            <p
+              key={index}
+              className={`${submitErrors ? "text-error" : "text-success"}`}
+            >
+              {message}
+            </p>
+          ))}
         </div>
-      </Card>
+      </div>
     </form>
   );
 };
