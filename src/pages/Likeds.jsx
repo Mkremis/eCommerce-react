@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 import ProductCard from "../components/ProductCard";
 
 const Likeds = () => {
-  const { handleLogout } = useContext(AuthContext);
   const likes = useLoaderData();
-  if (!likes) return handleLogout();
 
   return (
     <article

@@ -8,20 +8,80 @@ import { useLoaderData } from "react-router-dom";
 import "./RegistrationForm.css";
 
 const FORM_DATA = {
-  username: { type: "text" },
-  password: { type: "password" },
-  title: { type: "text" },
-  first: { type: "text" },
-  last: { type: "text" },
-  email: { type: "email" },
-  phone: { type: "tel" },
-  thumbnail: { type: "url" },
-  city: { type: "text" },
-  state: { type: "text" },
-  street_number: { type: "text" },
-  street: { type: "text" },
-  country: { type: "text" },
-  postcode: { type: "text" },
+  username: {
+    type: "text",
+    required: true,
+    pattern: "^[a-zA-Z0-9]{1,15}$",
+    title: "Username must be alphanumeric and up to 15 characters",
+  },
+  password: {
+    type: "password",
+    required: true,
+    pattern: "^.{6,}$",
+    title: "Password must be at least 6 characters",
+  },
+  title: {
+    type: "text",
+    pattern: "^.{1,5}$",
+    title: "Title must be up to 5 characters",
+  },
+  first: {
+    type: "text",
+    pattern: "^.{1,30}$",
+    title: "First name must be up to 30 characters",
+  },
+  last: {
+    type: "text",
+    pattern: "^.{1,30}$",
+    title: "Last name must be up to 30 characters",
+  },
+  email: {
+    type: "email",
+    required: true,
+    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+    title: "Enter a valid email address",
+  },
+  phone: {
+    type: "tel",
+    required: true,
+    pattern: "^[0-9]{1,10}$",
+    title: "Phone number must be numeric and up to 10 digits",
+  },
+  thumbnail: {
+    type: "url",
+    pattern: "^https?://.+",
+    title: "Enter a valid URL starting with 'http://' or 'https://'",
+  },
+  city: {
+    type: "text",
+    pattern: "^.{1,20}$",
+    title: "City must be up to 20 characters",
+  },
+  state: {
+    type: "text",
+    pattern: "^.{1,20}$",
+    title: "State must be up to 20 characters",
+  },
+  street_number: {
+    type: "text",
+    pattern: "^.{1,20}$",
+    title: "Location number must be up to 20 characters",
+  },
+  street: {
+    type: "text",
+    pattern: "^.{1,20}$",
+    title: "Street must be up to 20 characters",
+  },
+  country: {
+    type: "text",
+    pattern: "^.{1,20}$",
+    title: "Country must be up to 20 characters",
+  },
+  postcode: {
+    type: "text",
+    pattern: "^[0-9]{1,10}$",
+    title: "Postcode must be numeric and up to 10 digits",
+  },
 };
 
 const RegistrationForm = () => {
@@ -84,24 +144,22 @@ const RegistrationForm = () => {
     });
 
     // Verifica si el valor no es nulo ni vacío antes de validar
-    if (value.trim() !== "") {
-      // Realiza la validación usando el esquema correspondiente (updateSchema)
-      const schema = isUpdate ? updateSchema : registerSchema;
-      const field = schema.shape[name];
-
-      try {
-        // Intenta validar el valor ingresado
-        field.parse(value);
-        // Si no hay errores de validación, marca el campo como válido
-        setInputErrors({ ...inputErrors, [name]: false });
-      } catch (error) {
-        // Si hay errores de validación, marca el campo como inválido y muestra el mensaje de error
-        const errorMessage = JSON.parse(error)[0].message;
-        setInputErrors({ ...inputErrors, [name]: errorMessage });
-      }
-    } else {
-      // Si el campo está vacío, marca el campo como válido
+    if (isUpdate && (value === "" || value === null)) {
       setInputErrors({ ...inputErrors, [name]: false });
+      return;
+    }
+    const schema = isUpdate ? updateSchema : registerSchema;
+    const field = schema.shape[name];
+
+    try {
+      // Intenta validar el valor ingresado
+      field.parse(value);
+      // Si no hay errores de validación, marca el campo como válido
+      setInputErrors({ ...inputErrors, [name]: false });
+    } catch (error) {
+      // Si hay errores de validación, marca el campo como inválido y muestra el mensaje de error
+      const errorMessage = JSON.parse(error)[0].message;
+      setInputErrors({ ...inputErrors, [name]: errorMessage });
     }
   };
 
@@ -129,6 +187,7 @@ const RegistrationForm = () => {
             handleChange={(e) => handleChange(name, e.target.value)}
             type={FORM_DATA[name].type}
             name={name}
+            isRequired={!isUpdate && FORM_DATA[name].required}
           />
         ))}
       </div>

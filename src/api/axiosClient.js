@@ -4,7 +4,7 @@ import axios from "axios";
 // http://localhost:3000
 
 const client = axios.create({
-  baseURL: "https://ecommerce-users-api-7qkr-dev.fl0.io",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 

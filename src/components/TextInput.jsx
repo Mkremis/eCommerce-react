@@ -9,6 +9,7 @@ export default function Text_Input({
   errorMessage,
   type,
   name,
+  isRequired,
 }) {
   const uuid = uuidv4();
   return (
@@ -24,7 +25,8 @@ export default function Text_Input({
           onChange={handleChange}
           placeholder={`Type the ${name} here`}
           name={name}
-          autoComplete="false"
+          autoComplete="off"
+          required={isRequired}
         />
         {errorMessage && (
           <span
