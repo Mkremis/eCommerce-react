@@ -48,14 +48,14 @@ const HomeContent = () => {
                     image={`https://${product.imageUrl}`}
                     name={product.name}
                     id={product.id}
-                    gender={"women"}
+                    gender={"men"}
                   >
                     <ProductFooter
                       price={product.price.current.text}
                       id={product.id}
                       name={product.name}
                       image={`https://${product.imageUrl}`}
-                      gender={"women"}
+                      gender={"men"}
                     />
                   </ProductCard>
                 </section>

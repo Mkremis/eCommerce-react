@@ -178,16 +178,16 @@ const RegistrationForm = () => {
     <form onSubmit={handleSubmit} className="registration-form">
       <h4>{isUpdate ? "User Dashboard" : "User Registration"}</h4>
       <div className="input-container">
-        {Object.entries(formData).map(([name, value]) => (
+        {Object.entries(FORM_DATA).map(([name, value]) => (
           <TextInput
             key={name}
             labelText={name}
-            errorMessage={inputErrors[name]}
-            value={value}
-            handleChange={(e) => handleChange(name, e.target.value)}
-            type={FORM_DATA[name].type}
             name={name}
+            value={formData[name]}
+            type={FORM_DATA[name].type}
+            handleChange={(e) => handleChange(name, e.target.value)}
             isRequired={!isUpdate && FORM_DATA[name].required}
+            errorMessage={inputErrors[name]}
           />
         ))}
       </div>
