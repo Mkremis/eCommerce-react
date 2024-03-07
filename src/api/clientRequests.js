@@ -1,7 +1,7 @@
 import client from "./axiosClient";
 
 export const login = async (username, password) =>
-  client.post(`/api/users/login`, {
+  client.post(`/auth/login`, {
     username,
     password,
   });

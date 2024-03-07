@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-// import RenderForm from "../components/RenderForm";
 import AuthContext from "../context/AuthContext";
 import RegistrationForm from "../components/RegistrationForm";
 
