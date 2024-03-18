@@ -50,7 +50,7 @@ export const registerSchema = z.object({
     .string()
     .max(20, { message: "State must not exceed 20 characters" })
     .optional(),
-  street_number: z
+  streetNumber: z
     .string()
     .max(20, { message: "Location number must not exceed 20 characters" })
     .optional(),
@@ -131,7 +131,7 @@ export const updateSchema = z.object({
     .string()
     .max(20, { message: "State must not exceed 20 characters" })
     .optional(),
-  street_number: z
+  streetNumber: z
     .string()
     .max(20, { message: "Location number must not exceed 20 characters" })
     .optional(),

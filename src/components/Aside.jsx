@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { options } from "../api/apiConfig";
+import { ASOS_HEADERS } from "../api/apiConfig";
 
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
@@ -20,7 +20,7 @@ const Aside = () => {
     } else {
       fetch(
         "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
-        options
+        ASOS_HEADERS
       )
         .then((res) => (res.ok ? res.json() : Promise.reject()))
         .then((cat) => {

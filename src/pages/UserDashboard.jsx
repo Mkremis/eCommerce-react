@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import RegistrationForm from "../components/RegistrationForm";
+import DashboardForm from "../components/DashboardForm";
 
 const UserDashboard = () => {
   const { auth: user } = useContext(AuthContext);
@@ -19,7 +19,7 @@ const UserDashboard = () => {
           </nav>
         )}
       </header>
-      {user ? <Outlet /> : <RegistrationForm />}
+      {user ? <Outlet /> : <DashboardForm />}
     </article>
   );
 };

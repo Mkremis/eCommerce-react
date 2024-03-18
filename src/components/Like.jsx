@@ -1,36 +1,65 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
-import { likesUpdate } from "../api/clientRequests";
+import { likeRequests } from "../api/clientRequests";
 
-const Like = ({ price, id, name, image, styles, gender }) => {
-  const { likes, setLikes, auth: user } = useContext(AuthContext);
-
-  const initalLike = likes.find((obj) => obj.id === id) || null;
-  const [like, setLike] = useState(initalLike);
-  const product = { id, name, image, price, gender };
+const Like = ({
+  prodId,
+  prodName,
+  prodGender,
+  prodImage,
+  prodPrice,
+  priceCurrency,
+  styles,
+}) => {
+  const { likes, setLikes } = useContext(AuthContext);
+  const initialLike = likes.find((like) => like.id === prodId) || null;
+  const [like, setLike] = useState(initialLike);
 
   useEffect(() => {
-    const updatedLikes = likes.find((obj) => obj.id === id) || null;
-    if (updatedLikes) setLike(updatedLikes);
+    function updateLike() {
+      const updatedLike = likes.find((like) => like?.prodId === prodId);
+      if (updatedLike) {
+        setLike(updatedLike);
+      }
+    }
+    updateLike();
   }, [likes]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (like) {
-      setLike(false);
-      const newLikes = likes.filter(({ id }) => id !== product.id);
-      setLikes(newLikes);
-      likesUpdate(newLikes, user);
+      try {
+        await likeRequests().deleteLike(prodId);
+        setLike(null);
+        const newLikes = likes.filter((like) => like.prodId !== prodId);
+        setLikes(newLikes);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      setLike(true);
-      const newLikes = [...likes, product];
-      setLikes(newLikes);
-      likesUpdate(newLikes, user);
+      try {
+        const productLiked = {
+          prodId,
+          prodName,
+          prodGender,
+          prodImage,
+          prodPrice,
+          priceCurrency,
+        };
+        await likeRequests().createLike(productLiked);
+        setLike(prodId);
+        const newLikes = [...likes, productLiked];
+        setLikes(newLikes);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
   return (
     <button className="like-button" onClick={handleLike} style={styles}>
       {like ? "❤" : "🤍"}
     </button>
   );
 };
+
 export default Like;

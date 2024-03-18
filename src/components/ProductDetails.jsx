@@ -4,15 +4,15 @@ import AuthContext from "../context/AuthContext";
 
 import Like from "./Like";
 import "./ProductDetails.css";
-import { cartUpdate } from "../api/clientRequests";
+import { cartRequests } from "../api/clientRequests";
+import { useGetCart } from "../hooks/useGetCart";
 
 const ProductDetails = ({ product }) => {
-  const { cart, setCart, auth: user } = useContext(AuthContext);
+  const { cart, setCart, auth: user, currentProduct } = useContext(AuthContext);
   const [productQ, setProductQ] = useState(0);
-
   const { pathname } = useLocation();
   const gender = pathname.split("/")[1];
-
+  console.log(currentProduct);
   function handleCart() {
     const addQ = () => {
       const newQ = productQ + 1;
@@ -25,37 +25,42 @@ const ProductDetails = ({ product }) => {
       if (product.id in cart) updateCart({ newQ });
     };
 
-    const updateCart = ({ newQ = productQ }) => {
+    const updateCart = async ({ newQ = productQ }) => {
       const newCart = {
-        ...cart,
-        [product.id]: {
-          gender,
-          prodName: product.name,
-          prodImage: product.media.images[0].url,
-          prodPrice: product.price.current.value,
-          productQ: newQ,
-        },
+        prodId: product?.id,
+        prodGender: gender,
+        prodName: product?.name,
+        prodImage: product?.media?.images[0]?.url,
+        prodPrice: currentProduct?.price?.current?.value,
+        productQ: newQ,
       };
-      setCart(newCart);
-      user && cartUpdate(newCart, user);
+      try {
+        const result = user && (await cartRequests().updateUserCart(newCart));
+        useGetCart(user, setCart);
+      } catch (error) {
+        console.error(
+          "Error updatting the user cart form the server:",
+          error.message
+        );
+      }
     };
     return { addQ, subsQ, updateCart };
   }
 
   useEffect(() => {
     Object.keys(cart).some((key) => parseInt(key) === product.id) &&
-      setProductQ(cart[product.id].productQ);
+      setProductQ(cart[product?.id].productQ);
   }, [product]);
 
   return (
     <article className="details">
       <section className="details__product">
-        <h1 className="details__company">{product.brand.name}</h1>
-        <h2 className="details__title">{product.name}</h2>
+        <h1 className="details__company">{product?.brand?.name}</h1>
+        <h2 className="details__title">{product?.name}</h2>
         <div
           className="details__description"
           dangerouslySetInnerHTML={{
-            __html: product.brand.description || product.description || "",
+            __html: product?.brand?.description || product?.description || "",
           }}
         />
 
@@ -64,26 +69,26 @@ const ProductDetails = ({ product }) => {
             <span>Product Information</span>
           </summary>
           <article>
-            {product.sizeGuide && (
-              <a href={product.sizeGuide} target="_blank">
+            {product?.sizeGuide && (
+              <a href={product?.sizeGuide} target="_blank">
                 Size Guide
               </a>
             )}
 
             <p>
-              Gender: <span>{product.gender}</span>
+              Gender: <span>{product?.gender}</span>
             </p>
             <p>
-              Colour: <span>{product.media.images[0].colour}</span>
+              Colour: <span>{product?.media?.images[0]?.colour}</span>
             </p>
             <div
               dangerouslySetInnerHTML={{
-                __html: product.description || "",
+                __html: product?.description || "",
               }}
             />
             <div
               dangerouslySetInnerHTML={{
-                __html: product.info.aboutMe || "",
+                __html: product?.info?.aboutMe || "",
               }}
             />
           </article>
@@ -92,31 +97,36 @@ const ProductDetails = ({ product }) => {
       <section className="details__order">
         <div className="details__prices">
           <div className="details__now">
-            <p className="price_now">{product.price.current.text}</p>
-            {product.price.previous.value !== product.price.current.value && (
+            <p className="price_now">{currentProduct?.price?.current?.text}</p>
+            {currentProduct?.price?.previous?.value !==
+              currentProduct?.price?.current?.value && (
               <p className="details__discount">
                 -
                 {parseInt(
-                  ((product.price.previous.value -
-                    product.price.current.value) /
-                    product.price.previous.value) *
+                  ((currentProduct?.price?.previous?.value -
+                    currentProduct?.price?.current?.value) /
+                    currentProduct?.price?.previous?.value) *
                     100
                 )}
                 %
               </p>
             )}
           </div>
-          {product.price.previous.value !== product.price.current.value && (
-            <p className="details__before">{product.price.previous.text}</p>
+          {currentProduct?.price?.previous?.value !==
+            currentProduct?.price?.current?.value && (
+            <p className="details__before">
+              {currentProduct?.price?.previous?.text}
+            </p>
           )}
         </div>
         <div style={{ paddingBottom: "1rem" }}>
           <Like
-            id={product.id}
-            name={product.name}
-            image={`https://${product.media.images[0].url}`}
-            price={product.price.current.value}
-            gender={gender}
+            prodId={product?.id}
+            prodName={product?.name}
+            prodGender={product?.gender}
+            prodImage={`https://${product?.media?.images[0]?.url}`}
+            prodPrice={currentProduct?.price?.current?.value}
+            priceCurrency={currentProduct?.price?.currency}
             styles={{
               fontSize: "3rem",
             }}
@@ -126,7 +136,7 @@ const ProductDetails = ({ product }) => {
           <div className="input">
             <button
               className="input__minus"
-              onClick={handleCart().removeQ}
+              onClick={handleCart().subsQ}
               disabled={productQ === 0 ? true : false}
             >
               -

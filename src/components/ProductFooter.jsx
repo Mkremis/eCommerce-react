@@ -1,16 +1,23 @@
 import React from "react";
 import Like from "./Like";
 
-const ProductFooter = ({ price, id, name, image, gender }) => {
+const ProductFooter = ({
+  prodId,
+  prodName,
+  prodGender,
+  prodImage,
+  prodPrice,
+}) => {
   return (
     <div className="product-description__footer">
-      <span className="product-price">{price}</span>
+      <span className="product-price">{prodPrice.current.text}</span>
       <Like
-        id={id}
-        name={name}
-        image={image}
-        price={price}
-        gender={gender}
+        prodId={prodId}
+        prodName={prodName}
+        prodGender={prodGender}
+        prodImage={prodImage}
+        prodPrice={prodPrice.current.value}
+        priceCurrency={prodPrice.currency}
         styles={{
           fontSize: "1rem",
         }}

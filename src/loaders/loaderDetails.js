@@ -1,12 +1,8 @@
-import { options } from "../api/apiConfig";
-import axios from "axios";
+import { productRequests } from "../api/clientRequests";
 
 const loaderDetails = async ({ params }) => {
   try {
-    const URL = `https://asos2.p.rapidapi.com/products/v3/detail?id=${params.id}&lang=en-US&store=US&sizeSchema=US&currency=USD`;
-    const response = await axios.get(URL, options);
-    const { data } = response;
-    return { data };
+    return await productRequests().getProductDetail(params.id);
   } catch (err) {
     console.error(`An error ocurred loading product details: ${err}`);
   }

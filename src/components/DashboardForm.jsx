@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { registerUser, updateUser } from "../api/clientRequests";
+import React, { useState, useEffect, useContext } from "react";
+import { userRequests } from "../api/clientRequests";
 
 import TextInput from "./TextInput";
 
-import { registerSchema, updateSchema } from "../schemas/users.schema";
+import { updateSchema } from "../schemas/users.schema";
 import { useLoaderData } from "react-router-dom";
-import "./RegistrationForm.css";
+import "./DashboardForm.css";
+import AuthContext from "../context/AuthContext";
 
 const FORM_DATA = {
   username: {
     type: "text",
-    required: true,
     pattern: "^[a-zA-Z0-9]{1,15}$",
     title: "Username must be alphanumeric and up to 15 characters",
+    readOnly: true,
   },
   password: {
     type: "password",
-    required: true,
     pattern: "^.{6,}$",
     title: "Password must be at least 6 characters",
+  },
+  confirmPassword: {
+    type: "password",
+    pattern: "^.{6,}$",
+    title: "Confirm Password must be at least 6 characters",
   },
   title: {
     type: "text",
@@ -62,7 +67,7 @@ const FORM_DATA = {
     pattern: "^.{1,20}$",
     title: "State must be up to 20 characters",
   },
-  street_number: {
+  streetNumber: {
     type: "text",
     pattern: "^.{1,20}$",
     title: "Location number must be up to 20 characters",
@@ -84,10 +89,10 @@ const FORM_DATA = {
   },
 };
 
-const RegistrationForm = () => {
-  const user = useLoaderData();
+const DashboardForm = () => {
+  const userDashboard = useLoaderData();
+  const { auth: user } = useContext(AuthContext);
 
-  const [isUpdate, setIsUpdate] = useState(false);
   const [messages, setMessages] = useState([]);
   const [submitErrors, setSubmitErrors] = useState(false);
   const [inputErrors, setInputErrors] = useState(
@@ -97,7 +102,10 @@ const RegistrationForm = () => {
     )
   );
   const [formData, setFormData] = useState(
-    Object.keys(FORM_DATA).reduce((prev, curr) => ({ ...prev, [curr]: "" }), {})
+    Object.keys(FORM_DATA).reduce((prev, curr) => {
+      let initialData = user[curr] ? user[curr] : "";
+      return { ...prev, [curr]: initialData };
+    }, {})
   );
 
   const handleSubmit = async (e) => {
@@ -117,23 +125,17 @@ const RegistrationForm = () => {
           formData[curr] ? { ...prev, [curr]: formData[curr] } : prev,
         {}
       );
-      const response = isUpdate
-        ? await updateUser(updateData)
-        : await registerUser(formData);
-      if (response.status === 204) {
-        setSubmitErrors(false);
-        setMessages([`User ${isUpdate ? "updated" : "created"} successfully`]);
-        setTimeout(() => {
-          setMessages([]);
-        }, 4000);
-      } else {
-        setMessages(response.data.message);
-      }
+      const response = await userRequests().updateDashboard(updateData);
+      setSubmitErrors(false);
+      setMessages([`User updated successfully`]);
+      setTimeout(() => {
+        setMessages([]);
+      }, 4000);
       return response;
     } catch (error) {
       console.log(error);
       setSubmitErrors(true);
-      setMessages(error.response.data.message);
+      setMessages([error.response.data]);
     }
   };
 
@@ -144,18 +146,28 @@ const RegistrationForm = () => {
     });
 
     // Verifica si el valor no es nulo ni vacío antes de validar
-    if (isUpdate && (value === "" || value === null)) {
+    if (value === "" || value === null) {
       setInputErrors({ ...inputErrors, [name]: false });
       return;
     }
-    const schema = isUpdate ? updateSchema : registerSchema;
-    const field = schema.shape[name];
+
+    const field =
+      name === "confirmPassword"
+        ? updateSchema.shape["password"]
+        : updateSchema.shape[name];
 
     try {
       // Intenta validar el valor ingresado
       field.parse(value);
       // Si no hay errores de validación, marca el campo como válido
       setInputErrors({ ...inputErrors, [name]: false });
+
+      // Verificar si las contraseñas coinciden al escribir en confirmPassword
+      if (name === "confirmPassword" && formData.password !== value) {
+        setInputErrors({ ...inputErrors, [name]: "Passwords do not match" });
+      } else {
+        setInputErrors({ ...inputErrors, [name]: false });
+      }
     } catch (error) {
       // Si hay errores de validación, marca el campo como inválido y muestra el mensaje de error
       const errorMessage = JSON.parse(error)[0].message;
@@ -164,19 +176,18 @@ const RegistrationForm = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      delete user.id;
-      user.password = "";
-      setFormData(user);
-      setIsUpdate(true);
+    if (userDashboard) {
+      delete userDashboard.id;
+      userDashboard.password = "";
+      setFormData(userDashboard);
     } else {
-      setIsUpdate(false);
+      //actualizar para que redireccione a SignUp
     }
-  }, [user]);
+  }, [userDashboard]);
 
   return (
     <form onSubmit={handleSubmit} className="registration-form">
-      <h4>{isUpdate ? "User Dashboard" : "User Registration"}</h4>
+      <h4>User Dashboard</h4>
       <div className="input-container">
         {Object.entries(FORM_DATA).map(([name, value]) => (
           <TextInput
@@ -186,16 +197,15 @@ const RegistrationForm = () => {
             value={formData[name]}
             type={FORM_DATA[name].type}
             handleChange={(e) => handleChange(name, e.target.value)}
-            isRequired={!isUpdate && FORM_DATA[name].required}
+            isRequired={FORM_DATA[name].required}
             errorMessage={inputErrors[name]}
+            isReadOnly={FORM_DATA[name].readOnly}
           />
         ))}
       </div>
 
       <div className="button-container">
-        <button type="submit">
-          {isUpdate ? "Update Profile" : "Register"}
-        </button>
+        <button type="submit">Update Profile</button>
         <div className="message-container">
           {messages.map((message, index) => (
             <p
@@ -211,4 +221,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default DashboardForm;

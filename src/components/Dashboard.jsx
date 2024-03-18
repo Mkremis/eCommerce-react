@@ -12,10 +12,8 @@ const Dashboard = ({ isOpen, closeDash, user, logout }) => {
       onClick={closeDash}
     >
       <div className="user-info">
-        <h3 className="user-fullname">
-          {user.title} {user.first} {user.last}
-        </h3>
         <p className="user-username">{user.username}</p>
+        <p className="user-username">{user.email}</p>
       </div>
       <div className="user-buttons">
         <button className="user-mangment" onClick={handleDashboard}>

@@ -11,14 +11,21 @@ const Likeds = () => {
     >
       {likes.length > 0 &&
         likes.map((product) => {
+          const price = {
+            currency: product.priceCurrency,
+            current: {
+              value: product.prodPrice,
+              text: `$${product.prodPrice}`,
+            },
+          };
           return (
             <section className="product" key={product.id}>
               <ProductCard
-                image={product.image}
-                name={product.name}
-                price_curr={product.price}
-                id={product.id}
-                gender={product.gender}
+                image={product.prodImage}
+                name={product?.prodName}
+                id={product?.prodId}
+                gender={product?.ProdGender}
+                price={price}
               />
             </section>
           );

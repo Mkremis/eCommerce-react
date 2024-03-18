@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { options } from "../api/apiConfig"
+import { ASOS_HEADERS } from "../api/apiConfig";
 import axios from "axios";
 
 const useSearch = () => {
@@ -17,10 +17,12 @@ const useSearch = () => {
     if (search.length > 2 && !fetchSearch) {
       const URL = `https://asos2.p.rapidapi.com/v2/auto-complete?q=${search}&store=US&country=US&currency=USD&sizeSchema=US&lang=en-US`;
       axios
-        .get(URL, options)
+        .get(URL, ASOS_HEADERS)
         .then((res) =>
           setSuggestions(
-            res.data.suggestionGroups[0].suggestions.map((obj) => obj.searchTerm)
+            res.data.suggestionGroups[0].suggestions.map(
+              (obj) => obj.searchTerm
+            )
           )
         );
     }

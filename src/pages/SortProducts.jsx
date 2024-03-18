@@ -78,11 +78,11 @@ const SortProduct = () => {
                       gender={root}
                     >
                       <ProductFooter
-                        price={product.price.current.text}
-                        id={product.id}
-                        name={product.name}
-                        image={`https://${product.imageUrl}`}
-                        gender={root}
+                        prodId={product.id}
+                        prodName={product.name}
+                        prodGender={root}
+                        prodImage={`https://${product.imageUrl}`}
+                        prodPrice={product.price}
                       />
                     </ProductCard>
                   </section>

@@ -11,7 +11,7 @@ const CartNotification = () => {
     isOpen ? setIsOpen(null) : setIsOpen(true);
   };
   useEffect(() => {
-    let itemsCount = Object.keys(cart).length;
+    let itemsCount = cart.length;
     setCartItems(itemsCount);
     if (itemsCount > 0) {
       setShake(true);

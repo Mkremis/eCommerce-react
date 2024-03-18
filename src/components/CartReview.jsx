@@ -1,19 +1,26 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { cartUpdate } from "../api/clientRequests";
+import { cartRequests } from "../api/clientRequests";
+import { useGetCart } from "../hooks/useGetCart";
 
 const CartReview = () => {
   const { cart, setCart, auth: user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let cartItems = 0;
-  const handleRemoveItem = ({ target }) => {
+
+  const handleRemoveItem = async ({ target }) => {
     const item = target.id;
-    let newCart = JSON.parse(JSON.stringify(cart));
-    delete newCart[item];
-    setCart(newCart);
-    cartUpdate(newCart, user);
+    try {
+      await cartRequests().deleteCartItem(item);
+      useGetCart(user, setCart);
+    } catch (error) {
+      console.error(
+        "Error updatting the user cart form the server:",
+        error.message
+      );
+    }
   };
   const reviewItems = () => {
     let totalCart = 0;
@@ -27,8 +34,10 @@ const CartReview = () => {
         <article className="cart-modal__item" key={item}>
           <div
             className="cart-modal__item-details"
-            id={item}
-            onClick={() => navigate(`/${cart[item].gender}/${item}`)}
+            id={cart[item].prodId}
+            onClick={() =>
+              navigate(`/${cart[item].gender}/${cart[item].prodId}`)
+            }
           >
             <img
               className="cart-modal__image"
@@ -37,13 +46,13 @@ const CartReview = () => {
             />
             <p className="cart-modal__product">{cart[item].prodName}</p>
             <p className="cart-modal__quantity">x {cart[item].productQ}</p>
-            <p className="cart-modal__total-price">${totalPrice}</p>
+            <p className="cart-modal__total-price">${totalPrice.toFixed(2)}</p>
           </div>
           <div className="cart-modal__delete-container">
             <span
               className="material-symbols-outlined"
               style={{ fontSize: "1rem" }}
-              id={item}
+              id={cart[item].id}
               onClick={handleRemoveItem}
             >
               delete
@@ -60,7 +69,7 @@ const CartReview = () => {
       <div className="cart-modal__header">
         <h3 className="cart-modal__title">Cart</h3>
         <p className="cart-modal__total-cart">
-          Total: $<span>{reviewItems().totalCart}</span>
+          Total: $<span>{reviewItems().totalCart.toFixed(2)}</span>
         </p>
       </div>
       <div className="cart-modal__checkout-container">

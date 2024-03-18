@@ -1,5 +1,5 @@
 import axios from "axios";
-import { options } from "../api/apiConfig";
+import { ASOS_HEADERS } from "../api/apiConfig";
 
 const loaderSort = async ({ params }) => {
   const categories = {
@@ -24,7 +24,7 @@ const loaderSort = async ({ params }) => {
   }sizeSchema=US&lang=en-US`;
 
   try {
-    const response = await axios.get(URL, options);
+    const response = await axios.get(URL, ASOS_HEADERS);
     const { data } = response;
     return data;
   } catch (err) {

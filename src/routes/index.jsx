@@ -12,7 +12,7 @@ import Checkout from "../pages/Checkout";
 import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
 import Likeds from "../pages/Likeds";
-import RegistrationForm from "../components/RegistrationForm";
+import DashboardForm from "../components/DashboardForm";
 import {
   loaderHome,
   loaderDetails,
@@ -48,7 +48,7 @@ const routes = [
         children: [
           {
             path: ":username",
-            element: <RegistrationForm />,
+            element: <DashboardForm />,
             loader: loaderDashboard,
           },
           {

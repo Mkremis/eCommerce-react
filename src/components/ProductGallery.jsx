@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { useModal } from '../hooks/useModal';
-import Modal from './Modal';
-import './ProductGallery.css';
-import ProductGalleryModal from './ProductGalleryModal';
+import React, { useRef, useState } from "react";
+import { useModal } from "../hooks/useModal";
+import Modal from "./Modal";
+import "./ProductGallery.css";
+import ProductGalleryModal from "./ProductGalleryModal";
 
 const ProductGallery = ({ product }) => {
   const [indexImg, setIndexImg] = useState(0);
@@ -31,14 +31,10 @@ const ProductGallery = ({ product }) => {
             onClick={openModalGallery}
           />
           <button className="gallery__previous" onClick={handlePrev}>
-            <span className="material-symbols-outlined">
-              arrow_back_ios
-            </span>
+            <span className="material-symbols-outlined">arrow_back_ios</span>
           </button>
           <button className="gallery__next" onClick={handleNext}>
-            <span className="material-symbols-outlined">
-              arrow_forward_ios
-            </span>
+            <span className="material-symbols-outlined">arrow_forward_ios</span>
           </button>
         </div>
         <div className="gallery__thumnails">

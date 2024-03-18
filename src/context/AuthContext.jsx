@@ -1,15 +1,16 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, reloadSession, serverLogout } from "../api/clientRequests";
+import { reloadSession, serverLogout } from "../api/clientRequests";
 
 const AuthContext = createContext({});
-const initialCart = {};
+const initialCart = [];
 const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(null);
   const [cart, setCart] = useState(initialCart);
+  const [currentProduct, setCurrentProduct] = useState({});
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
   const [likes, setLikes] = useState(initialLikes);
@@ -39,10 +40,10 @@ const AuthProvider = ({ children }) => {
       if (!persist) return;
       try {
         const response = await reloadSession();
-        const { user_data, user_cart, user_likes } = response.data;
-        setAuth(user_data);
-        setCart(user_cart.cart || initialCart);
-        setLikes(user_likes.likes || initialLikes);
+        const { userData, userCart, userLikes } = response.data;
+        setAuth(userData);
+        setCart(userCart || initialCart);
+        setLikes(userLikes || initialLikes);
       } catch (error) {
         handleLogout();
       }
@@ -50,21 +51,6 @@ const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
-  const handleAuth = async (e) => {
-    try {
-      let { username, psw } = e.target;
-      username = username.value;
-      psw = psw.value;
-      const response = await login(username, psw);
-      const { user_data, user_cart, user_likes } = response.data;
-      setAuth(user_data);
-      setCart(user_cart.cart || initialCart);
-      setLikes(user_likes.likes || initialLikes);
-    } catch (error) {
-      console.log(error);
-      setErrors(error.response.data.message);
-    }
-  };
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
@@ -76,6 +62,7 @@ const AuthProvider = ({ children }) => {
   }, [errors]);
 
   const data = {
+    setErrors,
     errors,
     persist,
     setPersist,
@@ -83,7 +70,6 @@ const AuthProvider = ({ children }) => {
     setLikes,
     auth,
     setAuth,
-    handleAuth,
     handleLogout,
     cart,
     setCart,
@@ -92,6 +78,8 @@ const AuthProvider = ({ children }) => {
     refreshPage,
     cartItems,
     setCartItems,
+    currentProduct,
+    setCurrentProduct,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

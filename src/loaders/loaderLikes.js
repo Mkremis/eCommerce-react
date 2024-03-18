@@ -1,9 +1,9 @@
 import client from "../api/axiosClient";
+import { likeRequests } from "../api/clientRequests";
 
-const loaderLikes = async ({ params }) => {
+const loaderLikes = async () => {
   try {
-    const { username } = params;
-    const response = await client.get(`/api/users/${username}/likes`);
+    const response = await likeRequests().getUserLikes();
     return response.data;
   } catch (err) {
     console.error(err);

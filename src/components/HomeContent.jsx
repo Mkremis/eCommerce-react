@@ -23,13 +23,14 @@ const HomeContent = () => {
                     name={product.name}
                     id={product.id}
                     gender={"women"}
+                    price={product.price}
                   >
                     <ProductFooter
-                      price={product.price.current.text}
-                      id={product.id}
-                      name={product.name}
-                      image={`https://${product.imageUrl}`}
-                      gender={"women"}
+                      prodId={product.id}
+                      prodName={product.name}
+                      prodGender={"women"}
+                      prodImage={`https://${product.imageUrl}`}
+                      prodPrice={product.price}
                     />
                   </ProductCard>
                 </section>
@@ -49,13 +50,14 @@ const HomeContent = () => {
                     name={product.name}
                     id={product.id}
                     gender={"men"}
+                    price={product.price}
                   >
                     <ProductFooter
-                      price={product.price.current.text}
-                      id={product.id}
-                      name={product.name}
-                      image={`https://${product.imageUrl}`}
-                      gender={"men"}
+                      prodId={product.id}
+                      prodName={product.name}
+                      prodGender={"men"}
+                      prodImage={`https://${product.imageUrl}`}
+                      prodPrice={product.price}
                     />
                   </ProductCard>
                 </section>
