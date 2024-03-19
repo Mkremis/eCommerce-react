@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { reloadSession, serverLogout } from "../api/clientRequests";
+import { userRequests } from "../api/clientRequests";
 
 const AuthContext = createContext({});
 const initialCart = [];
@@ -25,6 +25,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
+    userRequests().logoutUser();
     navigate("/");
     setAuth(null);
     localStorage.removeItem("persist");
@@ -32,19 +33,19 @@ const AuthProvider = ({ children }) => {
     setCart(initialCart);
     setCartItems(0);
     setLikes(initialLikes);
-    serverLogout();
   };
 
   useEffect(() => {
     const checkLogin = async () => {
       if (!persist) return;
       try {
-        const response = await reloadSession();
+        const response = await userRequests().reloadSession();
         const { userData, userCart, userLikes } = response.data;
         setAuth(userData);
         setCart(userCart || initialCart);
         setLikes(userLikes || initialLikes);
       } catch (error) {
+        console.error(error);
         handleLogout();
       }
     };

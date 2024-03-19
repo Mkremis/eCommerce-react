@@ -2,24 +2,6 @@ import client from "./axiosClient";
 import axios from "axios";
 import { ASOS_HEADERS } from "../api/apiConfig";
 
-export const updateUser = async (userData) =>
-  client.patch("/api/users/update", JSON.stringify(userData), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-export const reloadSession = async () => client.get(`/api/users/reload`);
-
-export const serverLogout = async () => {
-  try {
-    const response = await client.get(`/api/users/logout`);
-    if ((response.status = "200")) alert(response.data.message);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 export function productRequests() {
   const getProductDetail = async (prodId) => {
     const options = {
@@ -107,11 +89,21 @@ export function userRequests() {
       userName,
       password,
     });
+  const reloadSession = async () => client.get(`/auth/reload`);
+
+  const logoutUser = async () => client.get("auth/logout");
 
   const getDashboard = async () => client.get("/api/users/dashboard");
 
   const updateDashboard = async (newDashboard) =>
     client.put("/api/users/dashboard", newDashboard, options);
 
-  return { registerUser, loginUser, getDashboard, updateDashboard };
+  return {
+    registerUser,
+    loginUser,
+    logoutUser,
+    reloadSession,
+    getDashboard,
+    updateDashboard,
+  };
 }
