@@ -73,7 +73,7 @@ const SortProduct = () => {
                     <ProductCard
                       image={`https://${product.imageUrl}`}
                       name={product.name}
-                      price_curr={product.price.current.text}
+                      price={product.price}
                       id={product.id}
                       gender={root}
                     >

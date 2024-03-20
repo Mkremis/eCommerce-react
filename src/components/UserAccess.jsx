@@ -3,7 +3,7 @@ import { useModal } from "../hooks/useModal";
 import Modal from "./Modal";
 import LoginForm from "./LoginForm";
 import AuthContext from "../context/AuthContext";
-import Dashboard from "./Dashboard";
+import UserPanel from "./UserPanel";
 
 const UserAccess = () => {
   const { auth, handleAuth, handleLogout } = useContext(AuthContext);
@@ -65,7 +65,7 @@ const UserAccess = () => {
         />
       </Modal>
       {auth && (
-        <Dashboard
+        <UserPanel
           isOpen={isOpenDash}
           closeDash={closeDash}
           user={auth}

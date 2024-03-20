@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import DashboardForm from "../components/DashboardForm";
 
-const UserDashboard = () => {
+const Dashboard = () => {
   const { auth: user } = useContext(AuthContext);
 
   return (
@@ -24,4 +24,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default Dashboard;

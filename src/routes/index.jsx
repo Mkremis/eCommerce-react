@@ -7,11 +7,9 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import ReviewProduct from "../pages/ReviewProduct";
 import SortProduct from "../pages/SortProducts";
-import UserDashboard from "../pages/UserDashboard";
 import Checkout from "../pages/Checkout";
 import SuccessPayment from "../pages/SuccessPayment";
 import Orders from "../pages/Orders";
-import Likeds from "../pages/Likeds";
 import DashboardForm from "../components/DashboardForm";
 import {
   loaderHome,
@@ -21,6 +19,8 @@ import {
   loaderOrders,
   loaderLikes,
 } from "../loaders";
+import Dashboard from "../pages/Dashboard";
+import Likes from "../pages/Likes";
 
 const routes = [
   {
@@ -44,7 +44,7 @@ const routes = [
       },
       {
         path: "/dashboard",
-        element: <UserDashboard />,
+        element: <Dashboard />,
         children: [
           {
             path: ":username",
@@ -58,12 +58,12 @@ const routes = [
           },
           {
             path: "likeds/:username",
-            element: <Likeds />,
+            element: <Likes />,
             loader: loaderLikes,
           },
           {
             path: "newuser",
-            element: <UserDashboard />,
+            element: <Dashboard />,
           },
         ],
       },
