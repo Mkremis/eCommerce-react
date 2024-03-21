@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./LoginForm.css";
-import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+
+import "./LoginForm.css";
 
 const LoginForm = ({ closeModalLogin }) => {
   const { setErrors, setAuth, setLikes, setCart, errors, persist, setPersist } =
@@ -18,7 +19,6 @@ const LoginForm = ({ closeModalLogin }) => {
       ? localStorage.setItem("persist", true)
       : localStorage.removeItem("persist");
   }, [persist]);
-  const navigate = useNavigate();
 
   return (
     <section className="login-container" id="container">

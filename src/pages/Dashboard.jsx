@@ -11,11 +11,11 @@ const Dashboard = () => {
       <header>
         {user && (
           <nav className="dashboard-nav">
-            <NavLink to={`/dashboard/${user.username}`}>User Data</NavLink>
-            <NavLink to={`/dashboard/orders/${user.username}`}>
+            <NavLink to={`/dashboard/${user.userName}`}>User Data</NavLink>
+            <NavLink to={`/dashboard/orders/${user.userName}`}>
               Order History
             </NavLink>
-            <NavLink to={`/dashboard/likeds/${user.username}`}>Likes</NavLink>
+            <NavLink to={`/dashboard/likeds/${user.userName}`}>Likes</NavLink>
           </nav>
         )}
       </header>

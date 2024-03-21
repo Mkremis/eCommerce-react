@@ -17,20 +17,9 @@ export default function SignIn({
         userName.value,
         password.value
       );
-      const { userData, userCart, userLikes } = response.data;
-      setAuth(userData);
-      setCart(userCart || []);
-      if (userLikes.length > 0) {
-        const likes = Promise.all(
-          userLikes.map(
-            async (userLike) =>
-              await productRequests().getProductDetail(userLike.prodId)
-          )
-        );
-        setLikes(await likes);
-      } else {
-        setLikes([]);
-      }
+      setAuth(response.data.userData);
+      setCart(response.data.userCart || []);
+      setLikes(response.data.userLikes || []);
     } catch (err) {
       console.error(err);
       setErrors([err.message]);

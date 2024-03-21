@@ -92,11 +92,11 @@ const DashboardForm = () => {
         initialFormData[key] = userDashboard[key];
       });
       initialFormData.email = user.email;
-      initialFormData.username = user.username;
+      initialFormData.username = user.userName;
 
       setFormData(initialFormData);
     }
-  }, [userDashboard, user.email, user.username]);
+  }, [userDashboard, user.email, user.userName]);
 
   return (
     <form onSubmit={handleSubmit} className="registration-form">

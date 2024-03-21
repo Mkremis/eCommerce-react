@@ -9,7 +9,6 @@ const CartReview = () => {
   const navigate = useNavigate();
 
   let cartItems = 0;
-
   const handleRemoveItem = async ({ target }) => {
     const item = target.id;
     try {
