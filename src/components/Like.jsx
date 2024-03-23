@@ -12,8 +12,11 @@ const Like = ({
   styles,
 }) => {
   const { likes, setLikes } = useContext(AuthContext);
-  const initialLike = likes.find((like) => like.id === prodId) || null;
-  const [like, setLike] = useState(initialLike);
+
+  const [like, setLike] = useState(null);
+  useEffect(() => {
+    setLike(likes.find((like) => like.id === prodId) || null);
+  }, []);
 
   useEffect(() => {
     function updateLike() {

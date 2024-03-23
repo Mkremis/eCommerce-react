@@ -1,6 +1,6 @@
 export const ASOS_HEADERS = {
   headers: {
-    "X-RapidAPI-Key": "0b048e90e6mshcd711004ccd8b43p1c3fbajsnd92706b2c07f",
+    "X-RapidAPI-Key": "49d9c22181msh41372344189763fp1c86dajsn7ad9035f998d",
     "X-RapidAPI-Host": "asos2.p.rapidapi.com",
   },
 };

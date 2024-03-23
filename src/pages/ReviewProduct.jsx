@@ -5,6 +5,7 @@ import ProductDetails from "../components/ProductDetails";
 
 const ReviewProduct = () => {
   const data = useLoaderData();
+
   return (
     <section className="content-order">
       <ProductGallery product={data} />

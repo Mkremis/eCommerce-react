@@ -8,9 +8,17 @@ const initialLikes = [];
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const [currency, setCurrency] = useState("USD");
+  const [language, setLanguage] = useState("en-US");
+  const [priceFormat, setPriceFormat] = useState(
+    new Intl.NumberFormat(language, {
+      style: "currency",
+      currency: currency,
+    })
+  );
   const [auth, setAuth] = useState(null);
   const [cart, setCart] = useState(initialCart);
-  const [currentProduct, setCurrentProduct] = useState({});
+  const [currentProduct, setCurrentProduct] = useState(null);
   const [cartItems, setCartItems] = useState(0);
   const [page, setPage] = useState(1);
   const [likes, setLikes] = useState(initialLikes);
@@ -81,6 +89,10 @@ const AuthProvider = ({ children }) => {
     setCartItems,
     currentProduct,
     setCurrentProduct,
+    currency,
+    setCurrency,
+    language,
+    priceFormat,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

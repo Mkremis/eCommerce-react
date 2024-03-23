@@ -4,15 +4,57 @@ import AuthContext from "../context/AuthContext";
 
 import Like from "./Like";
 import "./ProductDetails.css";
-import { cartRequests } from "../api/clientRequests";
-import { useGetCart } from "../hooks/useGetCart";
+import { cartRequests, productRequests } from "../api/clientRequests";
 
 const ProductDetails = ({ product }) => {
-  const { cart, setCart, auth: user, currentProduct } = useContext(AuthContext);
+  // Destructuring values from AuthContext
+  const {
+    cart,
+    setCart,
+    auth: user,
+    currentProduct,
+    currency,
+  } = useContext(AuthContext);
+
+  // State to manage the quantity of the product
   const [productQ, setProductQ] = useState(0);
+
+  // State to hold price details of the current product
+  const [priceDetails, setPriceDetails, priceFormat] = useState(currentProduct);
+
+  // Getting the pathname from the current location
   const { pathname } = useLocation();
+
+  // Extracting gender from the pathname
   const gender = pathname.split("/")[1];
-  console.log(currentProduct);
+
+  // Effect to update product quantity based on cart data
+  useEffect(() => {
+    if (cart) {
+      const itemFound = Object.values(cart).find((item) => {
+        const itemId = parseInt(item.prodId); // Convert to number
+        const productId = parseInt(product.id); // Convert to number
+        return itemId === productId;
+      });
+      if (itemFound) setProductQ(itemFound.productQ);
+    }
+  }, [product]);
+
+  // Effect to fetch and update stock price details
+  useEffect(() => {
+    const getStockPrice = async (prodId) => {
+      try {
+        const response = await productRequests().getProductPrice({ prodId });
+        setPriceDetails(response.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (!priceDetails || priceDetails.productId !== product.id)
+      getStockPrice(product.id);
+  }, [priceDetails, product]);
+
+  // Function to handle cart operations
   function handleCart() {
     const addQ = () => {
       const newQ = productQ + 1;
@@ -31,22 +73,28 @@ const ProductDetails = ({ product }) => {
         prodGender: gender,
         prodName: product?.name,
         prodImage: product?.media?.images[0]?.url,
-        prodPrice: currentProduct?.price?.current?.value,
+        prodPrice: priceDetails.productPrice.current.value,
+        priceCurrency: priceDetails.productPrice.currency,
         productQ: newQ,
       };
-      try {
-        const result = user && (await cartRequests().updateUserCart(newCart));
-        useGetCart(user, setCart);
-      } catch (error) {
-        console.error(
-          "Error updatting the user cart form the server:",
-          error.message
-        );
+      if (user) {
+        try {
+          const updatedUserCart = await cartRequests().updateUserCart(newCart);
+          setCart(await updatedUserCart.data);
+        } catch (error) {
+          console.error(
+            "Error updating the user cart from the server:",
+            error.message
+          );
+        }
+      } else {
+        setCart([...cart, newCart]);
       }
     };
     return { addQ, subsQ, updateCart };
   }
 
+  // Effect to set product quantity from cart data
   useEffect(() => {
     Object.keys(cart).some((key) => parseInt(key) === product.id) &&
       setProductQ(cart[product?.id].productQ);
@@ -55,6 +103,7 @@ const ProductDetails = ({ product }) => {
   return (
     <article className="details">
       <section className="details__product">
+        {/* Product details */}
         <h1 className="details__company">{product?.brand?.name}</h1>
         <h2 className="details__title">{product?.name}</h2>
         <div
@@ -64,6 +113,7 @@ const ProductDetails = ({ product }) => {
           }}
         />
 
+        {/* Additional product information */}
         <details>
           <summary>
             <span>Product Information</span>
@@ -95,43 +145,53 @@ const ProductDetails = ({ product }) => {
         </details>
       </section>
       <section className="details__order">
-        <div className="details__prices">
-          <div className="details__now">
-            <p className="price_now">{currentProduct?.price?.current?.text}</p>
-            {currentProduct?.price?.previous?.value !==
-              currentProduct?.price?.current?.value && (
-              <p className="details__discount">
-                -
-                {parseInt(
-                  ((currentProduct?.price?.previous?.value -
-                    currentProduct?.price?.current?.value) /
-                    currentProduct?.price?.previous?.value) *
-                    100
-                )}
-                %
+        {/* Product prices */}
+        {priceDetails ? (
+          <div className="details__prices">
+            <div className="details__now">
+              <p className="price_now">
+                {priceDetails.productPrice?.current?.text}
+              </p>
+              {priceDetails.productPrice.previous?.value !==
+                priceDetails.productPrice.current.value && (
+                <p className="details__discount">
+                  -
+                  {parseInt(
+                    ((priceDetails.productPrice.previous?.value -
+                      priceDetails.productPrice.current.value) /
+                      priceDetails.productPrice.previous?.value) *
+                      100
+                  )}
+                  %
+                </p>
+              )}
+            </div>
+            {priceDetails.productPrice.previous?.value !==
+              priceDetails.productPrice.current.value && (
+              <p className="details__before">
+                {priceDetails.productPrice.previous?.text}
               </p>
             )}
           </div>
-          {currentProduct?.price?.previous?.value !==
-            currentProduct?.price?.current?.value && (
-            <p className="details__before">
-              {currentProduct?.price?.previous?.text}
-            </p>
-          )}
-        </div>
+        ) : (
+          <p>Loading price...</p>
+        )}
+
+        {/* Product like button */}
         <div style={{ paddingBottom: "1rem" }}>
           <Like
             prodId={product?.id}
             prodName={product?.name}
             prodGender={product?.gender}
             prodImage={`https://${product?.media?.images[0]?.url}`}
-            prodPrice={currentProduct?.price?.current?.value}
-            priceCurrency={currentProduct?.price?.currency}
+            prodPrice={priceDetails?.productPrice?.current?.value}
+            priceCurrency={priceDetails?.productPrice?.currency}
             styles={{
               fontSize: "3rem",
             }}
           />
         </div>
+        {/* Product quantity input and add to cart button */}
         <div className="details__product-quantity">
           <div className="input">
             <button
@@ -141,7 +201,6 @@ const ProductDetails = ({ product }) => {
             >
               -
             </button>
-
             <input
               className="input__number"
               type="number"

@@ -25,7 +25,23 @@ export function productRequests() {
       return {};
     }
   };
-  return { getProductDetail };
+  const getProductPrice = ({ prodId }) => {
+    const options = {
+      method: "GET",
+      url: "https://asos2.p.rapidapi.com/products/v4/get-stock-price",
+      params: {
+        productIds: prodId,
+        lang: "en-US",
+        store: "US",
+        sizeSchema: "US",
+        currency: "USD",
+      },
+      headers: ASOS_HEADERS.headers,
+    };
+
+    return axios.request(options);
+  };
+  return { getProductDetail, getProductPrice };
 }
 
 export function cartRequests() {
@@ -35,15 +51,12 @@ export function cartRequests() {
     },
   };
 
-  const getUserCart = async () => await client.get(`/api/users/cart`);
+  const updateUserCart = (updatedCart) =>
+    client.put(`/api/users/cart`, updatedCart, options);
 
-  const deleteCartItem = async (itemId) =>
-    await client.delete(`/api/users/cart/${itemId}`);
+  const deleteCartItem = (itemId) => client.delete(`/api/users/cart/${itemId}`);
 
-  const updateUserCart = async (updatedCart) =>
-    await client.put(`/api/users/cart`, updatedCart, options);
-
-  return { getUserCart, deleteCartItem, updateUserCart };
+  return { deleteCartItem, updateUserCart };
 }
 
 export function likeRequests() {

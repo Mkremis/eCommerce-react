@@ -1,30 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { cartRequests } from "../api/clientRequests";
-import { useGetCart } from "../hooks/useGetCart";
 
 const CartReview = () => {
-  const { cart, setCart, auth: user } = useContext(AuthContext);
+  const {
+    cart,
+    setCart,
+    auth: user,
+    currency,
+    setCurrentProduct,
+    language,
+    priceFormat,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let cartItems = 0;
+  useEffect(() => {
+    setCurrentProduct(null);
+  }, []);
+
   const handleRemoveItem = async ({ target }) => {
     const item = target.id;
     try {
-      await cartRequests().deleteCartItem(item);
-      useGetCart(user, setCart);
+      if (user) {
+        const updatedUserCart = await cartRequests().deleteCartItem(item);
+        setCart(await updatedUserCart.data);
+      } else {
+        //ver que hacer aqui
+      }
     } catch (error) {
-      console.error(
-        "Error updatting the user cart form the server:",
-        error.message
-      );
+      console.error("Error updatting the user cart form the server:", error);
     }
   };
+
   const reviewItems = () => {
     let totalCart = 0;
     let toRender = [];
-
     for (const item in cart) {
       cartItems++;
       let totalPrice = cart[item].prodPrice * cart[item].productQ;
@@ -35,7 +47,7 @@ const CartReview = () => {
             className="cart-modal__item-details"
             id={cart[item].prodId}
             onClick={() =>
-              navigate(`/${cart[item].gender}/${cart[item].prodId}`)
+              navigate(`/${cart[item].prodGender}/${cart[item].prodId}`)
             }
           >
             <img
@@ -45,7 +57,12 @@ const CartReview = () => {
             />
             <p className="cart-modal__product">{cart[item].prodName}</p>
             <p className="cart-modal__quantity">x {cart[item].productQ}</p>
-            <p className="cart-modal__total-price">${totalPrice.toFixed(2)}</p>
+            <p className="cart-modal__total-price">
+              {totalPrice.toLocaleString("es-ES", {
+                style: "currency",
+                currency: cart[item].priceCurrency,
+              })}
+            </p>
           </div>
           <div className="cart-modal__delete-container">
             <span
@@ -68,7 +85,13 @@ const CartReview = () => {
       <div className="cart-modal__header">
         <h3 className="cart-modal__title">Cart</h3>
         <p className="cart-modal__total-cart">
-          Total: $<span>{reviewItems().totalCart.toFixed(2)}</span>
+          Total:
+          <span>
+            {reviewItems().totalCart.toLocaleString(language, {
+              style: "currency",
+              currency: currency,
+            })}
+          </span>
         </p>
       </div>
       <div className="cart-modal__checkout-container">

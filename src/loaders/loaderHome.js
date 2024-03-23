@@ -14,8 +14,9 @@ export const loaderHome = async () => {
       let data = await Promise.all(
         response.map(async (res) => await res.json())
       );
-      let homeData = data.map((d) => d.products);
+      let homeData = data ? data.map((d) => d.products) : [];
       sessionStorage.setItem("homeData", JSON.stringify({ homeData }));
+
       return { homeData };
     } catch (error) {
       console.log(error);
