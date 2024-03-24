@@ -11,7 +11,6 @@ const CartReview = () => {
     currency,
     setCurrentProduct,
     language,
-    priceFormat,
   } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -24,10 +23,14 @@ const CartReview = () => {
     const item = target.id;
     try {
       if (user) {
-        const updatedUserCart = await cartRequests().deleteCartItem(item);
-        setCart(await updatedUserCart.data);
+        const response = await cartRequests().deleteCartItem(item);
+        const updatedUserCart = await response.data;
+        setCart(updatedUserCart);
       } else {
-        //ver que hacer aqui
+        const updatedUserCart = cart.filter(
+          (i) => String(i.id) !== String(item)
+        );
+        setCart(updatedUserCart);
       }
     } catch (error) {
       console.error("Error updatting the user cart form the server:", error);

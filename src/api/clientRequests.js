@@ -51,8 +51,13 @@ export function cartRequests() {
     },
   };
 
-  const updateUserCart = (updatedCart) =>
-    client.put(`/api/users/cart`, updatedCart, options);
+  const updateUserCart = async (updatedCart) => {
+    try {
+      return await client.put(`/api/users/cart`, updatedCart, options);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const deleteCartItem = (itemId) => client.delete(`/api/users/cart/${itemId}`);
 
@@ -108,8 +113,13 @@ export function userRequests() {
 
   const getDashboard = async () => client.get("/api/users/dashboard");
 
-  const updateDashboard = async (newDashboard) =>
-    client.put("/api/users/dashboard", newDashboard, options);
+  const updateDashboard = async (newDashboard) => {
+    try {
+      return await client.put("/api/users/dashboard", newDashboard, options);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return {
     registerUser,

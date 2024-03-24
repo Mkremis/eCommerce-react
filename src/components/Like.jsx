@@ -14,9 +14,11 @@ const Like = ({
   const { likes, setLikes } = useContext(AuthContext);
 
   const [like, setLike] = useState(null);
+
   useEffect(() => {
-    setLike(likes.find((like) => like.id === prodId) || null);
-  }, []);
+    const isLike = likes.find((like) => String(like.prodId) === String(prodId));
+    setLike(isLike);
+  }, [likes]);
 
   useEffect(() => {
     function updateLike() {
@@ -33,8 +35,8 @@ const Like = ({
       try {
         await likeRequests().deleteLike(prodId);
         setLike(null);
-        const newLikes = likes.filter((like) => like.prodId !== prodId);
-        setLikes(newLikes);
+        const updatedLikes = likes.filter((like) => like.prodId !== prodId);
+        setLikes(updatedLikes);
       } catch (error) {
         console.error(error);
       }

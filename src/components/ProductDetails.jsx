@@ -79,18 +79,32 @@ const ProductDetails = ({ product }) => {
       };
       if (user) {
         try {
-          const updatedUserCart = await cartRequests().updateUserCart(newCart);
-          setCart(await updatedUserCart.data);
+          const response = await cartRequests().updateUserCart(newCart);
+          const updatedUserCart = await response.data;
+          setCart(updatedUserCart);
         } catch (error) {
-          console.error(
-            "Error updating the user cart from the server:",
-            error.message
-          );
+          console.error("Error updating the user cart from the server:", error);
         }
       } else {
-        setCart([...cart, newCart]);
+        const randomId = () => {
+          const randomFactor = parseInt(Math.random() * 100000);
+          const cartId = parseInt(Math.random() * randomFactor);
+          return cartId;
+        };
+        const isCart = cart.find((item) => item.prodId === newCart.prodId);
+        if (isCart) {
+          // Actualizar elemento existente
+          const updatedCart = cart.map((item) =>
+            item.prodId === newCart.prodId ? { ...item, ...newCart } : item
+          );
+          setCart(updatedCart);
+        } else {
+          // Agregar nuevo elemento al carrito
+          setCart([...cart, { id: randomId(), ...newCart }]);
+        }
       }
     };
+
     return { addQ, subsQ, updateCart };
   }
 
