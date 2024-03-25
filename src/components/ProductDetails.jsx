@@ -31,14 +31,12 @@ const ProductDetails = ({ product }) => {
   // Effect to update product quantity based on cart data
   useEffect(() => {
     if (cart) {
-      const itemFound = Object.values(cart).find((item) => {
-        const itemId = parseInt(item.prodId); // Convert to number
-        const productId = parseInt(product.id); // Convert to number
-        return itemId === productId;
-      });
+      const itemFound = Object.values(cart).find(
+        (item) => String(item.prodId) === String(product.id)
+      );
       if (itemFound) setProductQ(itemFound.productQ);
     }
-  }, [product]);
+  }, [product, cart]);
 
   // Effect to fetch and update stock price details
   useEffect(() => {

@@ -10,12 +10,6 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [currency, setCurrency] = useState("USD");
   const [language, setLanguage] = useState("en-US");
-  const [priceFormat, setPriceFormat] = useState(
-    new Intl.NumberFormat(language, {
-      style: "currency",
-      currency: currency,
-    })
-  );
   const [auth, setAuth] = useState(null);
   const [cart, setCart] = useState(initialCart);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -35,12 +29,12 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     userRequests().logoutUser();
     navigate("/");
-    setAuth(null);
     localStorage.removeItem("persist");
     setPersist(false);
     setCart(initialCart);
     setCartItems(0);
     setLikes(initialLikes);
+    setAuth(null);
   };
 
   useEffect(() => {
@@ -92,7 +86,6 @@ const AuthProvider = ({ children }) => {
     currency,
     setCurrency,
     language,
-    priceFormat,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

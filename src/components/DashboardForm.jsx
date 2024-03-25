@@ -24,7 +24,7 @@ const DashboardForm = () => {
   );
   const [formData, setFormData] = useState(
     Object.keys(FORM_DATA).reduce((prev, curr) => {
-      let initialData = user[curr] ? user[curr] : "";
+      let initialData = user ? user[curr] : "";
       return { ...prev, [curr]: initialData };
     }, {})
   );
@@ -86,7 +86,7 @@ const DashboardForm = () => {
 
   useEffect(() => {
     // Initialize form data from userDashboard
-    if (userDashboard) {
+    if (user && userDashboard) {
       const initialFormData = {};
       Object.keys(userDashboard).forEach((key) => {
         initialFormData[key] = userDashboard[key];
@@ -96,7 +96,7 @@ const DashboardForm = () => {
 
       setFormData(initialFormData);
     }
-  }, [userDashboard, user.email, user.userName]);
+  }, [userDashboard, user]);
 
   return (
     <form onSubmit={handleSubmit} className="registration-form">
