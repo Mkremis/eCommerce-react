@@ -107,9 +107,9 @@ export function userRequests() {
       userName,
       password,
     });
-  const reloadSession = async () => client.get(`/auth/reload`);
+  const reloadSession = async () => client.get(`/api/users/reload`);
 
-  const logoutUser = async () => client.get("auth/logout");
+  const logoutUser = async () => client.get("/api/users/logout");
 
   const getDashboard = async () => client.get("/api/users/dashboard");
 
