@@ -115,7 +115,7 @@ export function userRequests() {
 
   const updateDashboard = async (newDashboard) => {
     try {
-      return await client.put("/api/users/dashboard", newDashboard, options);
+      return await client.patch("/api/users/dashboard", newDashboard, options);
     } catch (error) {
       console.error(error);
     }

@@ -104,17 +104,6 @@ export const updateSchema = z.object({
     .min(6, {
       message: "Password must be at least 6 characters",
     })
-    .refinement(
-      (data) => {
-        if (data.password && data.confirmPassword !== data.password) {
-          throw new Error("Passwords do not match");
-        }
-        return true;
-      },
-      {
-        path: ["confirmPassword"],
-      }
-    )
     .nullable()
     .optional(),
   title: z

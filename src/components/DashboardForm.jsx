@@ -71,15 +71,14 @@ const DashboardForm = () => {
       const field = updateSchema.shape[name];
       field.parse(value);
       setInputErrors({ ...inputErrors, [name]: false });
-    } catch (error) {
-      let errorMessage = error.message;
-      // Parse the error message if it's JSON
-      if (error.message.startsWith("[")) {
-        const parsedError = JSON.parse(error.message);
-        errorMessage = parsedError[0].message;
-      } else {
-        console.error(error);
+      if (name === "confirmPassword" && value !== formData.password) {
+        throw new Error(
+          JSON.stringify([{ message: "Passwords do not match" }])
+        );
       }
+    } catch (error) {
+      const parsedError = JSON.parse(error.message);
+      const errorMessage = parsedError[0].message;
       setInputErrors({ ...inputErrors, [name]: errorMessage });
     }
   };

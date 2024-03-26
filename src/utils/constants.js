@@ -1,5 +1,5 @@
 const DASH_FORM_DATA = {
-  username: {
+  userName: {
     type: "text",
     pattern: "^[a-zA-Z0-9]{1,15}$",
     title: "Username must be alphanumeric and up to 15 characters",
