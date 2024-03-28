@@ -21,7 +21,8 @@ export default function SignIn({
       setCart(response.data.userCart || []);
       setLikes(response.data.userLikes || []);
     } catch (err) {
-      setErrors([err.response.data.error] || [err.message]);
+      console.error(err);
+      setErrors([err.response.data.message] || [err.message]);
     }
   };
 

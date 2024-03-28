@@ -33,10 +33,12 @@ const Like = ({
   const handleLike = async () => {
     if (like) {
       try {
-        await likeRequests().deleteLike(prodId);
-        setLike(null);
-        const updatedLikes = likes.filter((like) => like.prodId !== prodId);
-        setLikes(updatedLikes);
+        const response = await likeRequests().deleteLike(prodId);
+        if (response.statusText === "OK") {
+          setLike(null);
+          const updatedLikes = likes.filter((like) => like.prodId !== prodId);
+          setLikes(updatedLikes);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -50,10 +52,11 @@ const Like = ({
           prodPrice,
           priceCurrency,
         };
-        await likeRequests().createLike(productLiked);
-        setLike(prodId);
-        const newLikes = [...likes, productLiked];
-        setLikes(newLikes);
+        const response = await likeRequests().createLike(productLiked);
+        if (response.statusText === "OK") {
+          setLike(prodId);
+          setLikes([...likes, productLiked]);
+        }
       } catch (error) {
         console.error(error);
       }

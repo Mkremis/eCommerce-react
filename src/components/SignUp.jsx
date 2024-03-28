@@ -14,7 +14,7 @@ export default function SignUp({ setErrors, errors, setIsLogin }) {
       setIsLogin(true);
     } catch (err) {
       console.error(err);
-      setErrors([err.response.data.error] || [err.message]);
+      setErrors([err.response.data.message] || [err.message]);
     }
   };
 
