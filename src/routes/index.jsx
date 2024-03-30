@@ -21,6 +21,7 @@ import {
 } from "../loaders";
 import Dashboard from "../pages/Dashboard";
 import Likes from "../pages/Likes";
+import FailPayment from "../pages/FailPayment";
 
 const routes = [
   {
@@ -82,6 +83,10 @@ const routes = [
       {
         path: "/success-payment",
         element: <SuccessPayment />,
+      },
+      {
+        path: "/fail-payment",
+        element: <FailPayment />,
       },
       {
         path: "*",

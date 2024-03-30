@@ -130,3 +130,15 @@ export function userRequests() {
     updateDashboard,
   };
 }
+
+export function orderRequests() {
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const createOrder = (order) =>
+    client.post(`/api/users/create-order`, order, options);
+
+  return { createOrder };
+}

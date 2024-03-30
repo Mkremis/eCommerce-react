@@ -1,26 +1,21 @@
 import React, { useContext } from "react";
-import client from "../api/axiosClient";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
 import { useNavigate } from "react-router-dom";
+import { orderRequests } from "../api/clientRequests";
 
 const Checkout = () => {
   const { cart } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handlePay = async () => {
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await client.post(
-      `/api/create-order`,
-      JSON.stringify({ cart }),
-      options
-    );
-    const { data } = response;
-    if (data.init_point) window.location.href = data.init_point;
+    console.log(cart);
+    try {
+      const response = await orderRequests().createOrder(cart);
+      if (response.data.payLink) window.location.href = response.data.payLink;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
