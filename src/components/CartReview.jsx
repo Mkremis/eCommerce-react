@@ -71,7 +71,7 @@ const CartReview = () => {
             <span
               className="material-symbols-outlined"
               style={{ fontSize: "1rem" }}
-              id={cart[item].id}
+              id={cart[item].id || cart[item]._id}
               onClick={handleRemoveItem}
             >
               delete

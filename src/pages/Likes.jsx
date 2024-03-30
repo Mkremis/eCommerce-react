@@ -12,16 +12,16 @@ const Likes = () => {
       {likes.length > 0 &&
         likes.map((product) => {
           const price = {
-            currency: product.priceCurrency,
+            currency: product?.priceCurrency,
             current: {
-              value: product.prodPrice,
-              text: `$${product.prodPrice}`,
+              value: product?.prodPrice,
+              text: `$${product?.prodPrice}`,
             },
           };
           return (
-            <section className="product" key={product.id}>
+            <section className="product" key={product?.prodId}>
               <ProductCard
-                image={product.prodImage}
+                image={product?.prodImage}
                 name={product?.prodName}
                 id={product?.prodId}
                 gender={product?.ProdGender}
