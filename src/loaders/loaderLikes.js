@@ -1,4 +1,3 @@
-import client from "../api/axiosClient";
 import { likeRequests } from "../api/clientRequests";
 
 const loaderLikes = async () => {
