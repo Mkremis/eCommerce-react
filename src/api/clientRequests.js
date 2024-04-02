@@ -71,14 +71,12 @@ export function likeRequests() {
     },
   };
 
-  const getUserLikes = async () => await client.get(`/api/users/likes`);
+  const getUserLikes = () => client.get(`/api/users/likes`);
 
-  const deleteLike = async (prodId) =>
-    await client.delete(`/api/users/likes/${prodId}`);
+  const deleteLike = (prodId) => client.delete(`/api/users/likes/${prodId}`);
 
-  const createLike = async (newLike) => {
-    return await client.post(`/api/users/likes`, newLike, options);
-  };
+  const createLike = (newLike) =>
+    client.post(`/api/users/likes`, newLike, options);
 
   return { getUserLikes, deleteLike, createLike };
 }

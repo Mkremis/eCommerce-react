@@ -34,7 +34,7 @@ const Like = ({
     if (like) {
       try {
         const response = await likeRequests().deleteLike(prodId);
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           setLike(null);
           const updatedLikes = likes.filter((like) => like.prodId !== prodId);
           setLikes(updatedLikes);
@@ -53,7 +53,7 @@ const Like = ({
           priceCurrency,
         };
         const response = await likeRequests().createLike(productLiked);
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           setLike(prodId);
           setLikes([...likes, productLiked]);
         }
