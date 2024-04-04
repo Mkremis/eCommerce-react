@@ -129,7 +129,7 @@ export function userRequests() {
   };
 }
 
-export function orderRequests() {
+export function ordersRequests() {
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -137,6 +137,9 @@ export function orderRequests() {
   };
   const createOrder = (order) =>
     client.post(`/api/users/create-order`, order, options);
+  const getPurchases = () => client.get(`/api/users/purchases`);
+  const getTransactions = (transactionId) =>
+    client.get(`/api/users/transaction/${transactionId}`);
 
-  return { createOrder };
+  return { createOrder, getPurchases, getTransactions };
 }

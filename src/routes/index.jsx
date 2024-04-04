@@ -9,20 +9,22 @@ import ReviewProduct from "../pages/ReviewProduct";
 import SortProduct from "../pages/SortProducts";
 import Checkout from "../pages/Checkout";
 import SuccessPayment from "../pages/SuccessPayment";
-import Orders from "../pages/Orders";
+import Purchases from "../pages/Purchases";
 import DashboardForm from "../components/DashboardForm";
 import {
   loaderHome,
   loaderDetails,
   loaderSort,
   loaderDashboard,
-  loaderOrders,
+  loaderPurchases,
   loaderLikes,
+  loaderTransaction,
 } from "../loaders";
 import Dashboard from "../pages/Dashboard";
 import Likes from "../pages/Likes";
 import FailPayment from "../pages/FailPayment";
-
+import Transaction from "../pages/Transaction";
+Transaction;
 const routes = [
   {
     path: "/",
@@ -53,12 +55,12 @@ const routes = [
             loader: loaderDashboard,
           },
           {
-            path: "orders/:username",
-            element: <Orders />,
-            loader: loaderOrders,
+            path: "purchases/:username",
+            element: <Purchases />,
+            loader: loaderPurchases,
           },
           {
-            path: "likeds/:username",
+            path: "likes/:username",
             element: <Likes />,
             loader: loaderLikes,
           },
@@ -87,6 +89,11 @@ const routes = [
       {
         path: "/fail-payment",
         element: <FailPayment />,
+      },
+      {
+        path: "/transaction/:transactionId",
+        element: <Transaction />,
+        loader: loaderTransaction,
       },
       {
         path: "*",

@@ -55,7 +55,6 @@ const useFilters = (facets, refreshPage) => {
     }
     const path = location.pathname.split("/");
     refreshPage();
-    console.log("query ", query);
     navigate(
       `/${path[1]}/category/${path[3]}/sortBy/${path[5]}/filter/${query}/search/${path[9]}/offset/48`
     );

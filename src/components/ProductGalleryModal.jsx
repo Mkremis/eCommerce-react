@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
-import './ProductGallery.css';
+import React, { useRef } from "react";
+import "./ProductGallery.css";
 
 const ProductGalleryModal = ({ product, currentPoster }) => {
- //if(currentPoster.current) console.log('current', currentPoster.current.src);
   let galleryModal = product.media.images[0].url;
   let { images } = product.media;
   const modalPoster = useRef(null);
@@ -13,7 +12,11 @@ const ProductGalleryModal = ({ product, currentPoster }) => {
     <article className="gallery">
       <div className="gallery__image-container">
         <img
-          src={currentPoster.current ?currentPoster.current.src :`https://${galleryModal}`}
+          src={
+            currentPoster.current
+              ? currentPoster.current.src
+              : `https://${galleryModal}`
+          }
           className="gallery__image"
           ref={modalPoster}
         />

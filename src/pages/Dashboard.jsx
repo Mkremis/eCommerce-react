@@ -12,10 +12,10 @@ const Dashboard = () => {
         {user && (
           <nav className="dashboard-nav">
             <NavLink to={`/dashboard/${user.userName}`}>User Data</NavLink>
-            <NavLink to={`/dashboard/orders/${user.userName}`}>
+            <NavLink to={`/dashboard/purchases/${user.userName}`}>
               Order History
             </NavLink>
-            <NavLink to={`/dashboard/likeds/${user.userName}`}>Likes</NavLink>
+            <NavLink to={`/dashboard/likes/${user.userName}`}>Likes</NavLink>
           </nav>
         )}
       </header>

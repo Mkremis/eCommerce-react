@@ -1,9 +1,11 @@
 import loaderDashboard from "./loaderDashboard";
 import loaderDetails from "./loaderDetails";
 import loaderHome from "./loaderHome";
-import loaderOrders from "./loaderOrders";
+import loaderOrders from "./loaderPurchases";
 import loaderSort from "./loaderSort";
 import loaderLikes from "./loaderLikes";
+import loaderPurchases from "./loaderPurchases";
+import loaderTransaction from "./loaderTransaction";
 
 export {
   loaderDashboard,
@@ -12,4 +14,6 @@ export {
   loaderOrders,
   loaderSort,
   loaderLikes,
+  loaderPurchases,
+  loaderTransaction,
 };
