@@ -91,9 +91,8 @@ const routes = [
         element: <FailPayment />,
       },
       {
-        path: "/transaction/:transactionId",
+        path: "/transaction/:merchant_order_id",
         element: <Transaction />,
-        loader: loaderTransaction,
       },
       {
         path: "*",

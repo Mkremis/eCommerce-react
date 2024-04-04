@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Recipt({ transaction, items }) {
+export default function Receipt({ transaction, items }) {
   const navigate = useNavigate();
 
   const formatDate = (dateString) => {
