@@ -7,9 +7,9 @@ const Transaction = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const params = new URLSearchParams(window.location.search);
-      console.log("params", params);
-      const transactionId = params.get("merchant_order_id");
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      console.log("hashParams", hashParams);
+      const transactionId = hashParams.get("merchant_order_id");
       console.log("transactionId", transactionId);
       if (transactionId) {
         const response = await ordersRequests().getTransactions(transactionId);
