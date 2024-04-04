@@ -374,7 +374,10 @@ img {
   color: green;
   font-weight: bold;
 }
-
+.failMessage {
+  color: red;
+  font-weight: bold;
+}
 .thumbnail {
   max-width: 50px;
   max-height: 50px;

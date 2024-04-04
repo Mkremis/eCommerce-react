@@ -1,13 +1,16 @@
+import { useContext } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Purchases = () => {
   const navigate = useNavigate();
   const purchases = useLoaderData();
+  const { currency } = useContext(AuthContext);
 
-  const formatCurrency = (amount, currency) => {
+  const formatCurrency = (amount) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: currency,
+      currency,
     }).format(amount);
   };
   return (
@@ -42,9 +45,11 @@ const Purchases = () => {
                   <td>{item.prodId}</td>
                   <td>{item.prodName}</td>
                   <td>{item.prodGender}</td>
-                  <td>$ {item.prodPrice}</td>
+                  <td>{formatCurrency(item.prodPrice)}</td>
                   <td>{item.productQ}</td>
-                  <td>$ {parseFloat(item.prodPrice) * item.productQ}</td>
+                  <td>
+                    {formatCurrency(parseFloat(item.prodPrice * item.productQ))}
+                  </td>
 
                   <td>
                     <Link to={`/transaction/${item.order_id}`}>
