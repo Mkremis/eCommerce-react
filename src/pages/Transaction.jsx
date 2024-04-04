@@ -7,6 +7,7 @@ const Transaction = () => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("URL completa:", window.location.href); // Imprimir URL completa
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       console.log("hashParams", hashParams);
       const transactionId = hashParams.get("merchant_order_id");
