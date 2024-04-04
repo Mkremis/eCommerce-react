@@ -5,7 +5,6 @@ import loaderOrders from "./loaderPurchases";
 import loaderSort from "./loaderSort";
 import loaderLikes from "./loaderLikes";
 import loaderPurchases from "./loaderPurchases";
-import loaderTransaction from "./loaderTransaction";
 
 export {
   loaderDashboard,
@@ -15,5 +14,4 @@ export {
   loaderSort,
   loaderLikes,
   loaderPurchases,
-  loaderTransaction,
 };
