@@ -137,7 +137,9 @@ export function ordersRequests() {
   };
   const createOrder = (order) =>
     client.post(`/api/users/create-order`, order, options);
+
   const getPurchases = () => client.get(`/api/users/purchases`);
+
   const getTransactions = (transactionId) =>
     client.get(`/api/users/transaction/${transactionId}`);
 
