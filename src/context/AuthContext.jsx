@@ -37,21 +37,21 @@ const AuthProvider = ({ children }) => {
     setAuth(null);
   };
 
+  const reloadSession = async () => {
+    try {
+      const response = await userRequests().reloadSession();
+      const { userData, userCart, userLikes } = response.data;
+      setAuth(userData);
+      setCart(userCart || initialCart);
+      setLikes(userLikes || initialLikes);
+    } catch (error) {
+      console.error(error);
+      handleLogout();
+    }
+  };
   useEffect(() => {
-    const checkLogin = async () => {
-      if (!persist) return;
-      try {
-        const response = await userRequests().reloadSession();
-        const { userData, userCart, userLikes } = response.data;
-        setAuth(userData);
-        setCart(userCart || initialCart);
-        setLikes(userLikes || initialLikes);
-      } catch (error) {
-        console.error(error);
-        handleLogout();
-      }
-    };
-    checkLogin();
+    if (!persist) return;
+    reloadSession();
   }, []);
 
   // clear errors after 5 seconds
@@ -86,6 +86,7 @@ const AuthProvider = ({ children }) => {
     currency,
     setCurrency,
     language,
+    reloadSession,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

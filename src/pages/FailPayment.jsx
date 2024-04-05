@@ -1,9 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import AuthContext from "../context/AuthContext";
 
 const FailPayment = () => {
-  const navigate = useNavigate();
-  setTimeout(() => navigate("/"), 2000);
+  const { reloadSession } = useContext(AuthContext);
+
+  useEffect(() => {
+    reloadSession();
+  }, []);
 
   return (
     <article
