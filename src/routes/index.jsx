@@ -18,7 +18,6 @@ import {
   loaderDashboard,
   loaderPurchases,
   loaderLikes,
-  loaderTransaction,
 } from "../loaders";
 import Dashboard from "../pages/Dashboard";
 import Likes from "../pages/Likes";
