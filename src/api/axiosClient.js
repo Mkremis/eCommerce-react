@@ -4,7 +4,7 @@ import axios from "axios";
 //http://localhost:8080
 
 const client = axios.create({
-  baseURL: "https://76d8-190-211-89-1.ngrok-free.app",
+  baseURL: "https://ecommerce-users-api-node-express-dev-hjbp.2.us-1.fl0.io",
   withCredentials: true,
   crossDomain: true,
 });
