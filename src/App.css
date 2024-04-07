@@ -378,26 +378,30 @@ img {
   color: red;
   font-weight: bold;
 }
-.thumbnail {
-  max-width: 50px;
-  max-height: 50px;
-  margin-right: 10px;
-}
 
-.itemRow {
+.item-row {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   cursor: pointer;
 }
-.itemRow:hover {
+.item-row:hover {
   background-color: var(--Pale-orange);
 }
-
-.itemName {
+.item-thumbnail {
+  flex-basis: 20%;
+  max-width: 50px;
+  max-height: 50px;
+  margin-right: 10px;
+}
+.item-name {
   flex: 1;
+  flex-basis: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 10px;
+}
+.item-q {
+  flex-basis: 20%;
 }

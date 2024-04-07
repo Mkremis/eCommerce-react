@@ -26,7 +26,7 @@ export default function Receipt({ transaction, items }) {
         <h2 className="heading">Transaction Details</h2>
         <p className="value">
           <span className="label">Transaction Reference:</span>
-          {transaction._id}
+          {transaction._id || transaction.id}
         </p>
         <p className="value">
           <span className="label">Transaction Amount:</span>
@@ -82,17 +82,16 @@ export default function Receipt({ transaction, items }) {
             items.map((item) => (
               <div
                 key={item._id}
-                className="itemRow"
+                className="item-row"
                 onClick={() => navigate(`/${item.gender}/${item.prodId}`)}
               >
                 <img
                   src={item.prodImage}
                   alt={item.prodName}
-                  className="thumbnail"
+                  className="item-thumbnail"
                 />
-                <span className="itemName">
-                  {item.prodName} - Quantity: {item.productQ}
-                </span>
+                <span className="item-name">{item.prodName}</span>
+                <span className="item-q">- Quantity: {item.productQ}</span>
               </div>
             ))}
         </div>
