@@ -40,20 +40,25 @@ const DashboardForm = () => {
       setMessages(["You have errors in your form"]);
       return;
     }
-
     try {
       // Update user data
       const response = await userRequests().updateDashboard(formData);
-      setSubmitErrors(false);
-      setMessages(["User updated successfully"]);
-      setTimeout(() => {
-        setMessages([]);
-      }, 4000);
+      if (response || response?.status === 200) {
+        setSubmitErrors(false);
+        setMessages(["User updated successfully"]);
+        setTimeout(() => {
+          setMessages([]);
+        }, 4000);
+      } else {
+        setSubmitErrors(true);
+        setMessages(["Error updating user"]);
+        setTimeout(() => {
+          setMessages([]);
+        }, 4000);
+      }
       return response;
     } catch (error) {
       console.log(error);
-      setSubmitErrors(true);
-      setMessages([error.response.data]);
     }
   };
 
@@ -167,7 +172,9 @@ const DashboardForm = () => {
           {messages.map((message, index) => (
             <p
               key={index}
-              className={`${submitErrors ? "text-error" : "text-success"}`}
+              className={`${
+                submitErrors ? "error-message" : "success-message"
+              }`}
             >
               {message}
             </p>
