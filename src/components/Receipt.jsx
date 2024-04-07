@@ -81,7 +81,7 @@ export default function Receipt({ transaction, items }) {
           {items.length &&
             items.map((item) => (
               <div
-                key={item._id}
+                key={item._id || item.id}
                 className="item-row"
                 onClick={() => navigate(`/${item.gender}/${item.prodId}`)}
               >
@@ -91,7 +91,7 @@ export default function Receipt({ transaction, items }) {
                   className="item-thumbnail"
                 />
                 <span className="item-name">{item.prodName}</span>
-                <span className="item-q">- Quantity: {item.productQ}</span>
+                <span className="item-q">{item.productQ} units</span>
               </div>
             ))}
         </div>

@@ -36,7 +36,10 @@ const Purchases = () => {
           ) : (
             purchases.map((item) => {
               return (
-                <tr key={item._id} className="purchases-table__order">
+                <tr
+                  key={item._id || item.id}
+                  className="purchases-table__order"
+                >
                   <td
                     onClick={() => navigate(`/${item.gender}/${item.prodId}`)}
                   >

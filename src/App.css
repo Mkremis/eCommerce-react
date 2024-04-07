@@ -389,19 +389,17 @@ img {
   background-color: var(--Pale-orange);
 }
 .item-thumbnail {
-  flex-basis: 20%;
   max-width: 50px;
   max-height: 50px;
   margin-right: 10px;
 }
 .item-name {
-  flex: 1;
-  flex-basis: 60%;
+  flex-basis: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 10px;
 }
 .item-q {
-  flex-basis: 20%;
+  text-align: center;
 }
