@@ -11,7 +11,7 @@ const Like = ({
   priceCurrency,
   styles,
 }) => {
-  const { likes, setLikes } = useContext(AuthContext);
+  const { auth: user, likes, setLikes } = useContext(AuthContext);
 
   const [like, setLike] = useState(null);
 
@@ -33,9 +33,16 @@ const Like = ({
   const handleLike = async () => {
     if (like) {
       try {
-        const response = await likeRequests().deleteLike(prodId);
-        if (response.status === 200) {
-          setLike(null);
+        if (user) {
+          const deleteUserLikeResponse = await likeRequests().deleteLike(
+            prodId
+          );
+          if (deleteUserLikeResponse.status === 200) {
+            setLike(null);
+            const updatedLikes = likes.filter((like) => like.prodId !== prodId);
+            setLikes(updatedLikes);
+          }
+        } else {
           const updatedLikes = likes.filter((like) => like.prodId !== prodId);
           setLikes(updatedLikes);
         }
@@ -52,8 +59,15 @@ const Like = ({
           prodPrice,
           priceCurrency,
         };
-        const response = await likeRequests().createLike(productLiked);
-        if (response.status === 200) {
+        if (user) {
+          const createUserLikeResponse = await likeRequests().createLike(
+            productLiked
+          );
+          if (createUserLikeResponse.status === 200) {
+            setLike(prodId);
+            setLikes([...likes, productLiked]);
+          }
+        } else {
           setLike(prodId);
           setLikes([...likes, productLiked]);
         }

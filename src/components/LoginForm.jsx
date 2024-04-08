@@ -7,8 +7,17 @@ import SignUp from "./SignUp";
 import "./LoginForm.css";
 
 const LoginForm = ({ closeModalLogin }) => {
-  const { setErrors, setAuth, setLikes, setCart, errors, persist, setPersist } =
-    useContext(AuthContext);
+  const {
+    setErrors,
+    setAuth,
+    likes,
+    setLikes,
+    cart,
+    setCart,
+    errors,
+    persist,
+    setPersist,
+  } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
   const togglePersist = () => {
@@ -28,6 +37,8 @@ const LoginForm = ({ closeModalLogin }) => {
             setErrors={setErrors}
             errors={errors}
             setAuth={setAuth}
+            cart={cart}
+            likes={likes}
             setLikes={setLikes}
             setCart={setCart}
             togglePersist={togglePersist}

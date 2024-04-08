@@ -1,10 +1,8 @@
 import axios from "axios";
-
-// "https://ecommerce-users-api-node-express-dev-hjbp.2.us-1.fl0.io"
-//http://localhost:8080
+import { SERVER_ENDPOINT } from "../config";
 
 const client = axios.create({
-  baseURL: "https://0775-190-211-89-1.ngrok-free.app",
+  baseURL: SERVER_ENDPOINT,
   withCredentials: true,
   crossDomain: true,
 });

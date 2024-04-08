@@ -1,10 +1,16 @@
-import { productRequests, userRequests } from "../api/clientRequests";
+import {
+  cartRequests,
+  likeRequests,
+  userRequests,
+} from "../api/clientRequests";
 import handleTogglePass from "../utils/handleTogglePass";
 
 export default function SignIn({
   setErrors,
   setAuth,
+  likes,
   setLikes,
+  cart,
   setCart,
   errors,
   togglePersist,
@@ -13,13 +19,27 @@ export default function SignIn({
   const handleAuth = async (e) => {
     try {
       let { userName, password } = e.target;
-      const response = await userRequests().loginUser(
+      const loginResponse = await userRequests().loginUser(
         userName.value,
         password.value
       );
-      setAuth(response.data.userData);
-      setCart(response.data.userCart || []);
-      setLikes(response.data.userLikes || []);
+      setAuth(loginResponse.data.userData);
+
+      if (cart.length) {
+        const userCartResponse = await Promise.all(
+          cart.map(async (item) => await cartRequests().updateUserCart(item))
+        );
+        const updatedUserCart = userCartResponse[0].data;
+        setCart(updatedUserCart);
+      } else {
+        setCart(loginResponse.data.userCart || []);
+      }
+      if (likes.length) {
+        likes.forEach(async (like) => await likeRequests().createLike(like));
+        const userLikesResponse = await likeRequests().getUserLikes();
+      } else {
+        setLikes(loginResponse.data.userLikes || []);
+      }
     } catch (err) {
       console.error(err);
       setErrors([err.response.data.message] || [err.message]);

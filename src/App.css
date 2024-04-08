@@ -268,17 +268,7 @@ img {
   align-items: center;
   justify-content: center;
 }
-.pay-button {
-  background-color: var(--Orange);
-  padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-  letter-spacing: 3px;
-  margin: auto;
-  width: 10ch;
-}
+
 /* purchases */
 .purchases-table {
   font-size: 0.5rem;

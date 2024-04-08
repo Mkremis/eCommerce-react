@@ -6,8 +6,8 @@ import ProductGalleryModal from "./ProductGalleryModal";
 
 const ProductGallery = ({ product }) => {
   const [indexImg, setIndexImg] = useState(0);
-  let gallery = product.media.images[indexImg].url;
-  let { images } = product.media;
+  let gallery = product?.media?.images[indexImg]?.url;
+  let images = product?.media?.images || [];
   const poster = useRef(null);
   const handleClick = (e) => {
     poster.current.src = e.target.src;

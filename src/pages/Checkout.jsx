@@ -1,21 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
-import { useNavigate } from "react-router-dom";
-import { ordersRequests } from "../api/clientRequests";
+
+import MercadoPago from "../components/MercadoPago";
+
+import LoginForm from "../components/LoginForm";
 
 const Checkout = () => {
-  const { cart } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handlePay = async () => {
-    try {
-      const response = await ordersRequests().createOrder(cart);
-      if (response.data.payLink) window.location.href = response.data.payLink;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { auth: user, cart } = useContext(AuthContext);
 
   return (
     <article className="checkout">
@@ -23,9 +15,23 @@ const Checkout = () => {
       <div className="cart-review">
         <CartReview />
       </div>
-      <button onClick={handlePay} className="pay-button">
-        Pay
-      </button>
+      {user ? (
+        cart.length && <MercadoPago cart={cart} />
+      ) : (
+        <div style={{ marginTop: "3rem" }}>
+          <p
+            style={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              textAlign: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            Please login to your user account to make an order
+          </p>
+          <LoginForm />
+        </div>
+      )}
     </article>
   );
 };

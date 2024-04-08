@@ -1,4 +1,4 @@
-import React, { Suspense} from "react";
+import React, { Suspense } from "react";
 import Loader from "../components/Loader";
 const Hero = React.lazy(() => import("../components/Hero"));
 const HomeContent = React.lazy(() => import("../components/HomeContent"));
