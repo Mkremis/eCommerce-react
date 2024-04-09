@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import CartReview from "../components/CartReview";
 
-import MercadoPago from "../components/MercadoPago";
-
 import LoginForm from "../components/LoginForm";
+import MercadoPagoWrapper from "../components/MercadoPagoWrapper";
 
 const Checkout = () => {
   const { auth: user, cart } = useContext(AuthContext);
@@ -16,7 +15,7 @@ const Checkout = () => {
         <CartReview />
       </div>
       {user ? (
-        cart.length && <MercadoPago cart={cart} />
+        cart.length && <MercadoPagoWrapper cart={cart} />
       ) : (
         <div style={{ marginTop: "3rem" }}>
           <p
