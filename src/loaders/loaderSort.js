@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ASOS_HEADERS } from "../api/apiConfig";
+import { API_KEY } from "../config";
 
 const loaderSort = async ({ params }) => {
   const categories = {
@@ -24,7 +24,12 @@ const loaderSort = async ({ params }) => {
   }sizeSchema=US&lang=en-US`;
 
   try {
-    const response = await axios.get(URL, ASOS_HEADERS);
+    const response = await axios.get(URL, {
+      headers: {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+      },
+    });
     const { data } = response;
     return data;
   } catch (err) {

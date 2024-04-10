@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ASOS_HEADERS } from "../api/apiConfig";
-
+import { API_KEY } from "../config";
 import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 import "./Aside.css";
+
 const Aside = () => {
   const { pathname } = useLocation();
   const [response, setResponse] = useState(null);
@@ -20,7 +20,12 @@ const Aside = () => {
     } else {
       fetch(
         "https://asos2.p.rapidapi.com/categories/list?country=US&lang=en-US",
-        ASOS_HEADERS
+        {
+          headers: {
+            "X-RapidAPI-Key": API_KEY,
+            "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+          },
+        }
       )
         .then((res) => (res.ok ? res.json() : Promise.reject()))
         .then((cat) => {

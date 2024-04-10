@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ASOS_HEADERS } from "../api/apiConfig";
+
 import axios from "axios";
+import { API_KEY } from "../config";
 
 const useSearch = () => {
   const [search, setSearch] = useState("");
@@ -17,7 +18,12 @@ const useSearch = () => {
     if (search.length > 2 && !fetchSearch) {
       const URL = `https://asos2.p.rapidapi.com/v2/auto-complete?q=${search}&store=US&country=US&currency=USD&sizeSchema=US&lang=en-US`;
       axios
-        .get(URL, ASOS_HEADERS)
+        .get(URL, {
+          headers: {
+            "X-RapidAPI-Key": API_KEY,
+            "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+          },
+        })
         .then((res) =>
           setSuggestions(
             res.data.suggestionGroups[0].suggestions.map(

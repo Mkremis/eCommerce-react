@@ -1,6 +1,6 @@
 import client from "./axiosClient";
 import axios from "axios";
-import { ASOS_HEADERS } from "../api/apiConfig";
+import { API_KEY } from "../config";
 
 export function productRequests() {
   const getProductDetail = async (prodId) => {
@@ -14,7 +14,10 @@ export function productRequests() {
         sizeSchema: "US",
         currency: "USD",
       },
-      headers: ASOS_HEADERS.headers,
+      headers: {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+      },
     };
 
     try {
@@ -36,7 +39,10 @@ export function productRequests() {
         sizeSchema: "US",
         currency: "USD",
       },
-      headers: ASOS_HEADERS.headers,
+      headers: {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+      },
     };
 
     return axios.request(options);
