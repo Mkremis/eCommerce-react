@@ -22,7 +22,9 @@ const Like = ({
 
   useEffect(() => {
     function updateLike() {
-      const updatedLike = likes.find((like) => like?.prodId === prodId);
+      const updatedLike = likes.find(
+        (like) => String(like?.prodId) === String(prodId)
+      );
       if (updatedLike) {
         setLike(updatedLike);
       }
@@ -37,13 +39,19 @@ const Like = ({
           const deleteUserLikeResponse = await likeRequests().deleteLike(
             prodId
           );
+          console.log(deleteUserLikeResponse);
           if (deleteUserLikeResponse.status === 200) {
             setLike(null);
-            const updatedLikes = likes.filter((like) => like.prodId !== prodId);
+            const updatedLikes = likes.filter(
+              (like) => String(like.prodId) !== String(prodId)
+            );
             setLikes(updatedLikes);
           }
         } else {
-          const updatedLikes = likes.filter((like) => like.prodId !== prodId);
+          setLike(null);
+          const updatedLikes = likes.filter(
+            (like) => String(like.prodId) !== String(prodId)
+          );
           setLikes(updatedLikes);
         }
       } catch (error) {

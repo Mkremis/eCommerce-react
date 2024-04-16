@@ -20,7 +20,7 @@ const ProductDetails = ({ product }) => {
   const [productQ, setProductQ] = useState(0);
 
   // State to hold price details of the current product
-  const [priceDetails, setPriceDetails, priceFormat] = useState(currentProduct);
+  const [priceDetails, setPriceDetails] = useState(currentProduct);
 
   // Getting the pathname from the current location
   const { pathname } = useLocation();
@@ -71,8 +71,8 @@ const ProductDetails = ({ product }) => {
         prodGender: gender,
         prodName: product?.name,
         prodImage: product?.media?.images[0]?.url,
-        prodPrice: priceDetails.productPrice.current.value,
-        priceCurrency: priceDetails.productPrice.currency,
+        prodPrice: priceDetails?.productPrice?.current?.value,
+        priceCurrency: priceDetails?.productPrice?.currency,
         productQ: newQ,
       };
       if (user) {
